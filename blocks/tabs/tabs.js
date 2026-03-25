@@ -1,11 +1,10 @@
 // eslint-disable-next-line import/no-unresolved
 import { toClassName } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   // build tablist
   const tablist = document.createElement('div');
-  tablist.className = 'tabs-team-list';
+  tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
 
   // decorate tabs and tabpanels
@@ -15,7 +14,7 @@ export default async function decorate(block) {
 
     // decorate tabpanel
     const tabpanel = block.children[i];
-    tabpanel.className = 'tabs-team-panel';
+    tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${id}`;
     tabpanel.setAttribute('aria-hidden', !!i);
     tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
@@ -23,10 +22,9 @@ export default async function decorate(block) {
 
     // build tab button
     const button = document.createElement('button');
-    button.className = 'tabs-team-tab';
+    button.className = 'tabs-tab';
     button.id = `tab-${id}`;
 
-    moveInstrumentation(tab.parentElement, tabpanel.lastElementChild);
     button.innerHTML = tab.innerHTML;
 
     button.setAttribute('aria-controls', `tabpanel-${id}`);
@@ -45,7 +43,6 @@ export default async function decorate(block) {
     });
     tablist.append(button);
     tab.remove();
-    moveInstrumentation(button.querySelector('p'), null);
   });
 
   block.prepend(tablist);

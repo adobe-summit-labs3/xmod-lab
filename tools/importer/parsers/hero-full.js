@@ -42,7 +42,7 @@ export default function parse(element, { document }) {
   }
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'hero-full',
+    name: 'Hero (hero-full)',
     cells,
   });
   element.replaceWith(block);

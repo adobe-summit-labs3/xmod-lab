@@ -55,7 +55,7 @@ export default function parse(element, { document }) {
   }
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'columns-promo',
+    name: 'Columns (columns-promo)',
     cells,
   });
   element.replaceWith(block);

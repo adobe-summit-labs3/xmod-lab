@@ -66,7 +66,7 @@ var CustomImportScript = (() => {
       cells.push([contentCell]);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "hero-full",
+      name: "Hero (hero-full)",
       cells
     });
     element.replaceWith(block);
@@ -100,7 +100,7 @@ var CustomImportScript = (() => {
     }
     cells.push([col1, col2]);
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "columns-about",
+      name: "Columns (columns-about)",
       cells
     });
     element.replaceWith(block);
@@ -134,7 +134,7 @@ var CustomImportScript = (() => {
       cells.push([row]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "cards-feature",
+      name: "Cards (cards-feature)",
       cells
     });
     element.replaceWith(block);
@@ -183,7 +183,7 @@ var CustomImportScript = (() => {
       cells.push([tabLabel, tabContent]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "tabs-team",
+      name: "Tabs (tabs-team)",
       cells
     });
     element.replaceWith(block);
@@ -230,7 +230,7 @@ var CustomImportScript = (() => {
       cells.push(row);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "columns-promo",
+      name: "Columns (columns-promo)",
       cells
     });
     element.replaceWith(block);
@@ -310,7 +310,7 @@ var CustomImportScript = (() => {
       cells.push([col1, col2]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "cards-article",
+      name: "Cards (cards-article)",
       cells
     });
     element.replaceWith(block);
@@ -330,6 +330,18 @@ var CustomImportScript = (() => {
         "link",
         "iframe"
       ]);
+      const sourceUrl = payload.params && payload.params.originalURL;
+      if (sourceUrl) {
+        element.querySelectorAll("img").forEach((img) => {
+          const src = img.getAttribute("src");
+          if (src && !src.startsWith("http") && !src.startsWith("data:") && !src.startsWith("blob:")) {
+            try {
+              img.setAttribute("src", new URL(src, sourceUrl).href);
+            } catch (e) {
+            }
+          }
+        });
+      }
     }
   }
 

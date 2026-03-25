@@ -28,7 +28,7 @@ export default function parse(element, { document }) {
   });
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'tabs-activity',
+    name: 'Tabs',
     cells,
   });
   element.replaceWith(block);

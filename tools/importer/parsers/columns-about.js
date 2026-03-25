@@ -40,7 +40,7 @@ export default function parse(element, { document }) {
   cells.push([col1, col2]);
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'columns-about',
+    name: 'Columns (columns-about)',
     cells,
   });
   element.replaceWith(block);

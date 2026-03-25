@@ -23,5 +23,20 @@ export default function transform(hookName, element, payload) {
       'link',
       'iframe',
     ]);
+
+    // Resolve all relative image URLs to absolute using the source page URL
+    const sourceUrl = payload.params && payload.params.originalURL;
+    if (sourceUrl) {
+      element.querySelectorAll('img').forEach((img) => {
+        const src = img.getAttribute('src');
+        if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('blob:')) {
+          try {
+            img.setAttribute('src', new URL(src, sourceUrl).href);
+          } catch (e) {
+            // skip malformed URLs
+          }
+        }
+      });
+    }
   }
 }

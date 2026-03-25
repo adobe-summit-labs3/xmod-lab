@@ -26,7 +26,7 @@ const PAGE_TEMPLATE = {
   blocks: [
     {
       name: 'hero-full',
-      instances: ['section.hero-section.hero-section--full'],
+      instances: ['section.hero-section.hero-section--full', 'section.hero-section'],
     },
     {
       name: 'columns-featured',

@@ -1,11 +1,11 @@
-/* Columns Gallery - Photo grid with 3-col top row and full-width bottom image */
-.columns-gallery > div {
+/* Gallery - Photo grid with 3-col top row and full-width bottom image */
+.gallery > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--gap-lg);
 }
 
-.columns-gallery img {
+.gallery img {
   width: 100%;
   height: 280px;
   object-fit: cover;
@@ -14,16 +14,16 @@
 }
 
 /* wide/full image row */
-.columns-gallery > div:last-child {
+.gallery > div:last-child {
   grid-template-columns: 1fr;
 }
 
-.columns-gallery > div:last-child img {
+.gallery > div:last-child img {
   height: 360px;
 }
 
 @media (width >= 900px) {
-  .columns-gallery > div {
+  .gallery > div {
     grid-template-columns: repeat(3, 1fr);
   }
 }

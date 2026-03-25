@@ -2,10 +2,11 @@
   "status": "success",
   "url": "https://gabrielwalt.github.io/wknd/gear.html",
   "path": "wknd/gear",
-  "timestamp": "2026-03-25T21:52:30.926Z",
+  "timestamp": "2026-03-25T23:43:54.566Z",
   "title": "Gear — WKND Adventures",
   "template": "hub-landing-page",
   "blocks": [
+    "hero-full",
     "columns-featured",
     "tabs-activity",
     "columns-editorial",

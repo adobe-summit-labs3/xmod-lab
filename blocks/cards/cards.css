@@ -1,3 +1,6 @@
+/* Cards block — base + variants (cards-article, cards-feature) */
+
+/* ===== Base cards ===== */
 .cards > ul {
   list-style: none;
   margin: 0;
@@ -24,4 +27,178 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+/* ===== Cards Article variant ===== */
+.cards.cards-article > ul {
+  grid-template-columns: 1fr;
+  gap: var(--gap-lg);
+}
+
+.cards.cards-article > ul > li {
+  border: 1px solid var(--border-color-light);
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--background-color);
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.cards.cards-article > ul > li:hover {
+  background-color: var(--cream-color);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+}
+
+.cards.cards-article .cards-card-image {
+  overflow: hidden;
+}
+
+.cards.cards-article > ul > li img {
+  aspect-ratio: 16 / 10;
+  transition: transform 0.3s;
+}
+
+.cards.cards-article .cards-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  margin: 0;
+}
+
+/* tag pill */
+.cards.cards-article .cards-card-body em {
+  display: inline-block;
+  font-style: normal;
+  font-family: var(--heading-font-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  padding: 4px 12px;
+  border-radius: var(--button-border-radius);
+  width: fit-content;
+}
+
+.cards.cards-article .cards-card-body h5 {
+  margin: 0;
+}
+
+.cards.cards-article .cards-card-body p {
+  color: var(--text-color-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.cards.cards-article .cards-card-body a {
+  font-size: var(--body-font-size-xs);
+  color: var(--text-color-muted);
+}
+
+/* dark section: glass card variant */
+.section.dark .cards.cards-article > ul > li {
+  background: rgb(255 255 255 / 6%);
+  border-color: rgb(255 255 255 / 12%);
+}
+
+.section.dark .cards.cards-article > ul > li h5 {
+  color: var(--background-color);
+}
+
+.section.dark .cards.cards-article > ul > li p {
+  color: rgb(255 255 255 / 55%);
+}
+
+.section.dark .cards.cards-article > ul > li:hover {
+  background-color: var(--cream-color);
+  border-color: var(--border-color);
+}
+
+.section.dark .cards.cards-article > ul > li:hover h5,
+.section.dark .cards.cards-article > ul > li:hover p {
+  color: var(--dark-color);
+}
+
+@media (width >= 600px) {
+  .cards.cards-article > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards.cards-article > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Cards Feature variant ===== */
+/* stylelint-disable no-descending-specificity -- variant selectors follow base */
+.cards.cards-feature > ul {
+  grid-template-columns: 1fr;
+  gap: var(--gap-lg);
+}
+
+.cards.cards-feature > ul > li {
+  padding: 24px;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 20px;
+}
+
+/* hide image area — text-only cards */
+.cards.cards-feature .cards-card-image {
+  display: none;
+}
+
+.cards.cards-feature .cards-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.cards.cards-feature .cards-card-body h5 {
+  margin: 0;
+  color: var(--background-color);
+  font-size: 24px;
+}
+
+.cards.cards-feature .cards-card-body p {
+  margin: 0;
+  color: rgb(255 255 255 / 55%);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* text-button link */
+.cards.cards-feature .cards-card-body a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-family: var(--heading-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.84px;
+  color: var(--background-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s;
+}
+
+.cards.cards-feature .cards-card-body a:hover {
+  opacity: 0.65;
+  color: var(--background-color);
+}
+
+@media (width >= 600px) {
+  .cards.cards-feature > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards.cards-feature > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

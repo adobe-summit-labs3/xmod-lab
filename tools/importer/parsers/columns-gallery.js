@@ -23,7 +23,7 @@ export default function parse(element, { document }) {
   }
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'columns-gallery',
+    name: 'Gallery',
     cells,
   });
   element.replaceWith(block);

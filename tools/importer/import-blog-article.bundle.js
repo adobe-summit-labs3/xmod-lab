@@ -103,7 +103,7 @@ var CustomImportScript = (() => {
     }
     cells.push([contentWrapper]);
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "hero-article",
+      name: "Hero (hero-article)",
       cells
     });
     element.replaceWith(block);
@@ -148,7 +148,7 @@ var CustomImportScript = (() => {
     }
     cells.push([col1, col2]);
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "columns-sidebar",
+      name: "Columns (columns-sidebar)",
       cells
     });
     element.replaceWith(block);
@@ -166,7 +166,7 @@ var CustomImportScript = (() => {
       cells.push(row);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "columns-gallery",
+      name: "Gallery",
       cells
     });
     element.replaceWith(block);
@@ -219,7 +219,7 @@ var CustomImportScript = (() => {
       cells.push([col1, col2]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "cards-article",
+      name: "Cards (cards-article)",
       cells
     });
     element.replaceWith(block);
@@ -239,6 +239,18 @@ var CustomImportScript = (() => {
         "link",
         "iframe"
       ]);
+      const sourceUrl = payload.params && payload.params.originalURL;
+      if (sourceUrl) {
+        element.querySelectorAll("img").forEach((img) => {
+          const src = img.getAttribute("src");
+          if (src && !src.startsWith("http") && !src.startsWith("data:") && !src.startsWith("blob:")) {
+            try {
+              img.setAttribute("src", new URL(src, sourceUrl).href);
+            } catch (e) {
+            }
+          }
+        });
+      }
     }
   }
 

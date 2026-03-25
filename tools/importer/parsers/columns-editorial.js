@@ -23,7 +23,7 @@ export default function parse(element, { document }) {
   });
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'columns-editorial',
+    name: 'Columns (columns-editorial)',
     cells,
   });
   element.replaceWith(block);

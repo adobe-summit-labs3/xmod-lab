@@ -2,10 +2,11 @@
   "status": "success",
   "url": "https://gabrielwalt.github.io/wknd/destinations.html",
   "path": "wknd/destinations",
-  "timestamp": "2026-03-25T21:52:26.775Z",
+  "timestamp": "2026-03-25T23:40:03.762Z",
   "title": "Destinations — WKND Adventures",
   "template": "hub-landing-page",
   "blocks": [
+    "hero-full",
     "columns-featured",
     "columns-editorial",
     "cards-article",

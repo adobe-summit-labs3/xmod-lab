@@ -1,6 +1,6 @@
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
-  block.classList.add(`columns-editorial-${cols.length}-cols`);
+  block.classList.add(`gallery-${cols.length}-cols`);
 
   // setup image columns
   [...block.children].forEach((row) => {
@@ -9,7 +9,7 @@ export default function decorate(block) {
       if (pic) {
         const picWrapper = pic.closest('div');
         if (picWrapper && picWrapper.children.length === 1) {
-          picWrapper.classList.add('columns-editorial-img-col');
+          picWrapper.classList.add('gallery-img-col');
         }
       }
     });
