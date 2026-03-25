@@ -65,6 +65,24 @@
   --transition-fast: 0.15s;
   --transition-normal: 0.3s ease;
 
+  /* card shared patterns */
+  --card-border-radius: 20px;
+  --card-hover-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+  --card-hover-transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+
+  /* tag pill shared patterns */
+  --tag-padding: 4px 12px;
+  --tag-font-size: 12px;
+  --tag-letter-spacing: 0.6px;
+
+  /* dark section / overlay text */
+  --text-on-dark: rgb(255 255 255 / 85%);
+  --text-on-dark-muted: rgb(255 255 255 / 55%);
+
+  /* glass card (dark section) */
+  --glass-bg: rgb(255 255 255 / 6%);
+  --glass-border: rgb(255 255 255 / 12%);
+
   /* nav height */
   --nav-height: 64px;
 }
@@ -420,7 +438,7 @@ main > .section.dark h6 {
 }
 
 main > .section.dark p {
-  color: rgb(255 255 255 / 85%);
+  color: var(--text-on-dark);
 }
 
 main > .section.dark a:any-link:not(.button) {

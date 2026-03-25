@@ -94,6 +94,22 @@ Usage counts: dark (20), secondary (11), accent (9).
 | `--container-padding` | 0 24px |
 | `--section-padding` | 48px 0 (mobile), 64px 0 (desktop) |
 
+### Shared Component Tokens
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--card-border-radius` | `20px` | Cards, columns-promo, sidebar, gallery, tabs panels |
+| `--card-hover-shadow` | `0 4px 20px rgb(0 0 0 / 8%)` | Hover shadow on cards, promo, tab cards |
+| `--card-hover-transition` | `background-color 0.15s, border-color 0.15s, box-shadow 0.15s` | Shared card hover transition |
+| `--tag-padding` | `4px 12px` | Tag pill padding (cards, columns-featured, hero-article) |
+| `--tag-font-size` | `12px` | Tag pill font size |
+| `--tag-letter-spacing` | `0.6px` | Tag pill letter spacing |
+| `--text-on-dark` | `rgb(255 255 255 / 85%)` | Paragraph text on dark backgrounds |
+| `--text-on-dark-muted` | `rgb(255 255 255 / 55%)` | Secondary text on dark backgrounds |
+| `--glass-bg` | `rgb(255 255 255 / 6%)` | Glass card background (dark sections) |
+| `--glass-border` | `rgb(255 255 255 / 12%)` | Glass card border (dark sections) |
+| `--transition-fast` | `0.15s` | Quick interactions (hover, border) |
+| `--transition-normal` | `0.3s ease` | Standard transitions (transform, accordion) |
+
 ### Buttons
 Primary (black + amber shadow), Ghost (outline + amber shadow), Accent (amber + black shadow). All use offset `box-shadow` with hover lift and active press-down transitions.
 

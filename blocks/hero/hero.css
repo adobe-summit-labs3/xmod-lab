@@ -82,7 +82,7 @@
 }
 
 .hero.hero-full p {
-  color: rgb(255 255 255 / 85%);
+  color: var(--text-on-dark);
   font-size: 18px;
   line-height: 1.6;
   max-width: 608px;
@@ -192,7 +192,7 @@
 
 /* stylelint-disable no-descending-specificity -- variant selectors follow base */
 .hero.hero-article p {
-  color: rgb(255 255 255 / 85%);
+  color: var(--text-on-dark);
   margin: 0;
 }
 
@@ -211,11 +211,11 @@
   display: inline-block;
   font-style: normal;
   font-family: var(--heading-font-family);
-  font-size: 12px;
+  font-size: var(--tag-font-size);
   font-weight: 600;
   background-color: var(--accent-color);
   color: var(--background-color);
-  padding: 4px 12px;
+  padding: var(--tag-padding);
   border-radius: var(--button-border-radius);
   margin-right: var(--gap-sm);
   margin-bottom: var(--gap-md);

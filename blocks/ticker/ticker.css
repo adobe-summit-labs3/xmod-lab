@@ -14,7 +14,7 @@
 
 .ticker .ticker-track {
   display: inline-flex;
-  gap: 32px;
+  gap: var(--gap-xl);
   animation: ticker-scroll 40s linear infinite;
 }
 

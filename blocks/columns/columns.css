@@ -28,7 +28,7 @@
   .columns > div {
     align-items: center;
     flex-direction: unset;
-    gap: 24px;
+    gap: var(--gap-lg);
   }
 
   .columns > div > div {
@@ -76,7 +76,7 @@
   gap: var(--gap-md);
   border-top: 1px solid var(--accent-color);
   border-bottom: 1px solid var(--accent-color);
-  padding: 32px 0;
+  padding: var(--gap-xl) 0;
 }
 
 /* number column */
@@ -121,7 +121,7 @@
   height: auto;
   min-height: 20rem;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: var(--card-border-radius);
 }
 
 .columns.columns-featured > div > div {
@@ -135,12 +135,12 @@
   display: inline-block;
   font-style: normal;
   font-family: var(--heading-font-family);
-  font-size: 12px;
+  font-size: var(--tag-font-size);
   font-weight: 600;
-  letter-spacing: 0.6px;
+  letter-spacing: var(--tag-letter-spacing);
   background-color: var(--accent-color);
   color: var(--background-color);
-  padding: 4px 12px;
+  padding: var(--tag-padding);
   border-radius: var(--button-border-radius);
   margin-right: var(--gap-sm);
 }
@@ -203,12 +203,12 @@
 }
 
 .columns.columns-promo > div {
-  padding: 24px;
+  padding: var(--gap-lg);
   background-color: var(--background-color);
   border: 1px solid var(--border-color-light);
-  border-radius: 20px;
+  border-radius: var(--card-border-radius);
   margin-bottom: var(--gap-xl);
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: var(--card-hover-transition);
 }
 
 .columns.columns-promo > div:last-child {
@@ -218,7 +218,7 @@
 .columns.columns-promo > div:hover {
   background-color: var(--cream-color);
   border-color: var(--border-color);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+  box-shadow: var(--card-hover-shadow);
 }
 
 .columns.columns-promo h4 {
@@ -243,7 +243,7 @@
   color: var(--dark-color);
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: opacity 0.15s;
+  transition: opacity var(--transition-fast);
 }
 
 .columns.columns-promo a:any-link:hover {
@@ -291,8 +291,8 @@
 /* pull quote column */
 .columns.columns-sidebar > div > div:last-child {
   background-color: var(--dark-color);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: var(--card-border-radius);
+  padding: var(--gap-xl);
   color: var(--background-color);
 }
 

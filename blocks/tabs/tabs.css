@@ -24,7 +24,7 @@
   font-weight: 700;
   color: var(--border-color);
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
   line-height: 1.2;
   white-space: nowrap;
   box-shadow: none;
@@ -65,16 +65,16 @@
 /* article cards inside tabs — same hover pattern as cards-article */
 .tabs .tabs-panel > div {
   border: 1px solid var(--border-color-light);
-  border-radius: 20px;
+  border-radius: var(--card-border-radius);
   overflow: hidden;
   background: var(--background-color);
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: var(--card-hover-transition);
 }
 
 .tabs .tabs-panel > div:hover {
   background-color: var(--cream-color);
   border-color: var(--border-color);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+  box-shadow: var(--card-hover-shadow);
 }
 
 .tabs .tabs-panel > div picture img {
