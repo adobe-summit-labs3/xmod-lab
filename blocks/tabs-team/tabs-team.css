@@ -1,57 +1,121 @@
+/* Tabs Team - Team member profile tabs with avatars and bios */
 .tabs-team .tabs-team-list {
   display: flex;
-  gap: 0.5ch;
+  gap: var(--gap-lg);
   max-width: 100%;
-  font-size: var(--body-font-size-xs);
   overflow-x: auto;
-}
-
-@media (width >= 600px) {
-  .tabs-team .tabs-team-list {
-    font-size: var(--body-font-size-s);
-  }
-}
-
-@media (width >= 900px) {
-  .tabs-team .tabs-team-list {
-    font-size: var(--body-font-size-m);
-  }
+  border-top: 2px solid var(--dark-color);
+  padding-top: 12px;
+  margin-bottom: var(--gap-xl);
 }
 
 .tabs-team .tabs-team-list button {
   flex: 0 0 max-content;
   margin: 0;
-  border: 1px solid #dadada;
+  border: none;
+  border-bottom: 4px solid transparent;
   border-radius: 0;
-  padding: 0.5em;
-  background-color: var(--light-color);
-  color: initial;
-  font-weight: bold;
-  line-height: unset;
-  text-align: initial;
-  text-overflow: unset;
-  overflow: unset;
-  white-space: unset;
-  transition: background-color 0.2s;
+  padding: 8px 4px;
+  background: none;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--border-color);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.tabs-team .tabs-team-list button[aria-selected='true'] {
+  color: var(--dark-color);
+  border-bottom-color: var(--accent-color);
+}
+
+/* inactive hover: Gray-500 */
+.tabs-team .tabs-team-list button:hover {
+  color: var(--text-color-muted);
+}
+
+/* active tab stays black on hover */
+.tabs-team .tabs-team-list button[aria-selected='true']:hover {
+  color: var(--dark-color);
+}
+
+/* panel */
+.tabs-team .tabs-team-panel {
+  padding: 0;
+  border: none;
+  overflow: visible;
+}
+
+.tabs-team .tabs-team-panel[aria-hidden='true'] {
+  display: none;
+}
+
+/* bio and role paragraphs — must come before button p for specificity order */
+.tabs-team .tabs-team-panel p {
+  color: var(--text-color-muted);
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 .tabs-team .tabs-team-list button p {
   margin: 0;
 }
 
-.tabs-team .tabs-team-list button[aria-selected='true'] {
-  border-bottom: 1px solid var(--background-color);
-  background-color: var(--background-color);
-  cursor: initial;
+/* profile layout — stacked on mobile */
+.tabs-team .tabs-team-panel > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
 }
 
-.tabs-team .tabs-team-panel {
-  margin-top: -1px;
-  padding: 24px;
-  border: 1px solid #dadada;
-  overflow: auto;
+/* profile avatar */
+.tabs-team .tabs-team-panel img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-color);
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.tabs-team .tabs-team-panel[aria-hidden='true'] {
-  display: none;
+/* profile name */
+.tabs-team .tabs-team-panel h3 {
+  margin-bottom: var(--gap-sm);
+}
+
+/* profile role — em must come before h3 + p em for specificity */
+.tabs-team .tabs-team-panel em {
+  font-style: normal;
+  color: var(--text-color-muted);
+  font-size: 14px;
+}
+
+.tabs-team .tabs-team-panel h3 + p em {
+  font-style: normal;
+  color: var(--text-color-muted);
+  font-size: 14px;
+}
+
+@media (width >= 600px) {
+  .tabs-team .tabs-team-list button {
+    font-size: 18px;
+  }
+}
+
+@media (width >= 900px) {
+  .tabs-team .tabs-team-list button {
+    font-size: 20px;
+  }
+
+  /* desktop: profile image left, text right */
+  .tabs-team .tabs-team-panel > div {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: var(--gap-lg);
+    align-items: start;
+  }
 }

@@ -8,7 +8,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 400px;
+  min-height: min(55vh, 400px);
   padding: 48px 24px;
   overflow: hidden;
 }
@@ -25,7 +25,7 @@
   height: 100%;
 }
 
-/* overlay gradient */
+/* overlay gradient — bottom-to-top for text readability */
 .hero-full::after {
   content: '';
   position: absolute;
@@ -67,7 +67,7 @@
   font-weight: 700;
   letter-spacing: 1.4px;
   color: var(--accent-color);
-  margin-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-md);
 }
 
 /* button group */
@@ -76,24 +76,37 @@
   margin-right: var(--gap-md);
 }
 
+/* accent button on hero — black offset shadow */
 .hero-full a.button.accent {
-  box-shadow: 3px 3px 0 0 rgb(0 0 0 / 30%);
+  box-shadow: 4px 4px 0 var(--dark-color);
 }
 
+.hero-full a.button.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--dark-color);
+}
+
+.hero-full a.button.accent:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--dark-color);
+}
+
+/* ghost button on hero — white outline */
 .hero-full a.button.secondary {
-  border-color: rgb(255 255 255 / 50%);
+  border-color: var(--background-color);
   color: var(--background-color);
+  box-shadow: none;
 }
 
 .hero-full a.button.secondary:hover {
-  background-color: var(--background-color);
-  border-color: var(--background-color);
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
   color: var(--dark-color);
 }
 
 @media (width >= 600px) {
   .hero-full {
-    min-height: 500px;
+    min-height: min(55vh, 500px);
     padding: 64px 24px;
   }
 
@@ -104,7 +117,7 @@
 
 @media (width >= 900px) {
   .hero-full {
-    min-height: 585px;
+    min-height: 55vh;
     padding: 64px 32px;
   }
 

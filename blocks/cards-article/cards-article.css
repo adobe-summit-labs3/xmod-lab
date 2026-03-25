@@ -5,20 +5,21 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--gap-md);
+  gap: var(--gap-lg);
 }
 
 .cards-article > ul > li {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-light);
   border-radius: 20px;
   overflow: hidden;
   background-color: var(--background-color);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .cards-article > ul > li:hover {
-  box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
-  border-color: var(--accent-color);
+  background-color: var(--cream-color);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
 }
 
 .cards-article .cards-article-card-image {
@@ -33,15 +34,13 @@
   transition: transform 0.3s;
 }
 
-.cards-article > ul > li:hover img {
-  transform: scale(1.05);
-}
+/* no image zoom on hover — only the card container changes */
 
 .cards-article .cards-article-card-body {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-sm);
-  padding: 24px 16px;
+  gap: 12px;
+  padding: 16px 20px 20px;
 }
 
 /* tag pill */
@@ -51,6 +50,7 @@
   font-family: var(--heading-font-family);
   font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.6px;
   background-color: var(--accent-color);
   color: var(--background-color);
   padding: 4px 12px;
@@ -64,13 +64,37 @@
 
 .cards-article .cards-article-card-body p {
   color: var(--text-color-muted);
-  font-size: var(--body-font-size-s);
+  font-size: 14px;
   margin: 0;
 }
 
 .cards-article .cards-article-card-body a {
   font-size: var(--body-font-size-xs);
   color: var(--text-color-muted);
+}
+
+/* dark section: glass card variant */
+.section.dark .cards-article > ul > li {
+  background: rgb(255 255 255 / 6%);
+  border-color: rgb(255 255 255 / 12%);
+}
+
+.section.dark .cards-article > ul > li h5 {
+  color: var(--background-color);
+}
+
+.section.dark .cards-article > ul > li p {
+  color: rgb(255 255 255 / 55%);
+}
+
+.section.dark .cards-article > ul > li:hover {
+  background-color: var(--cream-color);
+  border-color: var(--border-color);
+}
+
+.section.dark .cards-article > ul > li:hover h5,
+.section.dark .cards-article > ul > li:hover p {
+  color: var(--dark-color);
 }
 
 @media (width >= 600px) {

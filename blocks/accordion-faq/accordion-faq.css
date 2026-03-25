@@ -1,9 +1,14 @@
 /* Accordion FAQ - Expandable FAQ items with rounded borders */
 .accordion-faq details {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-light);
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 12px;
+  transition: border-color 0.15s;
+}
+
+.accordion-faq details:hover {
+  border-color: var(--accent-color);
 }
 
 .accordion-faq details p {
@@ -22,7 +27,7 @@
   font-size: var(--body-font-size-m);
   font-weight: 600;
   color: var(--dark-color);
-  transition: background-color 0.2s;
+  transition: background-color 0.15s;
 }
 
 .accordion-faq details[open] summary {
@@ -53,9 +58,15 @@
 .accordion-faq details .accordion-faq-item-body {
   padding: 0 24px 16px;
   color: var(--text-color-subtle);
+  line-height: 1.7;
+}
+
+.accordion-faq details .accordion-faq-item-body a {
+  color: var(--accent-color);
+  text-decoration: underline;
 }
 
 .accordion-faq details[open] .accordion-faq-item-body {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color-light);
   background-color: var(--background-color);
 }

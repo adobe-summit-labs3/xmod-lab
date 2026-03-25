@@ -20,7 +20,6 @@
 
 .columns-gallery > div:last-child img {
   height: 360px;
-  margin-top: var(--gap-lg);
 }
 
 @media (width >= 900px) {

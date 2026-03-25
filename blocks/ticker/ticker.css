@@ -41,6 +41,17 @@
   }
 }
 
+/* reduced motion: show static scrollable row */
+@media (prefers-reduced-motion: reduce) {
+  .ticker .ticker-track {
+    animation: none;
+  }
+
+  .ticker {
+    overflow-x: auto;
+  }
+}
+
 @media (width >= 900px) {
   .ticker .ticker-track span {
     font-size: 32px;

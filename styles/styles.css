@@ -12,7 +12,10 @@
   --accent-color: #e8651a;
   --light-color: #f0ece4;
   --dark-color: #0f1a14;
+  --cream-color: #f5f0e8;
+  --forest-color: #1a3a2e;
   --border-color: #c8c2b8;
+  --border-color-light: #ddd8cf;
   --overlay-color: rgb(255 255 255 / 85%);
 
   /* fonts */
@@ -40,7 +43,9 @@
   --gap-sm: 8px;
   --gap-md: 16px;
   --gap-lg: 24px;
-  --gap-xl: 48px;
+  --gap-xl: 32px;
+  --gap-2xl: 48px;
+  --gap-3xl: 64px;
 
   /* buttons */
   --button-font-family: syncopate, syncopate-fallback, sans-serif;
@@ -49,7 +54,8 @@
   --button-letter-spacing: 0.98px;
   --button-border-radius: 9999px;
   --button-padding: 12px 32px;
-  --button-transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s, color 0.15s, border-color 0.15s;
+  --button-transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s,
+    color 0.15s, border-color 0.15s;
 
   /* links */
   --link-color: #e8651a;
@@ -57,6 +63,7 @@
 
   /* transitions */
   --transition-fast: 0.15s;
+  --transition-normal: 0.3s ease;
 
   /* nav height */
   --nav-height: 64px;
@@ -78,9 +85,9 @@
 /* tablet */
 @media (width >= 600px) {
   :root {
-    --heading-font-size-xxl: 36px;
-    --heading-font-size-xl: 30px;
-    --heading-font-size-l: 24px;
+    --heading-font-size-xxl: 40px;
+    --heading-font-size-xl: 32px;
+    --heading-font-size-l: 28px;
     --heading-font-size-m: 20px;
   }
 }
@@ -91,13 +98,14 @@
     --body-font-size-m: 18px;
     --body-font-size-s: 16px;
     --body-font-size-xs: 14px;
-    --heading-font-size-xxl: 40px;
-    --heading-font-size-xl: 32px;
-    --heading-font-size-l: 24px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 18px;
+    --heading-font-size-xxl: 56px;
+    --heading-font-size-xl: 40px;
+    --heading-font-size-l: 32px;
+    --heading-font-size-m: 24px;
+    --heading-font-size-s: 20px;
     --heading-font-size-xs: 14px;
-    --container-padding: 0 32px;
+    --section-padding: 64px 0;
+    --container-padding: 0 24px;
   }
 }
 
@@ -108,7 +116,7 @@ body {
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 body.appear {
@@ -151,11 +159,15 @@ h3 { font-size: var(--heading-font-size-l); }
 
 h4 {
   font-size: var(--heading-font-size-m);
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
 }
 
 h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+
+h6 {
+  font-size: var(--heading-font-size-xs);
+  letter-spacing: 0.08em;
+}
 
 p,
 dl,
@@ -164,12 +176,12 @@ ul,
 pre,
 blockquote {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 p {
   color: var(--text-color);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 code,
@@ -226,6 +238,12 @@ a:hover {
   text-decoration: underline;
 }
 
+/* focus ring — accessibility */
+*:focus-visible {
+  outline: 2px solid var(--dark-color);
+  outline-offset: 2px;
+}
+
 /* buttons */
 p.button-wrapper {
   margin: 12px 0;
@@ -262,56 +280,111 @@ button.button:disabled {
   opacity: 0.5;
 }
 
-/* primary button - solid dark */
+/* primary button — solid dark, amber offset shadow */
 a.button.primary,
 button.button.primary {
   border-color: var(--dark-color);
   background-color: var(--dark-color);
   color: var(--background-color);
+  box-shadow: 4px 4px 0 var(--accent-color);
 }
 
 a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--text-color-subtle);
-  background-color: var(--text-color-subtle);
-  transform: translateY(-1px);
+button.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--accent-color);
 }
 
-/* secondary button - outline / ghost */
+a.button.primary:active,
+button.button.primary:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--accent-color);
+}
+
+/* secondary button — ghost outline, amber offset shadow */
 a.button.secondary,
 button.button.secondary {
   border-color: var(--dark-color);
   background-color: transparent;
   color: var(--dark-color);
+  box-shadow: 4px 4px 0 var(--accent-color);
 }
 
 a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
+button.button.secondary:hover {
   background-color: var(--dark-color);
   color: var(--background-color);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--accent-color);
 }
 
-/* accent button - orange CTA */
+a.button.secondary:active,
+button.button.secondary:active {
+  background-color: var(--dark-color);
+  color: var(--background-color);
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--accent-color);
+}
+
+/* accent button — orange CTA, black offset shadow */
 a.button.accent,
 button.button.accent {
   border-color: var(--accent-color);
   background-color: var(--accent-color);
   color: var(--dark-color);
+  box-shadow: 4px 4px 0 var(--dark-color);
 }
 
 a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-  color: var(--background-color);
-  transform: translateY(-1px);
+button.button.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--dark-color);
+}
+
+a.button.accent:active,
+button.button.accent:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--dark-color);
+}
+
+/* text button — underlined Syncopate link, no background */
+a.button.text,
+button.button.text {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  box-shadow: none;
+}
+
+a.button.text:hover,
+button.button.text:hover {
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline;
+}
+
+a.button.text:active,
+button.button.text:active {
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+/* button groups — stack on mobile */
+@media (width < 600px) {
+  .button-wrapper + .button-wrapper {
+    margin-top: 8px;
+  }
+
+  .button-wrapper + .button-wrapper a.button,
+  .button-wrapper + .button-wrapper button.button {
+    width: 100%;
+  }
 }
 
 /* sections */
@@ -331,12 +404,6 @@ main > .section:first-of-type {
   padding-top: 0;
 }
 
-@media (width >= 900px) {
-  main > .section > div {
-    padding: var(--container-padding);
-  }
-}
-
 /* section style variants (from section-metadata) */
 main > .section.dark {
   background-color: var(--dark-color);
@@ -353,29 +420,37 @@ main > .section.dark h6 {
 }
 
 main > .section.dark p {
-  color: rgb(255 255 255 / 80%);
+  color: rgb(255 255 255 / 85%);
 }
 
 main > .section.dark a:any-link:not(.button) {
   color: var(--accent-color);
 }
 
+/* dark section: primary button inverts to white fill + amber shadow */
 main > .section.dark a.button.primary {
   border-color: var(--background-color);
   background-color: var(--background-color);
   color: var(--dark-color);
+  box-shadow: 4px 4px 0 var(--accent-color);
 }
 
+/* dark section: ghost button uses white outline */
 main > .section.dark a.button.secondary {
-  border-color: rgb(255 255 255 / 50%);
+  border-color: var(--background-color);
   color: var(--background-color);
+  box-shadow: 4px 4px 0 var(--accent-color);
 }
 
-main > .section.dark a.button.secondary:hover,
-main > .section.dark a.button.secondary:focus-visible {
+main > .section.dark a.button.secondary:hover {
   background-color: var(--background-color);
   border-color: var(--background-color);
   color: var(--dark-color);
+}
+
+/* dark section: focus ring uses white */
+main > .section.dark *:focus-visible {
+  outline-color: var(--background-color);
 }
 
 main > .section.secondary {
@@ -396,10 +471,12 @@ main > .section.accent h6 {
   color: var(--dark-color);
 }
 
+/* accent section: primary button uses black fill + white shadow */
 main > .section.accent a.button.primary {
   border-color: var(--dark-color);
   background-color: var(--dark-color);
   color: var(--background-color);
+  box-shadow: 4px 4px 0 var(--background-color);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -414,4 +491,16 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: var(--section-padding);
+}
+
+/* reduced motion — accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

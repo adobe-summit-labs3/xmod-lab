@@ -8,7 +8,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 380px;
+  min-height: min(55vh, 380px);
   padding: 48px 24px;
   overflow: hidden;
 }
@@ -52,12 +52,17 @@
   margin: 0;
 }
 
-/* breadcrumbs and tags */
+/* breadcrumbs — first line with links, 32px below */
+.hero-article > div > p:first-child {
+  margin-bottom: 32px;
+}
+
 .hero-article a {
   color: rgb(255 255 255 / 70%);
   font-size: var(--body-font-size-s);
 }
 
+/* tag pills — 16px below */
 .hero-article em {
   display: inline-block;
   font-style: normal;
@@ -69,7 +74,7 @@
   padding: 4px 12px;
   border-radius: var(--button-border-radius);
   margin-right: var(--gap-sm);
-  margin-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-md);
 }
 
 /* author avatar */
@@ -84,13 +89,13 @@
 
 @media (width >= 600px) {
   .hero-article {
-    min-height: 420px;
+    min-height: min(55vh, 420px);
   }
 }
 
 @media (width >= 900px) {
   .hero-article {
-    min-height: 495px;
+    min-height: 55vh;
     padding: 64px 32px;
   }
 

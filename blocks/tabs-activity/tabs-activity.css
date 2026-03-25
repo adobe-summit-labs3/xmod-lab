@@ -22,9 +22,10 @@
   font-weight: 700;
   color: var(--border-color);
   cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.15s, border-color 0.15s;
   line-height: 1.2;
   white-space: nowrap;
+  box-shadow: none;
 }
 
 .tabs-activity .tabs-activity-list button p {
@@ -36,14 +37,20 @@
   border-bottom-color: var(--accent-color);
 }
 
+/* inactive hover: Gray-500, not black */
 .tabs-activity .tabs-activity-list button:hover {
+  color: var(--text-color-muted);
+}
+
+/* active tab stays black on hover */
+.tabs-activity .tabs-activity-list button[aria-selected='true']:hover {
   color: var(--dark-color);
 }
 
 .tabs-activity .tabs-activity-panel {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--gap-md);
+  gap: var(--gap-lg);
   padding: 0;
   border: none;
   overflow: visible;
@@ -53,18 +60,19 @@
   display: none;
 }
 
-/* article cards inside tabs */
+/* article cards inside tabs — same hover pattern as cards-article */
 .tabs-activity .tabs-activity-panel > div {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-light);
   border-radius: 20px;
   overflow: hidden;
   background: var(--background-color);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .tabs-activity .tabs-activity-panel > div:hover {
-  box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
-  border-color: var(--accent-color);
+  background-color: var(--cream-color);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
 }
 
 .tabs-activity .tabs-activity-panel > div picture img {

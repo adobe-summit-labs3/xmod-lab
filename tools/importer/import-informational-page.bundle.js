@@ -522,6 +522,7 @@ var CustomImportScript = (() => {
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
+      WebImporter.rules.adjustImageUrls(main, url);
       const path = WebImporter.FileUtils.sanitizePath(
         new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "")
       );

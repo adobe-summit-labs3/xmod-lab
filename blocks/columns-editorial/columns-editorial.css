@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: var(--gap-md);
   border-top: 1px solid var(--accent-color);
+  border-bottom: 1px solid var(--accent-color);
   padding: 32px 0;
 }
 
@@ -24,7 +25,7 @@
 
 .columns-editorial > div > div:last-child p {
   color: var(--text-color-muted);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .columns-editorial img {
@@ -35,7 +36,7 @@
   .columns-editorial > div {
     display: grid;
     grid-template-columns: 80px 1fr;
-    gap: var(--gap-xl);
+    gap: var(--gap-2xl);
     align-items: start;
   }
 

@@ -1,33 +1,38 @@
+/* Columns About - Text + image two-column layout with large gap */
 .columns-about > div {
   display: flex;
   flex-direction: column;
+  gap: var(--gap-lg);
 }
 
+/* text column */
+.columns-about > div > div:not(.columns-about-img-col) h2 {
+  margin-bottom: 12px;
+}
+
+.columns-about > div > div:not(.columns-about-img-col) p {
+  color: var(--text-color-muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* image column */
 .columns-about img {
   width: 100%;
-}
-
-.columns-about > div > div {
-  order: 1;
-}
-
-.columns-about > div > .columns-about-img-col {
-  order: 0;
-}
-
-.columns-about > div > .columns-about-img-col img {
+  height: auto;
+  object-fit: cover;
   display: block;
 }
 
 @media (width >= 900px) {
   .columns-about > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-3xl);
+    align-items: start;
   }
 
   .columns-about > div > div {
-    flex: 1;
     order: unset;
   }
 }

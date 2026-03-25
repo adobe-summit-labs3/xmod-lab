@@ -18,7 +18,7 @@
 
 .columns-sidebar > div > div:first-child li {
   padding: 12px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color-light);
   font-weight: 500;
 }
 
@@ -26,23 +26,23 @@
 .columns-sidebar > div > div:last-child {
   background-color: var(--dark-color);
   border-radius: 20px;
-  padding: var(--gap-lg);
+  padding: 32px;
   color: var(--background-color);
 }
 
 .columns-sidebar > div > div:last-child blockquote,
 .columns-sidebar > div > div:last-child p {
   color: var(--background-color);
-  font-size: 20px;
+  font-size: 24px;
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.4;
   margin: 0 0 var(--gap-md);
 }
 
 .columns-sidebar > div > div:last-child em {
   font-style: normal;
   color: var(--text-color-muted);
-  font-size: var(--body-font-size-s);
+  font-size: 14px;
 }
 
 .columns-sidebar img {
@@ -52,12 +52,8 @@
 @media (width >= 900px) {
   .columns-sidebar > div {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 2fr;
     gap: var(--gap-lg);
     align-items: start;
-  }
-
-  .columns-sidebar > div > div:last-child {
-    padding: 32px;
   }
 }
