@@ -190,14 +190,15 @@ See `PROJECT.md` for full project state (blocks, variants, pages, design tokens,
 
 This project uses **consolidated block families** with CSS variants (not separate block folders).
 - 10 block folders total: `hero`, `cards`, `columns`, `tabs`, `gallery`, `accordion-faq`, `ticker`, `header`, `footer`, `fragment`
-- Variants are CSS class compounds: `class="hero hero-full"`, `class="cards cards-article"`, etc.
+- Variants are CSS class compounds: `class="cards cards-article"`, `class="hero hero-article"`, etc.
+- The `hero` block base is the full-bleed overlay hero (no variant needed). Only `hero-article` is a variant.
 - Variant names **always start with the base block name**: `columns (columns-promo)` not `columns (promo)`
 - A single CSS file per block family contains base styles + all variant overrides
 - EDS loads `blocks/{base-name}/{base-name}.js` regardless of which variant is used
 
 ### CSS Patterns
 
-- **Variant specificity:** `.hero.hero-full { ... }` overrides base `.hero` via compound selector
+- **Variant specificity:** `.hero.hero-article { ... }` overrides base `.hero` via compound selector
 - **Container targeting for variants:** Use `:has()` — e.g., `.columns-wrapper:has(.columns-promo) { max-width: ... }`
 - **Consolidated files use** `/* stylelint-disable no-descending-specificity */` at the top — this is expected
 - **`moveInstrumentation` does not exist** in this project. Never import it from `scripts.js`.

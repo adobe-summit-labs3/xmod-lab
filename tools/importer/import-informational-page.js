@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 // PARSER IMPORTS - All parsers needed for the informational-page template
-import heroFullParser from './parsers/hero-full.js';
+import heroParser from './parsers/hero-full.js';
 import columnsAboutParser from './parsers/columns-about.js';
 import cardsFeatureParser from './parsers/cards-feature.js';
 import tabsTeamParser from './parsers/tabs-team.js';
@@ -24,7 +24,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'hero-full',
+      name: 'hero',
       instances: ['section.hero-section'],
     },
     {
@@ -58,7 +58,7 @@ const PAGE_TEMPLATE = {
       name: 'Hero',
       selector: 'section.hero-section',
       style: 'dark',
-      blocks: ['hero-full'],
+      blocks: ['hero'],
       defaultContent: [],
     },
     {
@@ -106,7 +106,7 @@ const PAGE_TEMPLATE = {
 
 // PARSER REGISTRY - Map parser names to functions
 const parsers = {
-  'hero-full': heroFullParser,
+  'hero': heroParser,
   'columns-about': columnsAboutParser,
   'cards-feature': cardsFeatureParser,
   'tabs-team': tabsTeamParser,

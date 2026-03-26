@@ -2,12 +2,12 @@
 /* global WebImporter */
 
 // PARSER IMPORTS - All parsers needed for the homepage template
-import heroFullParser from './parsers/hero-full.js';
+import heroParser from './parsers/hero-full.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import tabsActivityParser from './parsers/tabs-activity.js';
 import tickerParser from './parsers/ticker.js';
 import accordionFaqParser from './parsers/accordion-faq.js';
-import columnsEditorialParser from './parsers/columns-editorial.js';
+import columnsNumberedParser from './parsers/columns-numbered.js';
 import columnsGalleryParser from './parsers/columns-gallery.js';
 
 // TRANSFORMER IMPORTS - All transformers for WKND site
@@ -23,7 +23,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'hero-full',
+      name: 'hero',
       instances: ['section.hero-section.hero-section--full', 'section.hero-section'],
     },
     {
@@ -43,7 +43,7 @@ const PAGE_TEMPLATE = {
       instances: ['.faq-list'],
     },
     {
-      name: 'columns-editorial',
+      name: 'columns-numbered',
       instances: ['.editorial-index'],
     },
     {
@@ -57,7 +57,7 @@ const PAGE_TEMPLATE = {
       name: 'Hero',
       selector: 'section.hero-section.hero-section--full',
       style: 'dark',
-      blocks: ['hero-full'],
+      blocks: ['hero'],
       defaultContent: [],
     },
     {
@@ -105,7 +105,7 @@ const PAGE_TEMPLATE = {
       name: 'How We Work',
       selector: 'section.section.secondary-section:has(.editorial-index)',
       style: 'secondary',
-      blocks: ['columns-editorial'],
+      blocks: ['columns-numbered'],
       defaultContent: ['.section-heading h2'],
     },
     {
@@ -129,12 +129,12 @@ const PAGE_TEMPLATE = {
 
 // PARSER REGISTRY - Map parser names to functions
 const parsers = {
-  'hero-full': heroFullParser,
+  'hero': heroParser,
   'columns-featured': columnsFeaturedParser,
   'tabs-activity': tabsActivityParser,
   'ticker': tickerParser,
   'accordion-faq': accordionFaqParser,
-  'columns-editorial': columnsEditorialParser,
+  'columns-numbered': columnsNumberedParser,
   'columns-gallery': columnsGalleryParser,
 };
 

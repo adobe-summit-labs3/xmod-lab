@@ -8,7 +8,7 @@
       "description": "Homepage with hero, featured content, activity browser, stories gallery, FAQ, and onboarding sections",
       "blocks": [
         {
-          "name": "hero-full",
+          "name": "hero",
           "instances": ["section.hero-section.hero-section--full"]
         },
         {
@@ -28,7 +28,7 @@
           "instances": [".faq-list"]
         },
         {
-          "name": "columns-editorial",
+          "name": "columns-numbered",
           "instances": [".editorial-index"]
         },
         {
@@ -42,7 +42,7 @@
           "name": "Hero",
           "selector": "section.hero-section.hero-section--full",
           "style": "dark",
-          "blocks": ["hero-full"],
+          "blocks": ["hero"],
           "defaultContent": []
         },
         {
@@ -90,7 +90,7 @@
           "name": "How We Work",
           "selector": "section.section.secondary-section:has(.editorial-index)",
           "style": "secondary",
-          "blocks": ["columns-editorial"],
+          "blocks": ["columns-numbered"],
           "defaultContent": [".section-heading h2"]
         },
         {
@@ -122,7 +122,7 @@
       "description": "Category hub page with hero, featured spotlight, category cards/grid, educational content, and cross-promotion links",
       "blocks": [
         {
-          "name": "hero-full",
+          "name": "hero",
           "instances": ["section.hero-section.hero-section--full"]
         },
         {
@@ -134,7 +134,7 @@
           "instances": [".tab-container.tab-container--wide"]
         },
         {
-          "name": "columns-editorial",
+          "name": "columns-numbered",
           "instances": [".editorial-index"]
         },
         {
@@ -152,7 +152,7 @@
           "name": "Hero",
           "selector": "section.hero-section.hero-section--full",
           "style": "dark",
-          "blocks": ["hero-full"],
+          "blocks": ["hero"],
           "defaultContent": []
         },
         {
@@ -200,7 +200,7 @@
           "name": "Adventure by Skill Level",
           "selector": "section.section.secondary-section:has(.editorial-index)",
           "style": "secondary",
-          "blocks": ["columns-editorial", "columns-promo"],
+          "blocks": ["columns-numbered", "columns-promo"],
           "defaultContent": ["h2.section-heading"]
         },
         {
@@ -223,7 +223,7 @@
       "description": "Editorial section page with hero, featured story, editorial philosophy, and engagement CTAs",
       "blocks": [
         {
-          "name": "hero-full",
+          "name": "hero",
           "instances": ["section.hero-section"]
         },
         {
@@ -237,6 +237,10 @@
         {
           "name": "tabs-activity",
           "instances": [".tab-container.tab-container--wide"]
+        },
+        {
+          "name": "columns-numbered",
+          "instances": [".editorial-index"]
         }
       ],
       "sections": [
@@ -245,16 +249,24 @@
           "name": "Hero",
           "selector": "section.hero-section",
           "style": "dark",
-          "blocks": ["hero-full"],
+          "blocks": ["hero"],
           "defaultContent": []
         },
         {
           "id": "section-2",
           "name": "Statement",
-          "selector": "section.section.inverse-section:first-of-type",
+          "selector": "section.section.inverse-section:first-of-type:not(:has(.editorial-index))",
           "style": "dark",
           "blocks": [],
           "defaultContent": ["h2.h2-heading", "p.paragraph-xl"]
+        },
+        {
+          "id": "section-2b",
+          "name": "Numbered Principles",
+          "selector": "section.section:has(.editorial-index)",
+          "style": null,
+          "blocks": ["columns-numbered"],
+          "defaultContent": ["h2.section-heading", "h2.h2-heading"]
         },
         {
           "id": "section-3",
@@ -307,7 +319,7 @@
       "description": "Informational page with hero, structured content such as team profiles and FAQ categories",
       "blocks": [
         {
-          "name": "hero-full",
+          "name": "hero",
           "instances": ["section.hero-section"]
         },
         {
@@ -341,7 +353,7 @@
           "name": "Hero",
           "selector": "section.hero-section",
           "style": "dark",
-          "blocks": ["hero-full"],
+          "blocks": ["hero"],
           "defaultContent": []
         },
         {

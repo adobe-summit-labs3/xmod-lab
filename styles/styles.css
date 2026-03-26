@@ -304,13 +304,13 @@ button.button.primary {
   border-color: var(--dark-color);
   background-color: var(--dark-color);
   color: var(--background-color);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 a.button.primary:hover,
 button.button.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 6px 6px 0 var(--accent-color);
+  box-shadow: 5px 5px 0 var(--accent-color);
 }
 
 a.button.primary:active,
@@ -325,7 +325,7 @@ button.button.secondary {
   border-color: var(--dark-color);
   background-color: transparent;
   color: var(--dark-color);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 a.button.secondary:hover,
@@ -333,7 +333,7 @@ button.button.secondary:hover {
   background-color: var(--dark-color);
   color: var(--background-color);
   transform: translateY(-2px);
-  box-shadow: 6px 6px 0 var(--accent-color);
+  box-shadow: 5px 5px 0 var(--accent-color);
 }
 
 a.button.secondary:active,
@@ -350,13 +350,13 @@ button.button.accent {
   border-color: var(--accent-color);
   background-color: var(--accent-color);
   color: var(--dark-color);
-  box-shadow: 4px 4px 0 var(--dark-color);
+  box-shadow: 3px 3px 0 var(--dark-color);
 }
 
 a.button.accent:hover,
 button.button.accent:hover {
   transform: translateY(-2px);
-  box-shadow: 6px 6px 0 var(--dark-color);
+  box-shadow: 5px 5px 0 var(--dark-color);
 }
 
 a.button.accent:active,
@@ -450,14 +450,14 @@ main > .section.dark a.button.primary {
   border-color: var(--background-color);
   background-color: var(--background-color);
   color: var(--dark-color);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 /* dark section: ghost button uses white outline */
 main > .section.dark a.button.secondary {
   border-color: var(--background-color);
   color: var(--background-color);
-  box-shadow: 4px 4px 0 var(--accent-color);
+  box-shadow: 3px 3px 0 var(--accent-color);
 }
 
 main > .section.dark a.button.secondary:hover {
@@ -494,7 +494,7 @@ main > .section.accent a.button.primary {
   border-color: var(--dark-color);
   background-color: var(--dark-color);
   color: var(--background-color);
-  box-shadow: 4px 4px 0 var(--background-color);
+  box-shadow: 3px 3px 0 var(--background-color);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */

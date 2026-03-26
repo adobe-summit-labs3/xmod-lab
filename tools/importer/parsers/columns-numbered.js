@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 /**
- * Parser for columns-editorial variant.
+ * Parser for columns-numbered variant.
  * Base: columns. Source: https://gabrielwalt.github.io/wknd/index.html
  * Selector: .editorial-index
  * Generated: 2026-03-25
@@ -23,7 +23,7 @@ export default function parse(element, { document }) {
   });
 
   const block = WebImporter.Blocks.createBlock(document, {
-    name: 'Columns (columns-editorial)',
+    name: 'Columns (columns-numbered)',
     cells,
   });
   element.replaceWith(block);

@@ -72,7 +72,7 @@
 }
 
 /* ===== Columns Editorial variant ===== */
-.columns.columns-editorial > div {
+.columns.columns-numbered > div {
   gap: var(--gap-md);
   border-top: 1px solid var(--accent-color);
   border-bottom: 1px solid var(--accent-color);
@@ -80,7 +80,7 @@
 }
 
 /* number column */
-.columns.columns-editorial > div > div:first-child {
+.columns.columns-numbered > div > div:first-child {
   font-family: var(--heading-font-family);
   font-size: 48px;
   font-weight: 700;
@@ -90,24 +90,24 @@
 }
 
 /* content column */
-.columns.columns-editorial > div > div:last-child h3 {
+.columns.columns-numbered > div > div:last-child h3 {
   margin-bottom: var(--gap-md);
 }
 
-.columns.columns-editorial > div > div:last-child p {
+.columns.columns-numbered > div > div:last-child p {
   color: var(--text-color-muted);
   line-height: 1.7;
 }
 
 @media (width >= 900px) {
-  .columns.columns-editorial > div {
+  .columns.columns-numbered > div {
     display: grid;
     grid-template-columns: 80px 1fr;
     gap: var(--gap-2xl);
     align-items: start;
   }
 
-  .columns.columns-editorial > div > div:first-child {
+  .columns.columns-numbered > div > div:first-child {
     font-size: 56px;
   }
 }
@@ -173,10 +173,7 @@
   object-fit: cover;
 }
 
-/* read button with amber offset shadow */
-.columns.columns-featured a.button.primary {
-  box-shadow: 3px 3px 0 var(--accent-color);
-}
+/* read button — inherits global primary shadow */
 
 @media (width >= 900px) {
   .columns.columns-featured > div {

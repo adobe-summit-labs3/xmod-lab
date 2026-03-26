@@ -2,10 +2,10 @@
 /* global WebImporter */
 
 // PARSER IMPORTS - All parsers needed for the hub-landing-page template
-import heroFullParser from './parsers/hero-full.js';
+import heroParser from './parsers/hero-full.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import tabsActivityParser from './parsers/tabs-activity.js';
-import columnsEditorialParser from './parsers/columns-editorial.js';
+import columnsNumberedParser from './parsers/columns-numbered.js';
 import cardsArticleParser from './parsers/cards-article.js';
 import columnsPromoParser from './parsers/columns-promo.js';
 
@@ -25,7 +25,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'hero-full',
+      name: 'hero',
       instances: ['section.hero-section.hero-section--full', 'section.hero-section'],
     },
     {
@@ -37,7 +37,7 @@ const PAGE_TEMPLATE = {
       instances: ['.tab-container.tab-container--wide'],
     },
     {
-      name: 'columns-editorial',
+      name: 'columns-numbered',
       instances: ['.editorial-index'],
     },
     {
@@ -55,7 +55,7 @@ const PAGE_TEMPLATE = {
       name: 'Hero',
       selector: 'section.hero-section.hero-section--full',
       style: 'dark',
-      blocks: ['hero-full'],
+      blocks: ['hero'],
       defaultContent: [],
     },
     {
@@ -103,7 +103,7 @@ const PAGE_TEMPLATE = {
       name: 'Adventure by Skill Level',
       selector: 'section.section.secondary-section:has(.editorial-index)',
       style: 'secondary',
-      blocks: ['columns-editorial', 'columns-promo'],
+      blocks: ['columns-numbered', 'columns-promo'],
       defaultContent: ['h2.section-heading'],
     },
     {
@@ -119,10 +119,10 @@ const PAGE_TEMPLATE = {
 
 // PARSER REGISTRY - Map parser names to functions
 const parsers = {
-  'hero-full': heroFullParser,
+  'hero': heroParser,
   'columns-featured': columnsFeaturedParser,
   'tabs-activity': tabsActivityParser,
-  'columns-editorial': columnsEditorialParser,
+  'columns-numbered': columnsNumberedParser,
   'cards-article': cardsArticleParser,
   'columns-promo': columnsPromoParser,
 };

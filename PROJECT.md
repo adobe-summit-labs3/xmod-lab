@@ -12,9 +12,9 @@ All variants share a single CSS/JS file under the base block folder.
 
 | Block | Variants | CSS Notes |
 |-------|----------|-----------|
-| `hero` | `hero-full`, `hero-article` | Full-bleed overlay hero. `hero-full` = landing pages, `hero-article` = blog posts with breadcrumbs. No-image fallback via `.no-image` class. |
+| `hero` | `hero-article` | Full-bleed overlay hero. Base (no variant) = landing pages with eyebrow, gradient overlay, CTA buttons. `hero-article` = blog posts with breadcrumbs, tag pills, author avatar. |
 | `cards` | `cards-article`, `cards-feature` | `cards-article` = image+body grid with hover effects. `cards-feature` = glass text-only cards (dark section). Shared internal classes: `cards-card-image`, `cards-card-body`. |
-| `columns` | `columns-about`, `columns-editorial`, `columns-featured`, `columns-promo`, `columns-sidebar` | 5 variants in one file. `columns-promo` uses `:has()` for narrow container. `columns-sidebar` has pull-quote dark panel. Shared internal class: `columns-img-col`. |
+| `columns` | `columns-about`, `columns-numbered`, `columns-featured`, `columns-promo`, `columns-sidebar` | 5 variants in one file. `columns-promo` uses `:has()` for narrow container. `columns-sidebar` has pull-quote dark panel. Shared internal class: `columns-img-col`. |
 | `tabs` | `tabs-team` | Base = activity browser (card grid panels). `tabs-team` = profile layout with circular avatars. Generic classes: `tabs-list`, `tabs-panel`, `tabs-tab`. |
 | `gallery` | _(none)_ | Standalone block (renamed from columns-gallery). Photo grid. |
 | `accordion-faq` | _(none)_ | Uses native `<details>/<summary>`. |
@@ -26,12 +26,12 @@ All variants share a single CSS/JS file under the base block folder.
 ### Block variant CSS selectors
 
 ```
-.hero.hero-full { ... }           /* compound selector for variant */
-.hero.hero-article { ... }
+.hero { ... }                     /* base hero (full-bleed overlay) — no variant needed */
+.hero.hero-article { ... }        /* variant for blog article pages */
 .cards.cards-article { ... }
 .cards.cards-feature { ... }
 .columns.columns-about { ... }
-.columns.columns-editorial { ... }
+.columns.columns-numbered { ... }
 .columns.columns-featured { ... }
 .columns.columns-promo { ... }
 .columns.columns-sidebar { ... }
@@ -120,28 +120,28 @@ Primary (black + amber shadow), Ghost (outline + amber shadow), Accent (amber + 
 ### Landing pages (import-homepage.js)
 | Page | Blocks |
 |------|--------|
-| `index` | hero-full, columns-featured, tabs, ticker, columns-editorial, gallery, accordion-faq |
+| `index` | hero, columns-featured, tabs, ticker, columns-numbered, gallery, accordion-faq |
 
 ### Hub/landing pages (import-hub-landing-page.js)
 | Page | Blocks |
 |------|--------|
-| `adventures` | hero-full, columns-featured, tabs, columns-editorial, cards-article, columns-promo |
-| `expeditions` | hero-full, columns-editorial, tabs, cards-article, columns-promo |
-| `destinations` | hero-full, columns-featured, columns-editorial, cards-article, columns-promo |
-| `gear` | hero-full, columns-featured, tabs, columns-editorial, cards-article |
+| `adventures` | hero, columns-featured, tabs, columns-numbered, cards-article, columns-promo |
+| `expeditions` | hero, columns-numbered, tabs, cards-article, columns-promo |
+| `destinations` | hero, columns-featured, columns-numbered, cards-article, columns-promo |
+| `gear` | hero, columns-featured, tabs, columns-numbered, cards-article |
 
 ### Editorial/section pages (import-editorial-section-page.js)
 | Page | Blocks |
 |------|--------|
-| `field-notes` | hero-full, columns-featured, tabs, columns-promo |
-| `community` | hero-full, columns-featured |
-| `sustainability` | hero-full, columns-featured |
+| `field-notes` | hero, columns-featured, tabs, columns-promo |
+| `community` | hero, columns-featured |
+| `sustainability` | hero, columns-numbered, columns-featured |
 
 ### Informational pages (import-informational-page.js)
 | Page | Blocks |
 |------|--------|
-| `about` | hero-full, columns-about, cards-feature, tabs-team, cards-article |
-| `faq` | hero-full, accordion-faq, columns-promo, cards-article |
+| `about` | hero, columns-about, cards-feature, tabs-team, cards-article |
+| `faq` | hero, accordion-faq, columns-promo, cards-article |
 
 ### Blog articles (import-blog-article.js)
 | Page | Blocks |
@@ -167,15 +167,15 @@ Primary (black + amber shadow), Ghost (outline + amber shadow), Accent (amber + 
 | `import-blog-article.js` | blog-article | 6 blog posts |
 
 ### Parsers (tools/importer/parsers/) — 14 files
-`hero-full.js`, `hero-article.js`, `columns-featured.js`, `columns-editorial.js`, `columns-gallery.js`, `columns-about.js`, `columns-sidebar.js`, `columns-promo.js`, `cards-article.js`, `cards-feature.js`, `tabs-activity.js`, `tabs-team.js`, `accordion-faq.js`, `ticker.js`
+`hero-full.js`, `hero-article.js`, `columns-featured.js`, `columns-numbered.js`, `columns-gallery.js`, `columns-about.js`, `columns-sidebar.js`, `columns-promo.js`, `cards-article.js`, `cards-feature.js`, `tabs-activity.js`, `tabs-team.js`, `accordion-faq.js`, `ticker.js`
 
 Parser output names (what goes into content HTML):
-- `Hero (hero-full)` → `class="hero hero-full"`
+- `Hero` → `class="hero"` (base hero, no variant — used on all landing/hub/info pages)
 - `Hero (hero-article)` → `class="hero hero-article"`
 - `Cards (cards-article)` → `class="cards cards-article"`
 - `Cards (cards-feature)` → `class="cards cards-feature"`
 - `Columns (columns-about)` → `class="columns columns-about"`
-- `Columns (columns-editorial)` → `class="columns columns-editorial"`
+- `Columns (columns-numbered)` → `class="columns columns-numbered"`
 - `Columns (columns-featured)` → `class="columns columns-featured"`
 - `Columns (columns-promo)` → `class="columns columns-promo"`
 - `Columns (columns-sidebar)` → `class="columns columns-sidebar"`

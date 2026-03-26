@@ -49,7 +49,7 @@ var CustomImportScript = (() => {
       cells.push([contentCell]);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Hero (hero-full)",
+      name: "Hero",
       cells
     });
     element.replaceWith(block);
@@ -112,7 +112,7 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/columns-editorial.js
+  // tools/importer/parsers/columns-numbered.js
   function parse4(element, { document: document2 }) {
     const items = element.querySelectorAll(".editorial-index-item");
     const cells = [];
@@ -122,7 +122,7 @@ var CustomImportScript = (() => {
       cells.push([number || "", content || ""]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Columns (columns-editorial)",
+      name: "Columns (columns-numbered)",
       cells
     });
     element.replaceWith(block);
@@ -300,7 +300,7 @@ var CustomImportScript = (() => {
     ],
     blocks: [
       {
-        name: "hero-full",
+        name: "hero",
         instances: ["section.hero-section.hero-section--full", "section.hero-section"]
       },
       {
@@ -312,7 +312,7 @@ var CustomImportScript = (() => {
         instances: [".tab-container.tab-container--wide"]
       },
       {
-        name: "columns-editorial",
+        name: "columns-numbered",
         instances: [".editorial-index"]
       },
       {
@@ -330,7 +330,7 @@ var CustomImportScript = (() => {
         name: "Hero",
         selector: "section.hero-section.hero-section--full",
         style: "dark",
-        blocks: ["hero-full"],
+        blocks: ["hero"],
         defaultContent: []
       },
       {
@@ -378,7 +378,7 @@ var CustomImportScript = (() => {
         name: "Adventure by Skill Level",
         selector: "section.section.secondary-section:has(.editorial-index)",
         style: "secondary",
-        blocks: ["columns-editorial", "columns-promo"],
+        blocks: ["columns-numbered", "columns-promo"],
         defaultContent: ["h2.section-heading"]
       },
       {
@@ -392,10 +392,10 @@ var CustomImportScript = (() => {
     ]
   };
   var parsers = {
-    "hero-full": parse,
+    "hero": parse,
     "columns-featured": parse2,
     "tabs-activity": parse3,
-    "columns-editorial": parse4,
+    "columns-numbered": parse4,
     "cards-article": parse5,
     "columns-promo": parse6
   };

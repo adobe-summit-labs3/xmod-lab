@@ -49,7 +49,7 @@ var CustomImportScript = (() => {
       cells.push([contentCell]);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Hero (hero-full)",
+      name: "Hero",
       cells
     });
     element.replaceWith(block);
@@ -168,7 +168,7 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/columns-editorial.js
+  // tools/importer/parsers/columns-numbered.js
   function parse6(element, { document: document2 }) {
     const items = element.querySelectorAll(".editorial-index-item");
     const cells = [];
@@ -178,7 +178,7 @@ var CustomImportScript = (() => {
       cells.push([number || "", content || ""]);
     });
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Columns (columns-editorial)",
+      name: "Columns (columns-numbered)",
       cells
     });
     element.replaceWith(block);
@@ -271,7 +271,7 @@ var CustomImportScript = (() => {
     ],
     blocks: [
       {
-        name: "hero-full",
+        name: "hero",
         instances: ["section.hero-section.hero-section--full", "section.hero-section"]
       },
       {
@@ -291,7 +291,7 @@ var CustomImportScript = (() => {
         instances: [".faq-list"]
       },
       {
-        name: "columns-editorial",
+        name: "columns-numbered",
         instances: [".editorial-index"]
       },
       {
@@ -305,7 +305,7 @@ var CustomImportScript = (() => {
         name: "Hero",
         selector: "section.hero-section.hero-section--full",
         style: "dark",
-        blocks: ["hero-full"],
+        blocks: ["hero"],
         defaultContent: []
       },
       {
@@ -353,7 +353,7 @@ var CustomImportScript = (() => {
         name: "How We Work",
         selector: "section.section.secondary-section:has(.editorial-index)",
         style: "secondary",
-        blocks: ["columns-editorial"],
+        blocks: ["columns-numbered"],
         defaultContent: [".section-heading h2"]
       },
       {
@@ -375,12 +375,12 @@ var CustomImportScript = (() => {
     ]
   };
   var parsers = {
-    "hero-full": parse,
+    "hero": parse,
     "columns-featured": parse2,
     "tabs-activity": parse3,
     "ticker": parse4,
     "accordion-faq": parse5,
-    "columns-editorial": parse6,
+    "columns-numbered": parse6,
     "columns-gallery": parse7
   };
   var transformers = [

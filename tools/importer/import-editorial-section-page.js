@@ -2,10 +2,11 @@
 /* global WebImporter */
 
 // PARSER IMPORTS - All parsers needed for the editorial-section-page template
-import heroFullParser from './parsers/hero-full.js';
+import heroParser from './parsers/hero-full.js';
 import columnsFeaturedParser from './parsers/columns-featured.js';
 import columnsPromoParser from './parsers/columns-promo.js';
 import tabsActivityParser from './parsers/tabs-activity.js';
+import columnsNumberedParser from './parsers/columns-numbered.js';
 
 // TRANSFORMER IMPORTS - All transformers for WKND site
 import wkndCleanupTransformer from './transformers/wknd-cleanup.js';
@@ -22,7 +23,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'hero-full',
+      name: 'hero',
       instances: ['section.hero-section'],
     },
     {
@@ -37,6 +38,10 @@ const PAGE_TEMPLATE = {
       name: 'tabs-activity',
       instances: ['.tab-container.tab-container--wide'],
     },
+    {
+      name: 'columns-numbered',
+      instances: ['.editorial-index'],
+    },
   ],
   sections: [
     {
@@ -44,16 +49,24 @@ const PAGE_TEMPLATE = {
       name: 'Hero',
       selector: 'section.hero-section',
       style: 'dark',
-      blocks: ['hero-full'],
+      blocks: ['hero'],
       defaultContent: [],
     },
     {
       id: 'section-2',
       name: 'Statement',
-      selector: 'section.section.inverse-section:first-of-type',
+      selector: 'section.section.inverse-section:first-of-type:not(:has(.editorial-index))',
       style: 'dark',
       blocks: [],
       defaultContent: ['h2.h2-heading', 'p.paragraph-xl'],
+    },
+    {
+      id: 'section-2b',
+      name: 'Numbered Principles',
+      selector: 'section.section:has(.editorial-index)',
+      style: null,
+      blocks: ['columns-numbered'],
+      defaultContent: ['h2.section-heading', 'h2.h2-heading'],
     },
     {
       id: 'section-3',
@@ -100,10 +113,11 @@ const PAGE_TEMPLATE = {
 
 // PARSER REGISTRY - Map parser names to functions
 const parsers = {
-  'hero-full': heroFullParser,
+  'hero': heroParser,
   'columns-featured': columnsFeaturedParser,
   'columns-promo': columnsPromoParser,
   'tabs-activity': tabsActivityParser,
+  'columns-numbered': columnsNumberedParser,
 };
 
 // TRANSFORMER REGISTRY

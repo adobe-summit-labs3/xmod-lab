@@ -1,25 +1,8 @@
 var CustomImportScript = (() => {
   var __defProp = Object.defineProperty;
-  var __defProps = Object.defineProperties;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a, b) => {
-    for (var prop in b || (b = {}))
-      if (__hasOwnProp.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b)) {
-        if (__propIsEnum.call(b, prop))
-          __defNormalProp(a, prop, b[prop]);
-      }
-    return a;
-  };
-  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -66,7 +49,7 @@ var CustomImportScript = (() => {
       cells.push([contentCell]);
     }
     const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Hero (hero-full)",
+      name: "Hero",
       cells
     });
     element.replaceWith(block);
@@ -176,6 +159,22 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
+  // tools/importer/parsers/columns-numbered.js
+  function parse5(element, { document: document2 }) {
+    const items = element.querySelectorAll(".editorial-index-item");
+    const cells = [];
+    items.forEach((item) => {
+      const number = item.querySelector(".editorial-index-number");
+      const content = item.querySelector(":scope > div");
+      cells.push([number || "", content || ""]);
+    });
+    const block = WebImporter.Blocks.createBlock(document2, {
+      name: "Columns (columns-numbered)",
+      cells
+    });
+    element.replaceWith(block);
+  }
+
   // tools/importer/transformers/wknd-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -247,7 +246,7 @@ var CustomImportScript = (() => {
     ],
     blocks: [
       {
-        name: "hero-full",
+        name: "hero",
         instances: ["section.hero-section"]
       },
       {
@@ -261,6 +260,10 @@ var CustomImportScript = (() => {
       {
         name: "tabs-activity",
         instances: [".tab-container.tab-container--wide"]
+      },
+      {
+        name: "columns-numbered",
+        instances: [".editorial-index"]
       }
     ],
     sections: [
@@ -269,16 +272,24 @@ var CustomImportScript = (() => {
         name: "Hero",
         selector: "section.hero-section",
         style: "dark",
-        blocks: ["hero-full"],
+        blocks: ["hero"],
         defaultContent: []
       },
       {
         id: "section-2",
         name: "Statement",
-        selector: "section.section.inverse-section:first-of-type",
+        selector: "section.section.inverse-section:first-of-type:not(:has(.editorial-index))",
         style: "dark",
         blocks: [],
         defaultContent: ["h2.h2-heading", "p.paragraph-xl"]
+      },
+      {
+        id: "section-2b",
+        name: "Numbered Principles",
+        selector: "section.section:has(.editorial-index)",
+        style: null,
+        blocks: ["columns-numbered"],
+        defaultContent: ["h2.section-heading", "h2.h2-heading"]
       },
       {
         id: "section-3",
@@ -323,19 +334,21 @@ var CustomImportScript = (() => {
     ]
   };
   var parsers = {
-    "hero-full": parse,
+    "hero": parse,
     "columns-featured": parse2,
     "columns-promo": parse3,
-    "tabs-activity": parse4
+    "tabs-activity": parse4,
+    "columns-numbered": parse5
   };
   var transformers = [
     transform,
     ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
-    const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
+    const enhancedPayload = {
+      ...payload,
       template: PAGE_TEMPLATE
-    });
+    };
     transformers.forEach((transformerFn) => {
       try {
         transformerFn.call(null, hookName, element, enhancedPayload);
