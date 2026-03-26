@@ -90,7 +90,10 @@ function buildMegamenuPanel(navItem) {
     const articleParent = secondList.querySelector(':scope > li');
     if (articleParent) {
       // Extract label text (text before nested ul)
-      const labelText = articleParent.childNodes[0]?.textContent?.trim();
+      // Get label text (DA wraps in <p>, handle both cases)
+      const labelEl = articleParent.querySelector(':scope > p') || articleParent.querySelector(':scope > span');
+      const labelText = labelEl?.textContent?.trim()
+        || [...articleParent.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim())?.textContent.trim();
       if (labelText) {
         const label = document.createElement('p');
         label.className = 'nav-megamenu-label';
@@ -184,7 +187,11 @@ export default async function decorate(block) {
       const hasSubmenu = item.querySelector('ul');
       if (hasSubmenu) {
         // Get the trigger label (first text node)
-        const label = item.childNodes[0]?.textContent?.trim() || '';
+        // Get label from first element child (DA wraps text in <p>, skip whitespace nodes)
+        const labelEl = item.querySelector(':scope > p') || item.querySelector(':scope > span');
+        const label = labelEl?.textContent?.trim()
+          || [...item.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim())?.textContent.trim()
+          || '';
 
         const trigger = document.createElement('button');
         trigger.className = 'nav-megamenu-trigger';

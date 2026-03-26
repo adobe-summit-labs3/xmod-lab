@@ -557,6 +557,100 @@ main .section.highlight {
   margin-top: -8px;
 }
 
+/* Button group — side-by-side buttons */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.button-group .button-wrapper {
+  margin: 0;
+}
+
+/* Text link style — for "Full FAQ", "Field Notes" etc. */
+a.text-link {
+  display: inline-block;
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent-color);
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+a.text-link:hover {
+  text-decoration: underline;
+}
+
+/* In dark sections, text-links should be white */
+main > .section.dark a.text-link {
+  color: var(--background-color);
+}
+
+/* Subsection overrides — visually break out of parent dark section */
+.subsection {
+  margin: 0 calc(-1 * max((100vw - 1200px) / 2, 24px));
+  padding: 48px max((100vw - 1200px) / 2, 24px);
+}
+
+.subsection-default {
+  background-color: var(--background-color);
+}
+
+.subsection-default h2 {
+  color: var(--heading-color, var(--text-color)) !important;
+}
+
+.subsection-default p {
+  color: var(--text-color) !important;
+}
+
+.subsection-default a.button.primary {
+  border-color: var(--dark-color) !important;
+  background-color: var(--dark-color) !important;
+  color: var(--background-color) !important;
+  box-shadow: 3px 3px 0 var(--accent-color) !important;
+}
+
+.subsection-default a:any-link:not(.button) {
+  color: var(--accent-color) !important;
+}
+
+.subsection-secondary {
+  background-color: var(--light-color);
+}
+
+.subsection-secondary h2 {
+  color: var(--heading-color, var(--text-color)) !important;
+}
+
+.subsection-secondary p {
+  color: var(--text-color) !important;
+}
+
+/* Quick Answers heading + FAQ link side by side */
+.subsection-default > .default-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+@media (width >= 900px) {
+  .subsection {
+    margin: 0 calc(-1 * max((100vw - 1200px) / 2, 32px));
+    padding: 64px max((100vw - 1200px) / 2, 32px);
+  }
+}
+
 /* reduced motion — accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,

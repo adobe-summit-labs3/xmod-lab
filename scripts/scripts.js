@@ -157,6 +157,107 @@ async function loadEager(doc) {
 }
 
 /**
+ * Fixes button variants and groups adjacent button-wrappers.
+ * Runs after sections are loaded so all buttons are in the DOM.
+ */
+function decorateButtonVariants() {
+  // 1. In dark and accent sections, make the second button secondary
+  document.querySelectorAll('main > .section.dark, main > .section.accent').forEach((section) => {
+    const wrappers = [...section.querySelectorAll('.default-content-wrapper')];
+    wrappers.forEach((wrapper) => {
+      const btnWrappers = [...wrapper.querySelectorAll(':scope > p.button-wrapper')];
+      // Second button in a group → secondary
+      for (let i = 1; i < btnWrappers.length; i += 1) {
+        const prevWrapper = btnWrappers[i - 1];
+        // Check if this wrapper immediately follows the previous one
+        if (btnWrappers[i].previousElementSibling === prevWrapper) {
+          const btn = btnWrappers[i].querySelector('a.button.primary');
+          if (btn) {
+            btn.classList.remove('primary');
+            btn.classList.add('secondary');
+          }
+        }
+      }
+    });
+  });
+
+  // 2. Convert "Full FAQ" and "Field Notes" buttons to text-links
+  document.querySelectorAll('a.button').forEach((btn) => {
+    const text = btn.textContent.trim();
+    if (text === 'Full FAQ' || text === 'Field Notes') {
+      btn.classList.remove('button', 'primary', 'secondary');
+      btn.classList.add('text-link');
+      const wrapper = btn.closest('p.button-wrapper');
+      if (wrapper) {
+        wrapper.classList.remove('button-wrapper');
+      }
+    }
+  });
+
+  // 3. Group adjacent button-wrappers into a flex container
+  document.querySelectorAll('p.button-wrapper').forEach((wrapper) => {
+    // Skip if already in a group
+    if (wrapper.parentElement.classList.contains('button-group')) return;
+
+    const next = wrapper.nextElementSibling;
+    if (next && next.classList.contains('button-wrapper')) {
+      const group = document.createElement('div');
+      group.className = 'button-group';
+      wrapper.parentNode.insertBefore(group, wrapper);
+      group.append(wrapper);
+      // Collect all consecutive button-wrappers
+      let sibling = group.nextElementSibling;
+      while (sibling && sibling.classList.contains('button-wrapper')) {
+        const nextSibling = sibling.nextElementSibling;
+        group.append(sibling);
+        sibling = nextSibling;
+      }
+    }
+  });
+}
+
+/**
+ * Splits the combined dark section so "Quick Answers" and "How We Work"
+ * get their own visual backgrounds instead of inheriting the dark section.
+ */
+function splitDarkSection() {
+  const darkSection = document.querySelector('main > .section.dark.accordion-faq-container');
+  if (!darkSection) return;
+
+  const accWrapper = darkSection.querySelector('.accordion-faq-wrapper');
+  const colsWrapper = darkSection.querySelector('.columns-wrapper');
+  if (!accWrapper || !colsWrapper) return;
+
+  // Find heading wrappers by text content
+  const allDCW = darkSection.querySelectorAll('.default-content-wrapper');
+  let qaHeadingDCW = null;
+  let hwwHeadingDCW = null;
+  allDCW.forEach((dcw) => {
+    const h2 = dcw.querySelector('h2');
+    if (h2 && h2.textContent.includes('Quick Answers')) qaHeadingDCW = dcw;
+    if (h2 && h2.textContent.includes('How We Work')) hwwHeadingDCW = dcw;
+  });
+
+  // Create "Quick Answers" subsection (white/default background)
+  if (qaHeadingDCW) {
+    const qaSubsection = document.createElement('div');
+    qaSubsection.className = 'subsection subsection-default';
+    darkSection.insertBefore(qaSubsection, qaHeadingDCW);
+    qaSubsection.append(qaHeadingDCW);
+    qaSubsection.append(accWrapper);
+  }
+
+  // Create "How We Work" subsection (light/secondary background)
+  if (hwwHeadingDCW) {
+    const hwwSubsection = document.createElement('div');
+    hwwSubsection.className = 'subsection subsection-secondary';
+    darkSection.insertBefore(hwwSubsection, hwwHeadingDCW);
+    hwwSubsection.append(hwwHeadingDCW);
+    hwwSubsection.append(colsWrapper);
+  }
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -166,6 +267,8 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
 
+  splitDarkSection();
+
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
@@ -174,6 +277,8 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  decorateButtonVariants();
 }
 
 /**
