@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity -- consolidated variant file */
+
 /* Cards block — base + variants (cards-article, cards-feature) */
 
 /* ===== Base cards ===== */
@@ -51,6 +53,13 @@
 
 .cards.cards-article .cards-card-image {
   overflow: hidden;
+  line-height: 0;
+}
+
+/* handle img inside <p> (no <picture> wrapper) */
+.cards.cards-article .cards-card-image p {
+  margin: 0;
+  line-height: 0;
 }
 
 .cards.cards-article > ul > li img {
@@ -66,10 +75,9 @@
   margin: 0;
 }
 
-/* tag pill */
-.cards.cards-article .cards-card-body em {
+/* tag pill — first paragraph in card body */
+.cards.cards-article .cards-card-body > p:first-child {
   display: inline-block;
-  font-style: normal;
   font-family: var(--heading-font-family);
   font-size: var(--tag-font-size);
   font-weight: 600;
@@ -81,6 +89,14 @@
   width: fit-content;
 }
 
+/* secondary tag text — em wrapper (region: Americas, Europe) */
+.cards.cards-article .cards-card-body em {
+  font-style: normal;
+  color: var(--text-color-muted);
+  font-size: var(--body-font-size-s);
+}
+
+.cards.cards-article .cards-card-body h3,
 .cards.cards-article .cards-card-body h5 {
   margin: 0;
 }
@@ -91,9 +107,15 @@
   margin: 0;
 }
 
-.cards.cards-article .cards-card-body a {
+/* "Read More" link */
+.cards.cards-article .cards-card-body > p:last-child a {
+  font-family: var(--heading-font-family);
   font-size: var(--body-font-size-xs);
-  color: var(--text-color-muted);
+  font-weight: 700;
+  letter-spacing: 0.84px;
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* dark section: glass card variant */
@@ -133,7 +155,6 @@
 }
 
 /* ===== Cards Feature variant ===== */
-/* stylelint-disable no-descending-specificity -- variant selectors follow base */
 .cards.cards-feature > ul {
   grid-template-columns: 1fr;
   gap: var(--gap-lg);

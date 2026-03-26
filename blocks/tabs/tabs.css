@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity -- consolidated variant file */
+
 /* Tabs block — base (activity) + variant (tabs-team) */
 
 /* ===== Base tabs (activity browser) ===== */
@@ -77,11 +79,77 @@
   box-shadow: var(--card-hover-shadow);
 }
 
-.tabs .tabs-panel > div picture img {
+/* card image — handle both <picture> and <p><a><img> structures */
+.tabs .tabs-panel > div > p:first-child {
+  margin: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.tabs .tabs-panel > div > p:first-child img {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
+}
+
+.tabs .tabs-panel > div picture img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+/* card body — content below image */
+.tabs .tabs-panel > div > p:nth-child(2),
+.tabs .tabs-panel > div > h4,
+.tabs .tabs-panel > div > p:nth-child(n+3) {
+  padding: 0 16px;
+}
+
+/* tag pill — second paragraph (after image) */
+.tabs .tabs-panel > div > p:nth-child(2) {
+  display: inline-block;
+  margin: 16px 16px 8px;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--tag-font-size);
+  font-weight: 600;
+  letter-spacing: var(--tag-letter-spacing);
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  border-radius: var(--button-border-radius);
+}
+
+.tabs .tabs-panel > div > p:nth-child(2) a {
+  display: block;
+  padding: var(--tag-padding);
+  color: var(--background-color);
+  text-decoration: none;
+}
+
+/* card title */
+.tabs .tabs-panel > div > h4 {
+  margin: 4px 16px 8px;
+  padding: 0;
+}
+
+.tabs .tabs-panel > div > h4 a {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+/* card description */
+.tabs .tabs-panel > div > p:last-child {
+  margin: 0 16px 16px;
+  padding: 0;
+  color: var(--text-color-muted);
+  font-size: 14px;
+}
+
+.tabs .tabs-panel > div > p:last-child a {
+  color: var(--text-color-muted);
+  text-decoration: none;
 }
 
 @media (width >= 600px) {
@@ -141,6 +209,15 @@
   box-shadow: none;
 }
 
+/* avatar column */
+.tabs.tabs-team .tabs-team-avatar {
+  line-height: 0;
+}
+
+.tabs.tabs-team .tabs-team-avatar p {
+  margin: 0;
+}
+
 /* profile avatar */
 .tabs.tabs-team .tabs-panel img {
   width: 128px;
@@ -148,7 +225,6 @@
   border-radius: 50%;
   border: 3px solid var(--accent-color);
   object-fit: cover;
-  flex-shrink: 0;
 }
 
 /* profile name */
@@ -163,18 +239,20 @@
   font-size: 14px;
 }
 
-.tabs.tabs-team .tabs-panel h3 + p em {
-  font-style: normal;
-  color: var(--text-color-muted);
-  font-size: 14px;
-}
-
 @media (width >= 900px) {
-  /* desktop: profile image left, text right */
+  /* desktop: avatar left, text right */
   .tabs.tabs-team .tabs-panel > div {
-    display: grid;
-    grid-template-columns: 11rem 1fr;
+    display: flex;
+    flex-direction: row;
     gap: var(--gap-lg);
     align-items: start;
+  }
+
+  .tabs.tabs-team .tabs-team-avatar {
+    flex-shrink: 0;
+  }
+
+  .tabs.tabs-team .tabs-team-text {
+    flex: 1;
   }
 }

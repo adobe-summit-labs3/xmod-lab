@@ -230,9 +230,16 @@ EDS decorates links as buttons based on their wrapper element:
 - `<p><em><a>text</a></em></p>` → `a.button.secondary`
 - `<p><a>text</a></p>` → **No button class** (stays as plain link)
 
-If imported content has bare `<a>` links that should render as buttons, you have two options:
+If imported content has bare `<a>` links that should render as buttons, you have three options:
 1. **Fix the import parser** to wrap links in `<strong>` or `<em>`
 2. **Add block-specific CSS** to style the link as a button (e.g., targeting `.block > div > div > p:last-child > a:any-link`)
+3. **Auto-promote in styled sections:** This project's `decorateButtons()` auto-promotes standalone `<p><a>` links to `.button.primary` in `.dark` and `.accent` sections (when `p.textContent === a.textContent`, meaning no surrounding text)
+
+### Styled Section Auto-Button Promotion
+
+`decorateButtons()` in `scripts.js` promotes bare standalone links to `.button.primary` in `.dark` and `.accent` sections. The key check `p.textContent.trim() !== text` ensures inline links in mixed-text paragraphs are NOT affected. This replaces the previous CSS-only `a:only-child` approach which incorrectly matched inline links (CSS `:only-child` ignores text nodes).
+
+**Warning:** CSS `:only-child` ignores text nodes. `p > a:only-child` matches `<p>text <a>link</a> text</p>` because the `<a>` is the only ELEMENT child. Never use `:only-child` to detect "link is the only content" — use JavaScript `p.textContent.trim() === a.textContent.trim()` instead.
 
 ### CSS Selector Adaptation for EDS Content
 
@@ -256,6 +263,43 @@ Shadow colors vary by variant: Primary uses `var(--accent-color)`, Accent uses `
 When block items need borders between them (e.g., columns-numbered), avoid `border-top` + `border-bottom` on all items — this creates double borders (2px visual) between adjacent items. Instead:
 - `border-top` on all items
 - `border-bottom` only on `:last-child`
+
+### Navigation (header.js) — Megamenu Pattern
+
+The nav uses EDS fragment loading (`/nav.plain.html`). Content structure:
+- **Section 1 (brand):** `<p><a>WKND Adventures</a></p>` → brand link with SVG logo
+- **Section 2 (sections):** Nested `<ul>` with `<br>`-separated descriptions → megamenu panels
+- **Section 3 (tools):** `<p><strong><a>Subscribe</a></strong></p>` → styled pill button
+
+**Megamenu panel detection:**
+- Single nested `<ul>` → grid layout (3-col for Explore, 4-col for Info)
+- Two sibling `<ul>` → Stories layout (page links left + article grid right)
+- Column count mapped to CSS classes: `{ 3: 'three', 4: 'four' }` → `nav-megamenu-grid-three`, `nav-megamenu-grid-four`
+
+**Megamenu interactions:**
+- Desktop: hover with 200ms grace period (`setTimeout` on mouseleave), click toggle
+- Mobile: hamburger toggle, click toggle for panels
+- Escape key closes all panels
+- Click outside nav closes panels
+
+### Footer (footer.js) — Section Labeling
+
+Footer fragment sections get CSS classes for targeting:
+- `sections[0]` → `.footer-top` (4-column grid)
+- `sections[last]` → `.footer-bottom` (copyright bar)
+
+Brand column restructuring: first `<a>` in `.footer-top > div:first-child` gets SVG logo + text.
+
+### Nav/Footer Content File Location
+
+Nav and footer content files MUST be at the **workspace root** (`/workspace/nav.plain.html`, `/workspace/footer.plain.html`), NOT in `/content/`. The AEM CLI serves workspace root `.plain.html` at `/{name}.plain.html`, which is the path `loadFragment()` fetches.
+
+### Gallery Section CSS Pattern
+
+When a gallery block is in a section with heading + standalone image:
+- `.gallery-container > .default-content-wrapper:first-child` → flex row for heading + button
+- `.gallery-container > .default-content-wrapper:last-child` → full-width image styling
+- `.gallery > div:last-child:not(:first-child)` → wide row only when there are multiple rows (`:not(:first-child)` prevents override when the gallery has a single row)
 
 ### Import Infrastructure
 

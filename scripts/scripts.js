@@ -95,7 +95,10 @@ function decorateButtons(main) {
     // require authored formatting for buttonization
     const strong = a.closest('strong');
     const em = a.closest('em');
-    if (!strong && !em) return;
+
+    // In styled sections (dark/accent), standalone links become buttons
+    const styledSection = p.closest('.section.dark, .section.accent');
+    if (!strong && !em && !styledSection) return;
 
     p.className = 'button-wrapper';
     a.className = 'button';
@@ -106,9 +109,12 @@ function decorateButtons(main) {
     } else if (strong) {
       a.classList.add('primary');
       strong.replaceWith(a);
-    } else {
+    } else if (em) {
       a.classList.add('secondary');
       em.replaceWith(a);
+    } else {
+      // Bare link in styled section → primary button
+      a.classList.add('primary');
     }
   });
 }

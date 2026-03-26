@@ -47,6 +47,25 @@ export default async function decorate(block) {
 
   block.prepend(tablist);
 
+  // Restructure tabs-team: group avatar and text into two columns
+  if (block.classList.contains('tabs-team')) {
+    block.querySelectorAll('.tabs-panel').forEach((panel) => {
+      const wrapper = panel.querySelector(':scope > div');
+      if (!wrapper) return;
+      const imgEl = wrapper.querySelector(':scope > p > img') || wrapper.querySelector(':scope > picture');
+      if (!imgEl) return;
+      const imgContainer = imgEl.closest('p') || imgEl.closest('picture');
+      const avatarCol = document.createElement('div');
+      avatarCol.className = 'tabs-team-avatar';
+      avatarCol.append(imgContainer);
+      const textCol = document.createElement('div');
+      textCol.className = 'tabs-team-text';
+      [...wrapper.children].forEach((child) => textCol.append(child));
+      wrapper.replaceChildren(avatarCol, textCol);
+    });
+    return;
+  }
+
   // Restructure card-like content in panels into individual card divs
   block.querySelectorAll('.tabs-panel').forEach((panel) => {
     const wrapper = panel.querySelector(':scope > div');

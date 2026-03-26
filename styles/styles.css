@@ -215,6 +215,25 @@ pre {
   white-space: pre;
 }
 
+/* blockquote — amber left border, italic */
+blockquote {
+  border-left: 4px solid var(--accent-color);
+  margin: 24px 0;
+  padding: 16px 24px;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+blockquote p {
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
 main > div {
   margin: 40px 16px;
 }
@@ -489,6 +508,18 @@ main > .section.accent h6 {
   color: var(--dark-color);
 }
 
+/* accent section: center default content (not inside block wrappers) */
+main > .section.accent > div > h2,
+main > .section.accent > div > p {
+  text-align: center;
+}
+
+/* accent section: button wrappers sit side by side */
+main > .section.accent .button-wrapper {
+  display: inline-block;
+  margin: 4px 8px;
+}
+
 /* accent section: primary button uses black fill + white shadow */
 main > .section.accent a.button.primary {
   border-color: var(--dark-color);
@@ -509,6 +540,21 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: var(--section-padding);
+}
+
+/* article body — narrow reading column after hero-article */
+/* stylelint-disable-next-line no-descending-specificity */
+.hero-container:has(.hero-article) + .section > div {
+  max-width: var(--container-narrow-max-width);
+}
+
+/* image captions in article body */
+/* stylelint-disable-next-line no-descending-specificity */
+.hero-container:has(.hero-article) + .section > div > p:has(> img) + p {
+  font-size: var(--body-font-size-s);
+  color: var(--text-color-muted);
+  font-style: italic;
+  margin-top: -8px;
 }
 
 /* reduced motion — accessibility */

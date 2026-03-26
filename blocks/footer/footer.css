@@ -1,20 +1,147 @@
+/* stylelint-disable no-descending-specificity */
+
+/* ----------------------------------------------------------------
+   Footer — dark inverse with amber top border
+   ---------------------------------------------------------------- */
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--dark-color);
+  color: var(--background-color);
+  border-top: 4px solid var(--accent-color);
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 40px 24px 24px;
 }
 
-footer .footer p {
+footer p {
   margin: 0;
 }
 
+footer a:any-link {
+  color: #999;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--background-color);
+}
+
+/* ----------------------------------------------------------------
+   Top section — 4-column grid
+   ---------------------------------------------------------------- */
+footer .footer-top {
+  padding: 48px 24px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-xl);
+}
+
+/* Column headings */
+footer h4 {
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  color: #999;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+/* Column link lists */
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer li {
+  padding: 6px 0;
+}
+
+footer li a {
+  font-size: var(--body-font-size-s);
+  color: #999;
+}
+
+/* Brand column */
+footer .footer-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--background-color);
+  margin-bottom: 12px;
+}
+
+footer .footer-brand-link:hover {
+  color: var(--background-color);
+}
+
+footer .footer-logo-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+footer .footer-logo-icon svg {
+  display: block;
+}
+
+footer .footer-logo-text {
+  font-family: var(--heading-font-family);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* Tagline below brand */
+footer .footer-top > div:first-child p:last-child {
+  font-size: var(--body-font-size-s);
+  color: #999;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* ----------------------------------------------------------------
+   Bottom bar
+   ---------------------------------------------------------------- */
+footer .footer-bottom {
+  padding: 24px;
+  border-top: 1px solid #3d4f45;
+}
+
+footer .footer-bottom .default-content-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+footer .footer-bottom p {
+  font-size: var(--body-font-size-s);
+  color: #999;
+}
+
+/* ----------------------------------------------------------------
+   Desktop (≥ 900px)
+   ---------------------------------------------------------------- */
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer-top {
+    padding: 64px 32px 48px;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: var(--gap-3xl);
+  }
+
+  footer .footer-bottom {
+    padding: 32px;
+  }
+
+  footer .footer-bottom .default-content-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
   }
 }

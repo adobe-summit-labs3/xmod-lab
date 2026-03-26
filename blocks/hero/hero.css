@@ -160,7 +160,17 @@
   font-size: var(--body-font-size-s);
 }
 
-/* tag pills */
+/* tag line — "Expedition · Americas · Hiking" */
+.hero.hero-article > div > p:nth-child(2) {
+  font-family: var(--heading-font-family);
+  font-size: var(--tag-font-size);
+  font-weight: 600;
+  letter-spacing: var(--tag-letter-spacing);
+  color: var(--accent-color);
+  margin-bottom: var(--gap-md);
+}
+
+/* tag pills if em-wrapped */
 .hero.hero-article em {
   display: inline-block;
   font-style: normal;
@@ -175,14 +185,36 @@
   margin-bottom: var(--gap-md);
 }
 
-/* author avatar */
-.hero.hero-article img[width="44"],
-.hero.hero-article img[alt*="avatar"] {
-  width: 44px;
-  height: 44px;
+/* author avatar — paragraph right after h1 containing only an img */
+.hero.hero-article > div > h1 + p > img {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgb(255 255 255 / 30%);
+}
+
+/* fallback: attribute-based avatar detection */
+.hero.hero-article img[width="44"],
+.hero.hero-article img[alt*="avatar"] {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgb(255 255 255 / 30%);
+}
+
+/* author name */
+.hero.hero-article > div > h1 + p + p {
+  font-weight: 700;
+  color: var(--background-color);
+  margin-top: var(--gap-sm);
+}
+
+/* author date/read time */
+.hero.hero-article > div > h1 + p + p + p {
+  color: var(--text-on-dark-muted);
+  font-size: var(--body-font-size-s);
 }
 
 @media (width >= 600px) {
