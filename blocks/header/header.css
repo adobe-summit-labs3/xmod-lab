@@ -351,15 +351,16 @@ header .nav-megamenu-article-link {
 header .nav-megamenu-link-title {
   display: block;
   font-weight: 600;
-  font-size: var(--body-font-size-m);
-  margin-bottom: 4px;
+  font-size: 16px;
+  margin-bottom: 0;
 }
 
 header .nav-megamenu-link-desc {
   display: block;
-  font-size: var(--body-font-size-s);
+  font-size: 14px;
+  font-weight: 400;
   color: var(--text-color-muted);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 header .nav-megamenu-link:hover .nav-megamenu-link-title,
@@ -371,15 +372,16 @@ header .nav-megamenu-article-link:hover .nav-megamenu-article-title {
 header .nav-megamenu-article-title {
   display: block;
   font-weight: 500;
-  font-size: var(--body-font-size-m);
-  margin-bottom: 4px;
+  font-size: 16px;
+  margin-bottom: 0;
 }
 
 header .nav-megamenu-article-desc {
   display: block;
-  font-size: var(--body-font-size-s);
+  font-size: 14px;
+  font-weight: 400;
   color: var(--text-color-muted);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 header .nav-megamenu-label {
@@ -589,27 +591,29 @@ header nav .nav-tools a:hover {
     padding: 32px 0;
     background-color: var(--background-color);
     border-top: 1px solid var(--border-color-light);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+    border-bottom: 1px solid var(--border-color-light);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 8%);
+    white-space: normal;
     z-index: 99;
   }
 
   header .nav-megamenu-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
   }
 
   /* Grid layouts */
-  header .nav-megamenu-grid {
+  header nav .nav-megamenu-grid {
     display: grid;
-    gap: 32px;
+    gap: 8px;
   }
 
-  header .nav-megamenu-grid-three {
+  header nav .nav-megamenu-grid-three {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  header .nav-megamenu-grid-four {
+  header nav .nav-megamenu-grid-four {
     grid-template-columns: repeat(4, 1fr);
   }
 
@@ -617,207 +621,54 @@ header nav .nav-tools a:hover {
   header .nav-megamenu-stories {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 0;
+    gap: 48px;
   }
 
   header .nav-megamenu-pages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     border-right: 1px solid var(--border-color-light);
-    padding-right: 32px;
+    padding-right: 48px;
   }
 
   header .nav-megamenu-articles {
-    padding-left: 32px;
+    padding-left: 0;
   }
 
   header .nav-megamenu-article-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 8px;
   }
 
   /* Link hover effect */
   header .nav-megamenu-link {
-    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 16px;
     border-radius: 8px;
+    min-width: 0;
     transition: background-color var(--transition-fast);
   }
 
   header .nav-megamenu-link:hover {
-    background-color: var(--cream-color);
-    padding: 8px 12px;
-    margin: 0 -12px;
+    background-color: var(--light-color);
   }
 
   header .nav-megamenu-article-link {
-    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
     border-radius: 8px;
+    min-width: 0;
     transition: background-color var(--transition-fast);
   }
 
   header .nav-megamenu-article-link:hover {
-    background-color: var(--cream-color);
-  }
-
-  /* ----------------------------------------------------------------
-     Megamenu panels — desktop dropdown (boilerplate nav-drop structure)
-     ---------------------------------------------------------------- */
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    background-color: var(--background-color);
-    border-top: 1px solid var(--border-color-light);
-    border-bottom: 1px solid var(--border-color-light);
-    box-shadow: 0 8px 32px rgb(0 0 0 / 8%);
-    padding: 32px 0;
-    white-space: normal;
-    z-index: 10;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: block;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    list-style: none;
-  }
-
-  /* Megamenu grid of link cards (boilerplate) */
-  header nav .nav-sections .nav-megamenu-grid {
-    display: grid;
-    gap: 8px;
-  }
-
-  header nav .nav-sections .nav-megamenu-grid.cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  header nav .nav-sections .nav-megamenu-grid.cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  header nav .nav-sections .nav-megamenu-grid.cols-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  /* Megamenu link card (boilerplate) */
-  header nav .nav-sections .nav-megamenu-link {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px 16px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: background-color 0.15s;
-  }
-
-  header nav .nav-sections .nav-megamenu-link:hover {
     background-color: var(--light-color);
-    text-decoration: none;
-    padding: 12px 16px;
-    margin: 0;
   }
 
-  header nav .nav-sections .nav-megamenu-link .megamenu-link-title {
-    font-family: var(--body-font-family);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-color);
-    line-height: 1.6;
-  }
-
-  header nav .nav-sections .nav-megamenu-link .megamenu-link-desc {
-    font-family: var(--body-font-family);
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-color-muted);
-    line-height: 1.4;
-  }
-
-  /* Section labels in megamenu (boilerplate) */
-  header nav .nav-sections .nav-megamenu-section-label {
-    font-family: var(--heading-font-family);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-color-muted);
-    letter-spacing: 0.08em;
-    margin: 0 0 12px;
-    padding: 0 16px;
-  }
-
-  /* Stories split layout (boilerplate) */
-  header nav .nav-sections .nav-megamenu-split {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
-  }
-
-  header nav .nav-sections .nav-megamenu-split-left {
-    flex: 0 0 33.333%;
-    padding-right: 48px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header nav .nav-sections .nav-megamenu-split-divider {
-    width: 1px;
-    background-color: var(--border-color-light);
-    flex-shrink: 0;
-  }
-
-  header nav .nav-sections .nav-megamenu-split-right {
-    flex: 1;
-    padding-left: 48px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header nav .nav-sections .nav-megamenu-split-left .nav-megamenu-link {
-    padding: 10px 16px;
-  }
-
-  /* Stories right-side article grid (boilerplate) */
-  header nav .nav-sections .nav-megamenu-articles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  header nav .nav-sections .nav-megamenu-article {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: background-color 0.15s;
-  }
-
-  header nav .nav-sections .nav-megamenu-article:hover {
-    background-color: var(--light-color);
-    text-decoration: none;
-  }
-
-  header nav .nav-sections .nav-megamenu-article .megamenu-article-title {
-    font-family: var(--body-font-family);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-color);
-    line-height: 1.4;
-  }
-
-  header nav .nav-sections .nav-megamenu-article .megamenu-article-desc {
-    font-family: var(--body-font-family);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-color-muted);
-    line-height: 1.4;
-  }
 }
