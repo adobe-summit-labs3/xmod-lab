@@ -3,7 +3,7 @@
 
 /**
  * Parser for cards-article variant.
- * Base: cards. Source: https://gabrielwalt.github.io/wknd/blog/patagonia-trek.html
+ * Base: cards. Source: https://wknd-adventures.com/blog/patagonia-trek.html
  * Selector: .grid-layout.desktop-3-column:has(.article-card)
  * Generated: 2026-03-25
  */

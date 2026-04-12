@@ -1,6 +1,6 @@
 # WKND Adventures — Project State
 
-**Original site:** https://gabrielwalt.github.io/wknd/
+**Original site:** https://wknd-adventures.com/
 **Local preview:** http://localhost:3000/content/wknd/{page}
 
 ---

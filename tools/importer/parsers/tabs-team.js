@@ -3,7 +3,7 @@
 
 /**
  * Parser for tabs-team variant.
- * Base: tabs. Source: https://gabrielwalt.github.io/wknd/about.html
+ * Base: tabs. Source: https://wknd-adventures.com/about.html
  * Selector: section.section:has(.tab-menu)
  * Generated: 2026-03-25
  */

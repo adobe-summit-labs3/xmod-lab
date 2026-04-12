@@ -3,7 +3,7 @@
 
 /**
  * Parser for ticker variant (custom block).
- * Source: https://gabrielwalt.github.io/wknd/index.html
+ * Source: https://wknd-adventures.com/index.html
  * Selector: .ticker-strip
  * Generated: 2026-03-25
  */

@@ -183,7 +183,7 @@ With this information, you can construct URLs for the preview environment (same 
 
 ## WKND Adventures — Project-Specific Guidance
 
-This project is a migration of https://gabrielwalt.github.io/wknd/ to AEM Edge Delivery Services.
+This project is a migration of https://wknd-adventures.com/ to AEM Edge Delivery Services.
 See `PROJECT.md` for full project state (blocks, variants, pages, design tokens, import infrastructure).
 
 ### Block Variant Convention

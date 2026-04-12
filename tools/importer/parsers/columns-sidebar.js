@@ -3,7 +3,7 @@
 
 /**
  * Parser for columns-sidebar variant.
- * Base: columns. Source: https://gabrielwalt.github.io/wknd/blog/patagonia-trek.html
+ * Base: columns. Source: https://wknd-adventures.com/blog/patagonia-trek.html
  * Selector: .secondary-section .grid-layout.desktop-3-column.grid-align-center
  * Generated: 2026-03-25
  */

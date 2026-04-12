@@ -3,7 +3,7 @@
 
 /**
  * Parser for hero-article variant.
- * Base: hero. Source: https://gabrielwalt.github.io/wknd/blog/patagonia-trek.html
+ * Base: hero. Source: https://wknd-adventures.com/blog/patagonia-trek.html
  * Selector: section.hero-section
  * Generated: 2026-03-25
  */

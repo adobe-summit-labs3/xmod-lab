@@ -3,7 +3,7 @@
 
 /**
  * Parser for columns-promo variant.
- * Base: columns. Source: https://gabrielwalt.github.io/wknd/adventures.html
+ * Base: columns. Source: https://wknd-adventures.com/adventures.html
  * Selector: .grid-layout.grid-layout--2col
  * Generated: 2026-03-25
  */

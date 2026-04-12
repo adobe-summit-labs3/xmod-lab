@@ -3,7 +3,7 @@
 
 /**
  * Parser for columns-gallery variant.
- * Base: columns. Source: https://gabrielwalt.github.io/wknd/index.html
+ * Base: columns. Source: https://wknd-adventures.com/index.html
  * Selector: .inverse-section .grid-layout.desktop-3-column
  * Generated: 2026-03-25
  */

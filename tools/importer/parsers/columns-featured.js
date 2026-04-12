@@ -3,7 +3,7 @@
 
 /**
  * Parser for columns-featured variant.
- * Base: columns. Source: https://gabrielwalt.github.io/wknd/index.html
+ * Base: columns. Source: https://wknd-adventures.com/index.html
  * Selector: .featured-article
  * Generated: 2026-03-25
  */

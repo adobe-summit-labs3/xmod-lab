@@ -3,7 +3,7 @@
 
 /**
  * Parser for accordion-faq variant.
- * Base: accordion. Source: https://gabrielwalt.github.io/wknd/index.html
+ * Base: accordion. Source: https://wknd-adventures.com/index.html
  * Selector: .faq-list
  * Generated: 2026-03-25
  */

@@ -3,7 +3,7 @@
 
 /**
  * Parser for hero-full variant.
- * Base: hero. Source: https://gabrielwalt.github.io/wknd/index.html
+ * Base: hero. Source: https://wknd-adventures.com/index.html
  * Selector: section.hero-section.hero-section--full
  * Generated: 2026-03-25
  */

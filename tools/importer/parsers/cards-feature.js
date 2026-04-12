@@ -3,7 +3,7 @@
 
 /**
  * Parser for cards-feature variant.
- * Base: cards. Source: https://gabrielwalt.github.io/wknd/about.html
+ * Base: cards. Source: https://wknd-adventures.com/about.html
  * Selector: .inverse-section .grid-layout.desktop-3-column.grid-gap-lg:has(.feature-card)
  * Generated: 2026-03-25
  */

@@ -3,7 +3,7 @@
 
 /**
  * Parser for columns-about variant.
- * Base: columns. Source: https://gabrielwalt.github.io/wknd/about.html
+ * Base: columns. Source: https://wknd-adventures.com/about.html
  * Selector: .grid-layout.grid-gap-xxl.tablet-1-column
  * Generated: 2026-03-25
  */

@@ -3,7 +3,7 @@
 
 /**
  * Parser for tabs-activity variant.
- * Base: tabs. Source: https://gabrielwalt.github.io/wknd/index.html
+ * Base: tabs. Source: https://wknd-adventures.com/index.html
  * Selector: .tab-container.tab-container--wide
  * Generated: 2026-03-25
  */
