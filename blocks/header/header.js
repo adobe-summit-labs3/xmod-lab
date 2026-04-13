@@ -181,8 +181,9 @@ export default async function decorate(block) {
 
       const hasSubmenu = item.querySelector('ul');
       if (hasSubmenu) {
-        // Get the trigger label (first text node)
-        const label = item.childNodes[0]?.textContent?.trim() || '';
+        // Get the trigger label — may be bare text or wrapped in <p> by CMS
+        const firstChild = item.firstElementChild;
+        const label = (firstChild && firstChild.tagName !== 'UL' ? firstChild.textContent : item.childNodes[0]?.textContent)?.trim() || '';
 
         const trigger = document.createElement('button');
         trigger.className = 'nav-megamenu-trigger';

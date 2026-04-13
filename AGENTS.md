@@ -335,7 +335,7 @@ Brand column restructuring: first `<a>` in `.footer-top > div:first-child` gets 
 
 ### Nav/Footer Content File Location
 
-Nav and footer fragment files live at the **workspace root** (`/workspace/nav.plain.html`, `/workspace/footer.plain.html`) so that code sync serves them at `/nav.plain.html` and `/footer.plain.html`. Copies also exist in `/workspace/content/` for local dev convenience. The `loadFragment()` calls in `header.js` and `footer.js` default to `/nav` and `/footer`.
+Nav and footer are **content**, not code — they live in the content directory (`/workspace/content/nav.plain.html`, `/workspace/content/footer.plain.html`) and are served by the CMS on the live site. The `header.js` and `footer.js` blocks use `getContentRoot()` from `scripts.js` to resolve the fragment path dynamically based on the current page URL — so the same code works whether content is served from `/` (root) or `/content/` (sub-path).
 
 ### Gallery Section CSS Pattern
 
