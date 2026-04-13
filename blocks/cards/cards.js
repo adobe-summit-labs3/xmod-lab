@@ -16,6 +16,22 @@ export default function decorate(block) {
         if (tag && !tag.querySelector('a, img')) tag.classList.add('tag-pill');
       }
     });
+    // Wrap entire card in its link for full-surface clickability
+    const link = li.querySelector('.cards-card-body a');
+    if (link) {
+      const wrapper = document.createElement('a');
+      wrapper.href = link.href;
+      wrapper.className = 'cards-card-link';
+      while (li.firstChild) wrapper.append(li.firstChild);
+      // Remove the original link from the heading to avoid nested <a>
+      const innerLink = wrapper.querySelector('.cards-card-body a');
+      if (innerLink) {
+        const parent = innerLink.parentElement;
+        while (innerLink.firstChild) parent.append(innerLink.firstChild);
+        innerLink.remove();
+      }
+      li.append(wrapper);
+    }
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
