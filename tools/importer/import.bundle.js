@@ -769,6 +769,10 @@ var CustomImportScript = (() => {
     if (sections.length === 0) return;
     for (let i = sections.length - 1; i >= 0; i--) {
       const sectionEl = sections[i];
+      if (sectionEl.textContent.trim() === "" && !sectionEl.querySelector("img, picture, a")) {
+        sectionEl.remove();
+        continue;
+      }
       const style = detectSectionStyle(sectionEl);
       if (style) {
         const metaBlock = WebImporter.Blocks.createBlock(document, {
@@ -862,11 +866,43 @@ var CustomImportScript = (() => {
         }
       });
       executeTransformers("afterTransform", main, payload);
+      const hrs = [...main.querySelectorAll("hr")];
+      for (let hi = 0; hi < hrs.length - 1; hi += 1) {
+        let node = hrs[hi].nextSibling;
+        const between = [];
+        let isEmpty = true;
+        while (node && node !== hrs[hi + 1]) {
+          between.push(node);
+          if (node.nodeType === 1 && node.textContent.trim() !== "") isEmpty = false;
+          if (node.nodeType === 3 && node.textContent.trim() !== "") isEmpty = false;
+          node = node.nextSibling;
+        }
+        if (isEmpty && node === hrs[hi + 1]) {
+          between.forEach((n) => n.remove());
+          hrs[hi + 1].remove();
+        }
+      }
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url);
+      [...main.querySelectorAll("hr")].forEach((h) => {
+        let next = h.nextElementSibling;
+        while (next && next.tagName !== "HR" && next.textContent.trim() === "" && !next.querySelector("img, picture, table")) {
+          const remove = next;
+          next = next.nextElementSibling;
+          remove.remove();
+        }
+        if (next && next.tagName === "HR") h.remove();
+      });
+      const finalHrs = main.querySelectorAll("hr");
+      console.log(`Final HR count: ${finalHrs.length}`);
+      finalHrs.forEach((h, idx) => {
+        const prev = h.previousElementSibling;
+        const next = h.nextElementSibling;
+        console.log(`  HR ${idx}: prev=${prev?.tagName}(${prev?.textContent?.substring(0, 20)?.trim()}), next=${next?.tagName}(${next?.textContent?.substring(0, 20)?.trim()})`);
+      });
       const path = WebImporter.FileUtils.sanitizePath(
         new URL(originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "")
       );
