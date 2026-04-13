@@ -214,6 +214,26 @@ node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run
   --urls tools/importer/urls.txt
 ```
 
+### Nav and footer import scripts
+
+Separate import scripts for the nav and footer fragments (not part of the main page import since they're site-wide fragments, not individual pages):
+
+- `tools/importer/import-nav.js` — parses the original site's navbar and produces the EDS nav fragment structure (brand + megamenu sections + subscribe CTA)
+- `tools/importer/import-footer.js` — parses the original site's footer and produces the EDS footer fragment structure (brand column + link columns + copyright)
+
+Bundle and run the same way as the main import script:
+```bash
+npx esbuild tools/importer/import-nav.js \
+  --bundle --format=iife --global-name=CustomImportScript \
+  --platform=browser --outfile=tools/importer/import-nav.bundle.js
+
+# Run against any page on the source site (nav/footer are global)
+echo "https://wknd-adventures.com/index.html" > /tmp/url.txt
+node run-bulk-import.js --import-script tools/importer/import-nav.bundle.js --urls /tmp/url.txt
+```
+
+**Note:** The nav/footer import output may flatten the section structure (all content in one `<div>` instead of separate section `<div>`s). The hand-crafted files in `/content/` have the correct multi-section structure needed by `header.js` and `footer.js`.
+
 ---
 
 ## Block JS — DOM Restructuring Notes

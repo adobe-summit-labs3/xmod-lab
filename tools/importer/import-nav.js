@@ -8,7 +8,7 @@
  *   Section 3 (tools): <p><strong><a>Subscribe</a></strong></p>
  */
 
-const BASE = '/content/wknd/';
+const BASE = '/';
 
 function rewriteHref(href) {
   if (!href) return href;

@@ -7,7 +7,7 @@
  *   Section 2 (bottom): copyright + tagline paragraphs
  */
 
-const BASE = '/content/wknd/';
+const BASE = '/';
 
 function rewriteHref(href) {
   if (!href) return href;
