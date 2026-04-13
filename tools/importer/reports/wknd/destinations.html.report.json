@@ -1,8 +1,0 @@
-{
-  "status": "failed",
-  "url": "https://wknd-adventures.com/destinations.html",
-  "path": "wknd/destinations.html",
-  "timestamp": "2026-03-25T23:39:23.930Z",
-  "error": "CustomImportScript.default not found after 10s. The bundled script may not have loaded correctly. Check browser console for errors.",
-  "errorStack": "Error: CustomImportScript.default not found after 10s. The bundled script may not have loaded correctly. Check browser console for errors.\n    at processUrl (file:///home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:293:13)\n    at async main (file:///home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:457:22)"
-}
