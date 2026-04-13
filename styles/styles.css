@@ -92,13 +92,13 @@
 /* fallback fonts */
 @font-face {
   font-family: instrument-sans-fallback;
-  size-adjust: 100%;
+  size-adjust: 91%;
   src: local('Arial');
 }
 
 @font-face {
   font-family: syncopate-fallback;
-  size-adjust: 85%;
+  size-adjust: 138%;
   src: local('Arial Black'), local('Arial');
 }
 
@@ -126,6 +126,7 @@
     --heading-font-size-xs: 14px;
     --section-padding: 64px 0;
     --container-padding: 0 24px;
+    --nav-height: 75px;
   }
 }
 
@@ -380,11 +381,6 @@ a.button:active {
   box-shadow: 0 0 0 0 var(--btn-shadow, var(--accent-color));
 }
 
-a.button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.5;
-}
 
 /* Primary: dark bg, white text */
 a.button.primary {
@@ -506,11 +502,10 @@ main > .section.dark *:focus-visible {
   outline-color: var(--background-color);
 }
 
-/* Accent: orange bg, dark text, centered */
+/* Accent: orange bg, dark text */
 main > .section.accent {
   background-color: var(--accent-color);
   color: var(--dark-color);
-  text-align: center;
 
   --btn-shadow: #fff;
 }
@@ -530,13 +525,6 @@ main > .section.accent p {
 
 main > .section.accent > div > p {
   font-size: 20px;
-}
-
-/* accent section: button wrappers sit side by side */
-main > .section.accent .button-wrapper {
-  display: inline-block;
-  margin: 4px 8px;
-  justify-content: center;
 }
 
 /* accent section: primary button uses black fill + white shadow */
@@ -560,6 +548,20 @@ main > .section.secondary {
 /* Narrow: constrains content to narrow max-width */
 main .section.narrow > div {
   max-width: var(--container-narrow-max-width);
+}
+
+/* Center: explicit text + button centering (opt-in via section-metadata) */
+main > .section.center {
+  text-align: center;
+}
+
+main > .section.center .button-group {
+  justify-content: center;
+}
+
+main > .section.center .button-wrapper {
+  display: inline-block;
+  margin: 4px 8px;
 }
 
 /* --- EYEBROW PILL: first p before h2 in dark/accent sections --- */
@@ -615,10 +617,6 @@ main .section.dark.narrow h2 {
   margin: 12px 0;
 }
 
-.section.accent .button-group,
-.section.dark .button-group {
-  justify-content: center;
-}
 
 main .default-content-wrapper .button-group p.button-wrapper {
   margin: 0;

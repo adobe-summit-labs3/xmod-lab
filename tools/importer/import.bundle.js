@@ -558,9 +558,13 @@ var CustomImportScript = (() => {
       }
       const authorDate = card.querySelector(".utility-text-secondary");
       if (authorDate) {
-        const authorP = document2.createElement("p");
-        authorP.innerHTML = `<em>${authorDate.textContent.trim()}</em>`;
-        col2.appendChild(authorP);
+        const descText = desc ? desc.textContent.trim() : "";
+        const utilityText = authorDate.textContent.trim();
+        if (utilityText && utilityText !== descText) {
+          const authorP = document2.createElement("p");
+          authorP.innerHTML = `<em>${utilityText}</em>`;
+          col2.appendChild(authorP);
+        }
       }
       const href = card.getAttribute("href");
       if (href) {
@@ -666,7 +670,8 @@ var CustomImportScript = (() => {
     "hero-section": "dark"
   };
   var COMPOUND_MAP = {
-    "container--narrow": "narrow"
+    "container--narrow": "narrow",
+    "utility-text-align-center": "center"
   };
   function detectSectionStyle(sectionEl) {
     const classes = sectionEl.className || "";

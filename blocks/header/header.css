@@ -303,7 +303,7 @@ header nav .nav-tools {
 }
 
 /* Subscribe button (wknd-import class-driven) */
-header .nav-subscribe {
+header .nav-subscribe:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -323,7 +323,7 @@ header .nav-subscribe {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-header .nav-subscribe:hover {
+header .nav-subscribe:hover:any-link {
   background-color: var(--forest-color);
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0 0 var(--accent-color);
@@ -334,10 +334,6 @@ header .nav-subscribe:hover {
    Desktop overrides (≥ 900px)
    ---------------------------------------------------------------- */
 @media (width >= 900px) {
-  header .nav-wrapper {
-    position: sticky;
-  }
-
   header nav {
     display: flex;
     align-items: center;

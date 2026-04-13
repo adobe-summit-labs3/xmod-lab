@@ -102,6 +102,47 @@ function decorateButtons(main) {
 }
 
 /**
+ * Fix button variants and group adjacent buttons.
+ * Runs during eager phase so hero buttons don't shift after first paint.
+ * @param {Element} main The main element
+ */
+function decorateButtonVariants(main) {
+  // In dark and accent sections, make the second consecutive button secondary
+  main.querySelectorAll(':scope > .section.dark, :scope > .section.accent').forEach((section) => {
+    section.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+      const btnWrappers = [...wrapper.querySelectorAll(':scope > p.button-wrapper')];
+      for (let i = 1; i < btnWrappers.length; i += 1) {
+        if (btnWrappers[i].previousElementSibling === btnWrappers[i - 1]) {
+          const btn = btnWrappers[i].querySelector('a.button.primary');
+          if (btn) {
+            btn.classList.remove('primary');
+            btn.classList.add('secondary');
+          }
+        }
+      }
+    });
+  });
+
+  // Group adjacent button-wrappers into a flex container
+  main.querySelectorAll('p.button-wrapper').forEach((wrapper) => {
+    if (wrapper.parentElement.classList.contains('button-group')) return;
+    const next = wrapper.nextElementSibling;
+    if (next && next.classList.contains('button-wrapper')) {
+      const group = document.createElement('div');
+      group.className = 'button-group';
+      wrapper.parentNode.insertBefore(group, wrapper);
+      group.append(wrapper);
+      let sibling = group.nextElementSibling;
+      while (sibling && sibling.classList.contains('button-wrapper')) {
+        const nextSibling = sibling.nextElementSibling;
+        group.append(sibling);
+        sibling = nextSibling;
+      }
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -112,6 +153,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  decorateButtonVariants(main);
 }
 
 /**
@@ -193,130 +235,97 @@ function decorateTabSections(main) {
     tablist.className = 'tabs-list';
     tablist.setAttribute('role', 'tablist');
 
-    // Sliding indicator element
+    // Sliding indicator (hidden until first interaction, CSS box-shadow handles default)
     const indicator = document.createElement('div');
     indicator.className = 'tabs-indicator';
-    let activeIndex = 0;
 
-    function moveIndicator(targetBtn, animate = true) {
+    function moveIndicator(targetBtn) {
       const listRect = tablist.getBoundingClientRect();
       const btnRect = targetBtn.getBoundingClientRect();
-      const newLeft = btnRect.left - listRect.left + tablist.scrollLeft;
-      const newRight = listRect.width - (newLeft + btnRect.width);
-      const newIndex = [...tablist.querySelectorAll('button')].indexOf(targetBtn);
-      const movingRight = newIndex > activeIndex;
+      indicator.style.left = `${btnRect.left - listRect.left + tablist.scrollLeft}px`;
+      indicator.style.right = `${listRect.width - (btnRect.left - listRect.left + tablist.scrollLeft + btnRect.width)}px`;
+    }
 
-      if (animate) {
-        // Asymmetric animation: leading edge moves first, trailing edge follows
-        if (movingRight) {
-          indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.08s, right 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
-        } else {
-          indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), right 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.08s';
-        }
-      } else {
-        indicator.style.transition = 'none';
+    function selectTab(button) {
+      // On first interaction, activate the JS indicator and disable CSS box-shadow
+      if (!tablist.classList.contains('tabs-animated')) {
+        tablist.classList.add('tabs-animated');
+        const prev = tablist.querySelector('[aria-selected="true"]');
+        if (prev) moveIndicator(prev);
+        requestAnimationFrame(() => { indicator.style.transition = 'left 0.3s ease, right 0.3s ease'; });
       }
 
-      indicator.style.left = `${newLeft}px`;
-      indicator.style.right = `${newRight}px`;
-      activeIndex = newIndex;
+      tabsContainer.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+        panel.setAttribute('aria-hidden', 'true');
+      });
+      tablist.querySelectorAll('[role=tab]').forEach((btn) => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.setAttribute('tabindex', '-1');
+      });
+      button.setAttribute('aria-selected', 'true');
+      button.setAttribute('tabindex', '0');
+      button.focus();
+
+      const panelId = button.getAttribute('aria-controls');
+      const panel = tabsContainer.querySelector(`#${panelId}`);
+      if (panel) panel.setAttribute('aria-hidden', 'false');
+
+      moveIndicator(button);
     }
 
     // Build tab panels
     group.forEach((section, i) => {
-      // Extract tab label from the first heading or first element
       const heading = section.querySelector(':scope > .default-content-wrapper > h2, :scope > .default-content-wrapper > h3');
       const label = heading ? heading.textContent.trim() : `Tab ${i + 1}`;
       const id = label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
-      // Remove the heading from the section (it becomes the tab button)
       if (heading) heading.remove();
 
-      // Create tab button
       const button = document.createElement('button');
       button.className = 'tabs-tab';
       button.id = `tab-${id}`;
       button.textContent = label;
       button.setAttribute('aria-controls', `tabpanel-${id}`);
-      button.setAttribute('aria-selected', !i);
+      button.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
       button.setAttribute('role', 'tab');
       button.setAttribute('type', 'button');
-      button.addEventListener('click', () => {
-        tabsContainer.querySelectorAll('[role=tabpanel]').forEach((panel) => {
-          panel.setAttribute('aria-hidden', true);
-        });
-        tablist.querySelectorAll('button').forEach((btn) => {
-          btn.setAttribute('aria-selected', false);
-        });
-        section.setAttribute('aria-hidden', false);
-        button.setAttribute('aria-selected', true);
-        moveIndicator(button);
-      });
+      button.setAttribute('tabindex', i === 0 ? '0' : '-1');
+      button.addEventListener('click', () => selectTab(button));
       tablist.append(button);
 
-      // Convert section into tab panel
       section.setAttribute('role', 'tabpanel');
-      section.setAttribute('aria-hidden', !!i);
+      section.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
       section.setAttribute('aria-labelledby', `tab-${id}`);
       section.id = `tabpanel-${id}`;
       section.classList.add('tabs-panel');
       tabsContainer.append(section);
     });
 
+    // Keyboard navigation: arrow keys, Home, End
+    tablist.addEventListener('keydown', (e) => {
+      const tabs = [...tablist.querySelectorAll('[role=tab]')];
+      const idx = tabs.indexOf(e.target);
+      if (idx < 0) return;
+
+      let next;
+      switch (e.key) {
+        case 'ArrowRight': next = (idx + 1) % tabs.length; break;
+        case 'ArrowLeft': next = (idx - 1 + tabs.length) % tabs.length; break;
+        case 'Home': next = 0; break;
+        case 'End': next = tabs.length - 1; break;
+        default: return;
+      }
+      e.preventDefault();
+      selectTab(tabs[next]);
+    });
+
     tablist.append(indicator);
+
     // Insert tablist after heading wrapper (if present), otherwise at the start
     const headingWrapper = tabsContainer.querySelector(':scope > .default-content-wrapper');
     if (headingWrapper) {
       headingWrapper.after(tablist);
     } else {
       tabsContainer.prepend(tablist);
-    }
-
-    // Position indicator on the first tab after layout
-    requestAnimationFrame(() => {
-      const firstBtn = tablist.querySelector('button');
-      if (firstBtn) moveIndicator(firstBtn, false);
-    });
-  });
-}
-
-/**
- * Post-decoration: fix button variants and group adjacent buttons.
- * Runs after all sections/blocks are loaded.
- * @param {Element} main The main element
- */
-function decorateButtonVariants(main) {
-  // 1. In dark and accent sections, make the second consecutive button secondary
-  main.querySelectorAll(':scope > .section.dark, :scope > .section.accent').forEach((section) => {
-    section.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
-      const btnWrappers = [...wrapper.querySelectorAll(':scope > p.button-wrapper')];
-      for (let i = 1; i < btnWrappers.length; i += 1) {
-        if (btnWrappers[i].previousElementSibling === btnWrappers[i - 1]) {
-          const btn = btnWrappers[i].querySelector('a.button.primary');
-          if (btn) {
-            btn.classList.remove('primary');
-            btn.classList.add('secondary');
-          }
-        }
-      }
-    });
-  });
-
-  // 2. Group adjacent button-wrappers into a flex container
-  main.querySelectorAll('p.button-wrapper').forEach((wrapper) => {
-    if (wrapper.parentElement.classList.contains('button-group')) return;
-    const next = wrapper.nextElementSibling;
-    if (next && next.classList.contains('button-wrapper')) {
-      const group = document.createElement('div');
-      group.className = 'button-group';
-      wrapper.parentNode.insertBefore(group, wrapper);
-      group.append(wrapper);
-      let sibling = group.nextElementSibling;
-      while (sibling && sibling.classList.contains('button-wrapper')) {
-        const nextSibling = sibling.nextElementSibling;
-        group.append(sibling);
-        sibling = nextSibling;
-      }
     }
   });
 }
@@ -333,7 +342,6 @@ async function loadLazy(doc) {
 
   // Post-load decorations
   decorateTabSections(main);
-  decorateButtonVariants(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

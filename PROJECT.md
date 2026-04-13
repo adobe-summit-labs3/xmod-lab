@@ -12,8 +12,8 @@ Mix of standalone blocks and block families with CSS variants.
 | Block | Variants | CSS Notes |
 |-------|----------|-----------|
 | `hero` | `article` | Full-bleed overlay hero. Base (no variant) = landing pages with eyebrow, gradient overlay, CTA buttons. `article` = blog posts with breadcrumbs, tag pills, author avatar. |
-| `cards` | `cards-article`, `cards-feature` | `cards-article` = image+body grid with hover effects. `cards-feature` = glass text-only cards (dark section). Shared internal classes: `cards-card-image`, `cards-card-body`. **Note:** `cards-feature` has CSS+parser but is not yet used in any content page. |
-| `columns` | `columns-about`, `columns-promo`, `columns-pullquote` | 3 variants in one file. `columns-promo` uses `:has()` for narrow container. `columns-pullquote` has pull-quote dark panel. Shared internal class: `columns-img-col`. **Note:** `columns-about` has CSS+parser but is not yet used in any content page. |
+| `cards` | `cards-article`, `cards-feature` | `cards-article` = image+body grid with hover effects. `cards-feature` = glass text-only cards (dark section). Shared internal classes: `cards-card-image`, `cards-card-body`. |
+| `columns` | `columns-about`, `columns-promo`, `columns-pullquote` | 3 variants in one file. `columns-promo` uses `:has()` for narrow container. `columns-pullquote` has pull-quote dark panel. Shared internal class: `columns-img-col`. |
 | `featured-article` | _(none)_ | Standalone block. Image + content side-by-side with tag pill, CTA button. Internal class: `featured-article-img-col`. |
 | `editorial-index` | _(none)_ | CSS-only block. Numbered items with large accent numbers. Grid layout: number + content. |
 | `tabs` | _(section style)_ | **Not a block** — section style in `lazy-styles.css`. Consecutive sections with `style: tabs` are grouped into a tabbed container by `decorateTabSections()` in `scripts.js`. Each panel is a full section that can contain any blocks. |
@@ -149,12 +149,12 @@ Primary (black + amber shadow), Ghost (outline + amber shadow), Accent (amber + 
 |------|--------|
 | `field-notes` | hero, featured-article, cards-article |
 | `community` | hero, featured-article, editorial-index, cards-article, faq-list |
-| `sustainability` | hero, editorial-index, featured-article, cards-article, gallery, tabs |
+| `sustainability` | hero, editorial-index, featured-article, cards-feature, cards-article, gallery, tabs |
 
 ### Informational pages
 | Page | Blocks |
 |------|--------|
-| `about` | hero, gallery, tabs (with nested team-profile), cards-article |
+| `about` | hero, columns-about, cards-feature, tabs (with nested team-profile), cards-article |
 | `faq` | hero, faq-list, cards-article |
 
 ### Blog articles
@@ -266,6 +266,6 @@ Tabs are handled by `decorateTabSections()` in `scripts.js`, not by a block. Con
 - **EDS image wrapping:** Images inside `<p>` tags don't get `<picture>` wrappers from EDS. Block JS must handle both `<picture>` and bare `<img>` in `<p>` patterns. See AGENTS.md "EDS Image Handling" section.
 - **Button decoration requires `<strong>`/`<em>` wrapper:** Plain `<a>` links in `<p>` tags don't get `.button` class from EDS. Import parsers should wrap CTA links in `<strong>` (primary) or `<em>` (secondary) for proper button decoration. Otherwise, block CSS must style links as buttons directly.
 - **CSS selectors must match EDS DOM:** Original site DOM selectors (e.g., `img[alt*="avatar"]`, `em` for tags) may not match imported content structure. Use positional selectors (`p:first-child`, `p:nth-last-child(2) > img`) as fallbacks.
-- **Reserved but unused variants:** `columns-about` and `cards-feature` have full CSS, import parsers, and BLOCK_REGISTRY entries, but no content page currently uses them. They are kept intentionally for the about page and potential future use. Do not remove them.
+- **Variant selector history:** `columns-about` and `cards-feature` import selectors were originally incorrect (`.grid-gap-xxl` instead of `.grid-gap-xl`, `.feature-card` instead of `.card.card-body`). Fixed 2026-04-13.
 - **Fragment block is a utility, not a content block:** `blocks/fragment/fragment.js` exports `loadFragment()` which `header.js` and `footer.js` depend on. It has zero content usage but must never be deleted. See AGENTS.md "Before Removing or Deleting Code".
 - **Content files live at `/content/{page}.plain.html`**, NOT at `/content/wknd/{page}`. The preview URL pattern is `http://localhost:3000/content/{page}`.

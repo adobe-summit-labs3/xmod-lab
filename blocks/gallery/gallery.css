@@ -84,13 +84,16 @@
   color: var(--background-color);
 }
 
-/* Reset button styling on section header links */
-.gallery-container > .default-content-wrapper a.button:any-link {
+/* Reset button styling on section header links — needs to beat
+   main > .section.dark a.button.primary (specificity 0,4,1) */
+main .gallery-container > .default-content-wrapper a.button:any-link {
   background: none;
   border: none;
   border-radius: 0;
   box-shadow: none;
   text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
   padding: 0;
   margin: 0;
   font-family: var(--heading-font-family);
@@ -100,9 +103,10 @@
   color: var(--background-color);
 }
 
-.gallery-container > .default-content-wrapper a.button:hover {
+main .gallery-container > .default-content-wrapper a.button:hover {
   transform: none;
   box-shadow: none;
+  opacity: 0.65;
 }
 
 /* --- Responsive --- */

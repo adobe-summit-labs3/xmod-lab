@@ -142,6 +142,7 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  nav.setAttribute('aria-label', 'Main');
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -156,7 +157,7 @@ export default async function decorate(block) {
     const brandLink = navBrand.querySelector('.button');
     if (brandLink) {
       brandLink.className = '';
-      brandLink.closest('.button-container')?.classList.remove('button-container');
+      brandLink.closest('.button-wrapper')?.classList.remove('button-wrapper');
     }
     // Restructure brand: create logo icon + text
     const brandAnchor = navBrand.querySelector('a');
@@ -244,8 +245,8 @@ export default async function decorate(block) {
     const toolLink = navTools.querySelector('a');
     if (toolLink) {
       toolLink.className = 'nav-subscribe';
-      // Remove button-container wrapper
-      const wrapper = toolLink.closest('.button-container');
+      // Remove button-wrapper wrapper
+      const wrapper = toolLink.closest('.button-wrapper');
       if (wrapper) wrapper.className = '';
     }
   }

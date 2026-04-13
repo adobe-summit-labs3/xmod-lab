@@ -4,6 +4,9 @@
  */
 
 function animateAccordion(details, summary) {
+  // Skip animation enhancement if Web Animations API is unsupported — native details works
+  if (!details.animate) return;
+
   let animation = null;
 
   function open() {

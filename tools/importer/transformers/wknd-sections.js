@@ -20,6 +20,7 @@ const STYLE_MAP = {
 // Map child element classes to compound style modifiers
 const COMPOUND_MAP = {
   'container--narrow': 'narrow',
+  'utility-text-align-center': 'center',
 };
 
 /**
