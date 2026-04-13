@@ -61,7 +61,7 @@ footer h4 {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.7px;
-  color: #999;
+  color: var(--background-color);
   margin: 0 0 16px;
 }
 
@@ -107,6 +107,12 @@ footer .footer-logo-icon {
 
 footer .footer-logo-icon svg {
   display: block;
+  color: var(--background-color);
+  fill: var(--background-color);
+}
+
+footer .footer-logo-icon img {
+  filter: brightness(0) invert(1);
 }
 
 footer .footer-logo-text {
@@ -115,6 +121,7 @@ footer .footer-logo-text {
   font-weight: 700;
   letter-spacing: 0.6px;
   line-height: 1.2;
+  color: var(--background-color);
 }
 
 /* Tagline below brand */
@@ -189,7 +196,7 @@ footer .section:last-child p {
 @media (width >= 900px) {
   footer .footer > div {
     padding: 0 24px;
-    margin: 0 40px;
+    margin: 0 auto;
   }
 
   footer .footer-top {

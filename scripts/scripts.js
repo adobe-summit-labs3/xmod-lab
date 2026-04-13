@@ -80,7 +80,6 @@ function buildAutoBlocks(main) {
  */
 function decorateButtons(main) {
   main.querySelectorAll('p a[href]').forEach((a) => {
-    a.title = a.title || a.textContent;
     const p = a.closest('p');
     const text = a.textContent.trim();
 
@@ -100,6 +99,7 @@ function decorateButtons(main) {
     const styledSection = p.closest('.section.dark, .section.accent');
     if (!strong && !em && !styledSection) return;
 
+    a.title = a.title || text;
     p.className = 'button-wrapper';
     a.className = 'button';
     if (strong && em) { // high-impact call-to-action
@@ -157,6 +157,148 @@ async function loadEager(doc) {
 }
 
 /**
+ * Decorates consecutive sections with style=tabs into a tabbed container.
+ * Each tabs section becomes a tab panel; the first heading in each becomes the tab label.
+ * Runs after all sections are loaded so blocks inside panels are fully decorated.
+ * @param {Element} main The main element
+ */
+function decorateTabSections(main) {
+  const sections = [...main.querySelectorAll(':scope > .section.tabs')];
+  if (!sections.length) return;
+
+  // Group consecutive .tabs sections
+  const groups = [];
+  let current = [];
+  sections.forEach((section) => {
+    if (current.length && current[current.length - 1].nextElementSibling !== section) {
+      groups.push(current);
+      current = [];
+    }
+    current.push(section);
+  });
+  if (current.length) groups.push(current);
+
+  groups.forEach((group) => {
+    // Find the section heading that precedes the tab group
+    // (e.g., "Browse by Activity" in a default-content-wrapper right before the first tab section)
+    const firstTab = group[0];
+
+    // Create tabs container
+    const tabsContainer = document.createElement('div');
+    tabsContainer.className = 'tabs-container';
+
+    // Insert before the first tab section
+    firstTab.parentNode.insertBefore(tabsContainer, firstTab);
+
+    // Check for a heading section immediately before the tab group
+    const prevSection = tabsContainer.previousElementSibling;
+    if (prevSection && prevSection.classList.contains('section')
+      && !prevSection.classList.contains('tabs')) {
+      // Check if this section only has a heading (section title for the tabs)
+      const wrappers = prevSection.querySelectorAll(':scope > .default-content-wrapper');
+      const blocks = prevSection.querySelectorAll(':scope > [class*="-wrapper"]:not(.default-content-wrapper)');
+      if (wrappers.length === 1 && blocks.length === 0) {
+        const h2 = wrappers[0].querySelector('h2');
+        if (h2 && wrappers[0].children.length === 1) {
+          tabsContainer.append(wrappers[0]);
+          prevSection.remove();
+        }
+      }
+    }
+
+    // Build tab list
+    const tablist = document.createElement('div');
+    tablist.className = 'tabs-list';
+    tablist.setAttribute('role', 'tablist');
+
+    // Sliding indicator element
+    const indicator = document.createElement('div');
+    indicator.className = 'tabs-indicator';
+    let activeIndex = 0;
+
+    function moveIndicator(targetBtn, animate = true) {
+      const listRect = tablist.getBoundingClientRect();
+      const btnRect = targetBtn.getBoundingClientRect();
+      const newLeft = btnRect.left - listRect.left + tablist.scrollLeft;
+      const newRight = listRect.width - (newLeft + btnRect.width);
+      const newIndex = [...tablist.querySelectorAll('button')].indexOf(targetBtn);
+      const movingRight = newIndex > activeIndex;
+
+      if (animate) {
+        // Asymmetric animation: leading edge moves first, trailing edge follows
+        if (movingRight) {
+          indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.08s, right 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else {
+          indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), right 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.08s';
+        }
+      } else {
+        indicator.style.transition = 'none';
+      }
+
+      indicator.style.left = `${newLeft}px`;
+      indicator.style.right = `${newRight}px`;
+      activeIndex = newIndex;
+    }
+
+    // Build tab panels
+    group.forEach((section, i) => {
+      // Extract tab label from the first heading or first element
+      const heading = section.querySelector(':scope > .default-content-wrapper > h2, :scope > .default-content-wrapper > h3');
+      const label = heading ? heading.textContent.trim() : `Tab ${i + 1}`;
+      const id = label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+      // Remove the heading from the section (it becomes the tab button)
+      if (heading) heading.remove();
+
+      // Create tab button
+      const button = document.createElement('button');
+      button.className = 'tabs-tab';
+      button.id = `tab-${id}`;
+      button.textContent = label;
+      button.setAttribute('aria-controls', `tabpanel-${id}`);
+      button.setAttribute('aria-selected', !i);
+      button.setAttribute('role', 'tab');
+      button.setAttribute('type', 'button');
+      button.addEventListener('click', () => {
+        tabsContainer.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+          panel.setAttribute('aria-hidden', true);
+        });
+        tablist.querySelectorAll('button').forEach((btn) => {
+          btn.setAttribute('aria-selected', false);
+        });
+        section.setAttribute('aria-hidden', false);
+        button.setAttribute('aria-selected', true);
+        moveIndicator(button);
+      });
+      tablist.append(button);
+
+      // Convert section into tab panel
+      section.setAttribute('role', 'tabpanel');
+      section.setAttribute('aria-hidden', !!i);
+      section.setAttribute('aria-labelledby', `tab-${id}`);
+      section.id = `tabpanel-${id}`;
+      section.classList.add('tabs-panel');
+      tabsContainer.append(section);
+    });
+
+    tablist.append(indicator);
+    // Insert tablist after heading wrapper (if present), otherwise at the start
+    const headingWrapper = tabsContainer.querySelector(':scope > .default-content-wrapper');
+    if (headingWrapper) {
+      headingWrapper.after(tablist);
+    } else {
+      tabsContainer.prepend(tablist);
+    }
+
+    // Position indicator on the first tab after layout
+    requestAnimationFrame(() => {
+      const firstBtn = tablist.querySelector('button');
+      if (firstBtn) moveIndicator(firstBtn, false);
+    });
+  });
+}
+
+/**
  * Post-decoration: fix button variants and group adjacent buttons.
  * Runs after all sections/blocks are loaded.
  * @param {Element} main The main element
@@ -178,18 +320,7 @@ function decorateButtonVariants(main) {
     });
   });
 
-  // 2. Convert specific buttons to text-links
-  main.querySelectorAll('a.button').forEach((btn) => {
-    const text = btn.textContent.trim();
-    if (text === 'Full FAQ' || text === 'Field Notes') {
-      btn.classList.remove('button', 'primary', 'secondary');
-      btn.classList.add('text-link');
-      const wrapper = btn.closest('p.button-wrapper');
-      if (wrapper) wrapper.classList.remove('button-wrapper');
-    }
-  });
-
-  // 3. Group adjacent button-wrappers into a flex container
+  // 2. Group adjacent button-wrappers into a flex container
   main.querySelectorAll('p.button-wrapper').forEach((wrapper) => {
     if (wrapper.parentElement.classList.contains('button-group')) return;
     const next = wrapper.nextElementSibling;
@@ -209,67 +340,6 @@ function decorateButtonVariants(main) {
 }
 
 /**
- * Split the dark section into visual subsections so that
- * Quick Answers gets a white background and How We Work gets a light background.
- * Uses MutationObserver to wait for blocks that may load asynchronously.
- * @param {Element} main The main element
- */
-function splitDarkSection(main) {
-  const darkSection = main.querySelector(':scope > .section.dark.accordion-faq-container');
-  if (!darkSection) return;
-
-  function doSplit() {
-    // Find the headings
-    const allDCW = darkSection.querySelectorAll('.default-content-wrapper');
-    let qaHeadingDCW = null;
-    let hwwHeadingDCW = null;
-    allDCW.forEach((dcw) => {
-      const h2 = dcw.querySelector('h2');
-      if (!h2) return;
-      if (h2.textContent.includes('Quick Answers')) qaHeadingDCW = dcw;
-      if (h2.textContent.includes('How We Work')) hwwHeadingDCW = dcw;
-    });
-
-    const accWrapper = darkSection.querySelector('.accordion-faq-wrapper');
-    const colsWrapper = darkSection.querySelector('.columns-wrapper');
-
-    // Wait until both wrappers exist
-    if (!accWrapper || !colsWrapper) return false;
-
-    // Create "Quick Answers" subsection
-    if (qaHeadingDCW && accWrapper) {
-      const qaSubsection = document.createElement('div');
-      qaSubsection.className = 'subsection subsection-default';
-      darkSection.insertBefore(qaSubsection, qaHeadingDCW);
-      qaSubsection.append(qaHeadingDCW);
-      qaSubsection.append(accWrapper);
-    }
-
-    // Create "How We Work" subsection
-    if (hwwHeadingDCW && colsWrapper) {
-      const hwwSubsection = document.createElement('div');
-      hwwSubsection.className = 'subsection subsection-secondary';
-      darkSection.insertBefore(hwwSubsection, hwwHeadingDCW);
-      hwwSubsection.append(hwwHeadingDCW);
-      hwwSubsection.append(colsWrapper);
-    }
-    return true;
-  }
-
-  // Try immediately
-  if (doSplit()) return;
-
-  // If blocks haven't loaded yet, observe for changes
-  const observer = new MutationObserver(() => {
-    if (doSplit()) observer.disconnect();
-  });
-  observer.observe(darkSection, { childList: true, subtree: true });
-
-  // Safety timeout — disconnect after 10 seconds
-  setTimeout(() => observer.disconnect(), 10000);
-}
-
-/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -280,8 +350,8 @@ async function loadLazy(doc) {
   await loadSections(main);
 
   // Post-load decorations
+  decorateTabSections(main);
   decorateButtonVariants(main);
-  splitDarkSection(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

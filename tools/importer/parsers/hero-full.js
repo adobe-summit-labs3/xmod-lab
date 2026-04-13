@@ -2,41 +2,65 @@
 /* global WebImporter */
 
 /**
- * Parser for hero-full variant.
- * Base: hero. Source: https://wknd-adventures.com/index.html
- * Selector: section.hero-section.hero-section--full
- * Generated: 2026-03-25
+ * Parser for hero (full-bleed overlay).
+ * Source: https://wknd-adventures.com/
+ * Selector: section.hero-section
  */
 export default function parse(element, { document }) {
-  // Extract background image from .hero-bg (found in captured DOM)
+  // Extract background image from .hero-bg
   const bgImage = element.querySelector('.hero-bg img');
 
-  // Extract content from .hero-content-inner
-  const eyebrow = element.querySelector('.hero-eyebrow');
-  const heading = element.querySelector('h1, .h1-heading');
-  const description = element.querySelector('.hero-lead, .paragraph-xl');
-  const ctaLinks = element.querySelectorAll('.button-group a');
+  // Extract content from .hero-content-inner (or fallback to .hero-content)
+  const inner = element.querySelector('.hero-content-inner') || element.querySelector('.hero-content');
 
   const cells = [];
 
-  // Row 1: Background image (per hero library pattern)
+  // Row 1: Background image
   if (bgImage) {
     cells.push([bgImage]);
   }
 
-  // Row 2: Content - eyebrow, heading, description, CTAs
+  // Row 2: Content — eyebrow, heading, lead, CTAs
   const contentCell = [];
-  if (eyebrow) contentCell.push(eyebrow);
+
+  // Eyebrow: p.tag (e.g., "WKND Adventures")
+  const eyebrow = inner && (inner.querySelector('.tag') || inner.querySelector('.hero-eyebrow'));
+  if (eyebrow) {
+    const p = document.createElement('p');
+    p.textContent = eyebrow.textContent.trim();
+    contentCell.push(p);
+  }
+
+  // Heading
+  const heading = element.querySelector('h1, .h1-heading');
   if (heading) contentCell.push(heading);
-  if (description) contentCell.push(description);
-  ctaLinks.forEach((link) => {
-    // Simplify button labels - unwrap inner div.button-label
-    const label = link.querySelector('.button-label');
-    if (label) {
-      link.textContent = label.textContent.trim();
-    }
-    contentCell.push(link);
-  });
+
+  // Lead paragraph
+  const lead = element.querySelector('.hero-lead, .paragraph-xl');
+  if (lead) contentCell.push(lead);
+
+  // CTAs: check both .button-group pattern and already-split <p><strong><a> pattern
+  const btnGroup = element.querySelector('.button-group');
+  if (btnGroup) {
+    const links = btnGroup.querySelectorAll('a');
+    links.forEach((link, i) => {
+      const label = link.querySelector('.button-label');
+      if (label) link.textContent = label.textContent.trim();
+      // Wrap: first = strong (primary), rest = em (secondary)
+      const p = document.createElement('p');
+      const wrapper = document.createElement(i === 0 ? 'strong' : 'em');
+      wrapper.appendChild(link.cloneNode(true));
+      p.appendChild(wrapper);
+      contentCell.push(p);
+    });
+  } else {
+    // Fallback: already-split buttons from cleanup transformer
+    const splitButtons = element.querySelectorAll('p > strong > a, p > em > a');
+    splitButtons.forEach((link) => {
+      contentCell.push(link.closest('p'));
+    });
+  }
+
   if (contentCell.length > 0) {
     cells.push([contentCell]);
   }

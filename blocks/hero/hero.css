@@ -21,7 +21,7 @@ main > .hero-container {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: min(65vh, 400px);
   padding: 48px 24px;
   overflow: hidden;
@@ -58,7 +58,7 @@ main > .hero-container {
   max-width: var(--container-max-width);
   width: 100%;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
 }
 
 .hero h1,
@@ -69,12 +69,14 @@ main > .hero-container {
 .hero h6 {
   color: var(--background-color);
   margin-bottom: 24px;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 35%);
 }
 
 .hero h1 {
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  max-width: 608px;
 }
 
 .hero p {
@@ -82,17 +84,22 @@ main > .hero-container {
   font-size: 18px;
   line-height: 1.6;
   max-width: 608px;
-  margin-inline: auto;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 35%);
 }
 
-/* eyebrow text (first p before h1) */
+/* eyebrow pill (first p before h1) */
 .hero > div > p:first-child {
+  display: inline-flex;
   font-family: var(--heading-font-family);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  color: var(--accent-color);
+  font-size: var(--tag-font-size);
+  font-weight: 600;
+  letter-spacing: var(--tag-letter-spacing);
+  color: var(--background-color);
+  background-color: var(--accent-color);
+  padding: var(--tag-padding);
+  border-radius: var(--button-border-radius);
   margin-bottom: var(--gap-md);
+  text-shadow: none;
 }
 
 /* lead paragraph — after h1 */
@@ -102,13 +109,12 @@ main > .hero-container {
   line-height: 1.6;
   color: rgb(255 255 255 / 85%);
   max-width: 608px;
-  margin-inline: auto;
   margin-bottom: 24px;
 }
 
-/* button group */
-.hero .button-group {
-  justify-content: center;
+/* button group — higher specificity to override .section.dark .button-group centering */
+.section .hero .button-group {
+  justify-content: flex-start;
 }
 
 .hero .button-wrapper {
@@ -155,28 +161,24 @@ main .hero a.button:any-link:active {
   box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
 }
 
-/* accent / primary button on hero — accent bg, dark text */
-.hero a.button.accent,
+/* primary button on hero — accent bg, dark text */
 main .hero a.button.primary:any-link {
   background: var(--accent-color);
   border: 2px solid var(--accent-color);
   color: var(--dark-color);
 }
 
-main .hero a.button.primary:any-link:hover,
-.hero a.button.accent:hover {
+main .hero a.button.primary:any-link:hover {
   filter: brightness(0.9);
 }
 
-/* ghost / secondary button on hero — white outline, dark shadow */
-.hero a.button.secondary,
+/* secondary button on hero — white outline, dark shadow */
 main .hero a.button.secondary:any-link {
   background: transparent;
   border: 2px solid rgb(255 255 255 / 50%);
   color: var(--background-color);
 }
 
-.hero a.button.secondary:hover,
 main .hero a.button.secondary:any-link:hover {
   border-color: var(--background-color);
   background-color: var(--accent-color);

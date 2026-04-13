@@ -26,25 +26,40 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/hero-full.js
   function parse(element, { document: document2 }) {
     const bgImage = element.querySelector(".hero-bg img");
-    const eyebrow = element.querySelector(".hero-eyebrow");
-    const heading = element.querySelector("h1, .h1-heading");
-    const description = element.querySelector(".hero-lead, .paragraph-xl");
-    const ctaLinks = element.querySelectorAll(".button-group a");
+    const inner = element.querySelector(".hero-content-inner") || element.querySelector(".hero-content");
     const cells = [];
     if (bgImage) {
       cells.push([bgImage]);
     }
     const contentCell = [];
-    if (eyebrow) contentCell.push(eyebrow);
+    const eyebrow = inner && (inner.querySelector(".tag") || inner.querySelector(".hero-eyebrow"));
+    if (eyebrow) {
+      const p = document2.createElement("p");
+      p.textContent = eyebrow.textContent.trim();
+      contentCell.push(p);
+    }
+    const heading = element.querySelector("h1, .h1-heading");
     if (heading) contentCell.push(heading);
-    if (description) contentCell.push(description);
-    ctaLinks.forEach((link) => {
-      const label = link.querySelector(".button-label");
-      if (label) {
-        link.textContent = label.textContent.trim();
-      }
-      contentCell.push(link);
-    });
+    const lead = element.querySelector(".hero-lead, .paragraph-xl");
+    if (lead) contentCell.push(lead);
+    const btnGroup = element.querySelector(".button-group");
+    if (btnGroup) {
+      const links = btnGroup.querySelectorAll("a");
+      links.forEach((link, i) => {
+        const label = link.querySelector(".button-label");
+        if (label) link.textContent = label.textContent.trim();
+        const p = document2.createElement("p");
+        const wrapper = document2.createElement(i === 0 ? "strong" : "em");
+        wrapper.appendChild(link.cloneNode(true));
+        p.appendChild(wrapper);
+        contentCell.push(p);
+      });
+    } else {
+      const splitButtons = element.querySelectorAll("p > strong > a, p > em > a");
+      splitButtons.forEach((link) => {
+        contentCell.push(link.closest("p"));
+      });
+    }
     if (contentCell.length > 0) {
       cells.push([contentCell]);
     }
@@ -152,14 +167,28 @@ var CustomImportScript = (() => {
 
   // tools/importer/parsers/columns-gallery.js
   function parse4(element, { document: document2 }) {
-    const images = element.querySelectorAll(".gallery-img, :scope > img");
-    const row = [];
-    images.forEach((img) => {
-      row.push(img);
+    const gridImages = element.querySelectorAll(".gallery-img, :scope > img");
+    const row1 = [];
+    gridImages.forEach((img) => {
+      row1.push(img);
     });
     const cells = [];
-    if (row.length > 0) {
-      cells.push(row);
+    if (row1.length > 0) {
+      cells.push(row1);
+    }
+    const parent = element.parentElement;
+    if (parent) {
+      const wideImgWrapper = parent.querySelector(".gallery-img--wide") || parent.querySelector(".utility-margin-top-lg .gallery-img--wide") || parent.querySelector(".utility-margin-top-lg > img");
+      let nextEl = element.nextElementSibling;
+      while (nextEl) {
+        const wideImg = nextEl.querySelector(".gallery-img--wide") || (nextEl.classList && nextEl.classList.contains("gallery-img--wide") ? nextEl : null) || (nextEl.tagName === "IMG" ? nextEl : null);
+        if (wideImg) {
+          cells.push([wideImg]);
+          nextEl.remove();
+          break;
+        }
+        nextEl = nextEl.nextElementSibling;
+      }
     }
     const block = WebImporter.Blocks.createBlock(document2, {
       name: "Gallery",
@@ -314,75 +343,143 @@ var CustomImportScript = (() => {
   function parse9(element, { document: document2 }) {
     const tabButtons = element.querySelectorAll(".tab-menu-link");
     const tabPanes = element.querySelectorAll(".tab-pane");
-    const cells = [];
+    const fragment = document2.createDocumentFragment();
+    const parentSection = element.closest(".section, section");
+    if (parentSection) {
+      const sectionHeading = parentSection.querySelector(".section-heading");
+      if (sectionHeading) {
+        const h2 = document2.createElement("h2");
+        h2.textContent = sectionHeading.textContent.trim();
+        fragment.appendChild(h2);
+        fragment.appendChild(document2.createElement("hr"));
+        sectionHeading.remove();
+      }
+    }
     tabButtons.forEach((btn, i) => {
       const pane = tabPanes[i];
       if (!pane) return;
       const label = btn.textContent.trim();
-      cells.push([label, pane]);
+      const section = document2.createElement("div");
+      const h3 = document2.createElement("h3");
+      h3.textContent = label;
+      section.appendChild(h3);
+      const articleCards = pane.querySelectorAll(".article-card");
+      const cardCells = [];
+      articleCards.forEach((card) => {
+        const img = card.querySelector(".article-card-image img");
+        const bodyCol = document2.createElement("div");
+        const tag = card.querySelector(".tag");
+        if (tag) {
+          const tagP = document2.createElement("p");
+          tagP.textContent = tag.textContent.trim();
+          bodyCol.appendChild(tagP);
+        }
+        const heading = card.querySelector("h3, h4, h5, h6");
+        if (heading) {
+          const h = document2.createElement("h3");
+          const href = card.getAttribute("href");
+          if (href) {
+            const a = document2.createElement("a");
+            a.href = href;
+            a.textContent = heading.textContent.trim();
+            h.appendChild(a);
+          } else {
+            h.textContent = heading.textContent.trim();
+          }
+          bodyCol.appendChild(h);
+        }
+        const desc = card.querySelector(".article-card-body > p");
+        if (desc) {
+          const p = document2.createElement("p");
+          p.textContent = desc.textContent.trim();
+          bodyCol.appendChild(p);
+        }
+        cardCells.push([img || "", bodyCol]);
+      });
+      if (cardCells.length > 0) {
+        const cardsBlock = WebImporter.Blocks.createBlock(document2, {
+          name: "Cards (cards-article)",
+          cells: cardCells
+        });
+        section.appendChild(cardsBlock);
+      }
+      const metaTable = WebImporter.Blocks.createBlock(document2, {
+        name: "Section Metadata",
+        cells: [["style", "tabs"]]
+      });
+      section.appendChild(metaTable);
+      section.appendChild(document2.createElement("hr"));
+      fragment.appendChild(section);
     });
-    const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Tabs",
-      cells
-    });
-    element.replaceWith(block);
+    element.replaceWith(fragment);
   }
 
   // tools/importer/parsers/tabs-team.js
   function parse10(element, { document: document2 }) {
-    const cells = [];
     const tabButtons = element.querySelectorAll(".tab-menu .tab-menu-link");
     const tabPanes = element.querySelectorAll(".tab-pane");
-    tabButtons.forEach((button, i) => {
-      const tabLabel = document2.createElement("div");
-      tabLabel.textContent = button.textContent.trim();
+    const fragment = document2.createDocumentFragment();
+    const sectionHeading = element.querySelector(".section-heading");
+    if (sectionHeading) {
+      const h2 = document2.createElement("h2");
+      h2.textContent = sectionHeading.textContent.trim();
+      fragment.appendChild(h2);
+      fragment.appendChild(document2.createElement("hr"));
+      sectionHeading.remove();
+    }
+    tabButtons.forEach((btn, i) => {
       const pane = tabPanes[i];
+      if (!pane) return;
+      const label = btn.textContent.trim();
+      const section = document2.createElement("div");
+      const h3 = document2.createElement("h3");
+      h3.textContent = label;
+      section.appendChild(h3);
       const profileCells = [];
-      if (pane) {
-        const avatarCol = document2.createElement("div");
-        const profileImg = pane.querySelector(".profile-circle img");
-        if (profileImg) {
-          avatarCol.appendChild(profileImg.cloneNode(true));
-        }
-        const name = pane.querySelector(".profile-name");
-        if (name) {
-          const nameP = document2.createElement("p");
-          nameP.textContent = name.textContent.trim();
-          avatarCol.appendChild(nameP);
-        }
-        const textCol = document2.createElement("div");
-        const role = pane.querySelector(".profile-name + p");
-        if (role) {
-          const em = document2.createElement("em");
-          em.textContent = role.textContent.trim();
-          const p = document2.createElement("p");
-          p.appendChild(em);
-          textCol.appendChild(p);
-        }
-        const bioContainer = pane.querySelector(".team-profile-bio");
-        if (bioContainer) {
-          const paragraphs = bioContainer.querySelectorAll("p");
-          paragraphs.forEach((para) => {
-            const newP = document2.createElement("p");
-            newP.textContent = para.textContent.trim();
-            textCol.appendChild(newP);
-          });
-        }
-        profileCells.push([avatarCol, textCol]);
+      const avatarCol = document2.createElement("div");
+      const profileImg = pane.querySelector(".profile-circle img");
+      if (profileImg) {
+        avatarCol.appendChild(profileImg.cloneNode(true));
       }
-      const nestedBlock = WebImporter.Blocks.createBlock(document2, {
+      const name = pane.querySelector(".profile-name");
+      if (name) {
+        const nameP = document2.createElement("p");
+        nameP.textContent = name.textContent.trim();
+        avatarCol.appendChild(nameP);
+      }
+      const textCol = document2.createElement("div");
+      const role = pane.querySelector(".profile-name + p");
+      if (role) {
+        const em = document2.createElement("em");
+        em.textContent = role.textContent.trim();
+        const p = document2.createElement("p");
+        p.appendChild(em);
+        textCol.appendChild(p);
+      }
+      const bioContainer = pane.querySelector(".team-profile-bio");
+      if (bioContainer) {
+        const paragraphs = bioContainer.querySelectorAll("p");
+        paragraphs.forEach((para) => {
+          const newP = document2.createElement("p");
+          newP.textContent = para.textContent.trim();
+          textCol.appendChild(newP);
+        });
+      }
+      profileCells.push([avatarCol, textCol]);
+      const profileBlock = WebImporter.Blocks.createBlock(document2, {
         name: "Team Profile",
         cells: profileCells
       });
-      const tabContent = document2.createElement("div");
-      tabContent.appendChild(nestedBlock);
-      cells.push([tabLabel, tabContent]);
+      section.appendChild(profileBlock);
+      const metaTable = WebImporter.Blocks.createBlock(document2, {
+        name: "Section Metadata",
+        cells: [["style", "tabs"]]
+      });
+      section.appendChild(metaTable);
+      section.appendChild(document2.createElement("hr"));
+      fragment.appendChild(section);
     });
-    const block = WebImporter.Blocks.createBlock(document2, {
-      name: "Tabs",
-      cells
-    });
-    element.replaceWith(block);
+    element.replaceWith(fragment);
   }
 
   // tools/importer/parsers/ticker.js
@@ -529,6 +626,21 @@ var CustomImportScript = (() => {
         "link",
         "iframe"
       ]);
+      element.querySelectorAll(".button-group").forEach((group) => {
+        const links = group.querySelectorAll("a");
+        const { document: document2 } = payload;
+        const fragment = document2.createDocumentFragment();
+        links.forEach((link, i) => {
+          const label = link.querySelector(".button-label");
+          if (label) link.textContent = label.textContent.trim();
+          const p = document2.createElement("p");
+          const wrapper = document2.createElement(i === 0 ? "strong" : "em");
+          wrapper.appendChild(link.cloneNode(true));
+          p.appendChild(wrapper);
+          fragment.appendChild(p);
+        });
+        group.replaceWith(fragment);
+      });
     }
     if (hookName === TransformHook.afterTransform) {
       const sourceUrl = payload.params && payload.params.originalURL;

@@ -18,23 +18,4 @@ export default function decorate(block) {
   } else if (rows.length === 1) {
     block.classList.add('no-image');
   }
-
-  // Decorate CTA links as buttons (links not wrapped in strong/em)
-  const content = block.querySelector(':scope > div');
-  if (content) {
-    let pastHeading = false;
-    let ctaIndex = 0;
-    [...content.children].forEach((child) => {
-      if (child.matches('h1, h2, h3')) pastHeading = true;
-      if (pastHeading && child.matches('p')
-        && child.children.length === 1
-        && child.firstElementChild?.tagName === 'A') {
-        const link = child.firstElementChild;
-        link.classList.add('button');
-        link.classList.add(ctaIndex === 0 ? 'accent' : 'secondary');
-        child.classList.add('button-wrapper');
-        ctaIndex += 1;
-      }
-    });
-  }
 }

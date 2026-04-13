@@ -1,11 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 
-/* Gallery — Photo grid with flexible layout
- * Merged: wknd-import gallery structure + boilerplate field-gallery visual design
- * Class names match wknd-import JS expectations.
- */
+/* Gallery — Photo grid with flexible layout */
 
-/* --- Local design tokens (from boilerplate, mapped to wknd-import tokens) --- */
 .gallery-container {
   --gallery-gap: var(--gap-lg, 24px);
   --gallery-radius: var(--card-border-radius, 20px);
@@ -20,6 +16,12 @@
 }
 
 /* --- Image grid rows --- */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gallery-gap);
+}
+
 .gallery > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -41,37 +43,16 @@
   display: block;
 }
 
-/* Wide/full image — last row when there are multiple rows */
+/* Wide image — last row when there are multiple rows */
 .gallery > div:last-child:not(:first-child) {
   grid-template-columns: 1fr;
-  margin-top: 0;
-}
-
-.gallery > div:last-child:not(:first-child) picture {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  border-radius: var(--gallery-radius);
 }
 
 .gallery > div:last-child:not(:first-child) img {
   height: var(--gallery-wide-height);
 }
 
-/* Standalone images at block root (outside row divs) */
-.gallery > p {
-  margin: var(--gallery-gap) 0 0;
-}
-
-.gallery > p img {
-  width: 100%;
-  height: var(--gallery-wide-height);
-  object-fit: cover;
-  border-radius: var(--gallery-radius);
-  display: block;
-}
-
-/* --- Gallery section: heading row layout (h2 left, button right) --- */
+/* --- Gallery section: heading row layout (h2 left, link right) --- */
 .gallery-container > .default-content-wrapper {
   display: flex;
   align-items: baseline;
@@ -91,7 +72,6 @@
   flex-shrink: 0;
 }
 
-/* Section link — heading-font, small, bold, underlined (boilerplate refinement) */
 .gallery-container > .default-content-wrapper a {
   font-family: var(--heading-font-family);
   font-size: 14px;
@@ -101,13 +81,10 @@
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
   white-space: nowrap;
+  color: var(--background-color);
 }
 
-/* Reset button styling on links inside gallery section header */
-.gallery-container > .default-content-wrapper .button-container {
-  display: inline;
-}
-
+/* Reset button styling on section header links */
 .gallery-container > .default-content-wrapper a.button:any-link {
   background: none;
   border: none;
@@ -120,26 +97,12 @@
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.84px;
+  color: var(--background-color);
 }
 
 .gallery-container > .default-content-wrapper a.button:hover {
   transform: none;
   box-shadow: none;
-}
-
-/* Gallery section: wide image in default content (outside gallery block) */
-.gallery-container > .default-content-wrapper:last-child {
-  display: block;
-  margin-top: var(--gallery-gap);
-  margin-bottom: 0;
-}
-
-.gallery-container > .default-content-wrapper:last-child img {
-  width: 100%;
-  height: var(--gallery-wide-height);
-  object-fit: cover;
-  border-radius: var(--gallery-radius);
-  display: block;
 }
 
 /* --- Responsive --- */

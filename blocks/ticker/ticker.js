@@ -6,17 +6,34 @@ export default function decorate(block) {
     ? paragraphs.map((p) => p.textContent.trim()).filter(Boolean)
     : [...block.children].map((row) => row.textContent.trim()).filter(Boolean);
   block.textContent = '';
+  block.setAttribute('aria-hidden', 'true');
 
   const track = document.createElement('div');
   track.className = 'ticker-track';
 
-  // Create items with separators, duplicated for seamless loop
-  const content = items.join(' · ');
-  const span1 = document.createElement('span');
-  span1.textContent = `${content} · `;
-  const span2 = document.createElement('span');
-  span2.textContent = `${content} · `;
+  // Build individual spans with separator spans, duplicated for seamless loop
+  function appendItems(container) {
+    items.forEach((item, i) => {
+      if (i > 0) {
+        const sep = document.createElement('span');
+        sep.className = 'ticker-sep';
+        sep.textContent = '·';
+        container.append(sep);
+      }
+      const span = document.createElement('span');
+      span.textContent = item;
+      container.append(span);
+    });
+    // Trailing separator for seamless loop
+    const sep = document.createElement('span');
+    sep.className = 'ticker-sep';
+    sep.textContent = '·';
+    container.append(sep);
+  }
 
-  track.append(span1, span2);
+  // Duplicate content for seamless infinite scroll
+  appendItems(track);
+  appendItems(track);
+
   block.append(track);
 }

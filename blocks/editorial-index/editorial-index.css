@@ -20,17 +20,29 @@
   font-weight: 700;
   color: var(--accent-color);
   letter-spacing: -0.03em;
-  line-height: 1;
+  line-height: 48px;
 }
 
-/* content column */
+/* strip margin from any <p> EDS wraps around the number text */
+.editorial-index > div > div:first-child p {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+/* content column — align heading top with number top */
 .editorial-index > div > div:last-child h3 {
-  margin-bottom: var(--gap-md);
+  font-size: 24px;
+  line-height: 1.1;
+  margin: 0 0 12px;
 }
 
 .editorial-index > div > div:last-child p {
   color: var(--text-color-muted);
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 @media (width >= 900px) {
@@ -41,5 +53,6 @@
 
   .editorial-index > div > div:first-child {
     font-size: 56px;
+    line-height: 56px;
   }
 }

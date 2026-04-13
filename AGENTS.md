@@ -195,10 +195,10 @@ See `PROJECT.md` for full project state (blocks, variants, pages, design tokens,
 ### Block Architecture
 
 This project uses a mix of **standalone blocks** and **consolidated block families** with CSS variants.
-- 13 block folders total: `hero`, `cards`, `columns`, `tabs`, `featured-article`, `editorial-index`, `gallery`, `faq-list`, `ticker`, `team-profile`, `header`, `footer`, `fragment`
+- 12 block folders total: `hero`, `cards`, `columns`, `featured-article`, `editorial-index`, `gallery`, `faq-list`, `ticker`, `team-profile`, `header`, `footer`, `fragment`
 - **Standalone blocks** (own folder, no variants): `featured-article`, `editorial-index`, `gallery`, `faq-list`, `ticker`, `team-profile`
 - **Block families with variants**: `hero (article)`, `cards (cards-article, cards-feature)`, `columns (columns-promo, columns-pullquote, columns-about)`
-- **Tabs** is a generic tab container that can nest any block inside its panels (e.g., `team-profile` block nested inside tabs for the team page)
+- **Tabs** is a **section style** (not a block). Consecutive sections with `style: tabs` are grouped into a tabbed container by `decorateTabSections()` in `scripts.js`. Any block can be placed inside a tab panel since each panel is a full section. CSS is in `styles/lazy-styles.css`.
 - The `hero` block base is the full-bleed overlay hero. `hero (article)` is the blog article variant.
 - Variant names for columns/cards start with the base block name: `columns (columns-promo)`, `cards (cards-article)`
 - EDS loads `blocks/{base-name}/{base-name}.js` regardless of which variant is used
@@ -335,7 +335,7 @@ A page with any random set of sections and blocks in any order must import corre
 - Parsers are self-contained: each receives only its matched DOM element and queries internal structure. No parser knows what page it's on or what other blocks exist.
 
 **Registry ordering rules (to prevent false matches):**
-1. Container blocks before their potential children (e.g., `tabs` before `cards-article`, since tabs can contain nested blocks)
+1. Container blocks before their potential children (e.g., `tabs` sections before `cards-article`, since tabs can contain nested blocks)
 2. More specific variants before generic ones (e.g., `hero (article)` before `hero`, `cards-feature` before `gallery`)
 3. Descendant filtering: elements nested inside already-matched blocks are automatically skipped
 

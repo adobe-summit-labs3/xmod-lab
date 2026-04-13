@@ -14,7 +14,6 @@ main > .section.ticker-container {
 .ticker {
   overflow: hidden;
   white-space: nowrap;
-  background: var(--background-color);
   border-top: 1px solid var(--accent-color);
   border-bottom: 1px solid var(--accent-color);
   padding: 16px 0;
@@ -23,11 +22,10 @@ main > .section.ticker-container {
 .ticker .ticker-track {
   display: inline-flex;
   align-items: center;
-  gap: var(--gap-xl);
+  gap: 32px;
   white-space: nowrap;
   animation: ticker-scroll 40s linear infinite;
   width: max-content;
-  line-height: 32px;
 }
 
 .ticker .ticker-track span {
@@ -35,20 +33,14 @@ main > .section.ticker-container {
   font-family: var(--heading-font-family);
   font-size: 24px;
   font-weight: 700;
-  letter-spacing: -0.64px;
+  letter-spacing: -0.48px;
   line-height: 32px;
   color: var(--dark-color);
 }
 
-/* separator dots */
-.ticker .ticker-track span.ticker-separator,
+/* separator dots — accent orange */
 .ticker .ticker-track .ticker-sep {
   color: var(--accent-color);
-  font-family: var(--heading-font-family);
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: -0.64px;
 }
 
 @keyframes ticker-scroll {
@@ -69,11 +61,5 @@ main > .section.ticker-container {
 
   .ticker {
     overflow-x: auto;
-  }
-}
-
-@media (width >= 900px) {
-  .ticker .ticker-track span {
-    font-size: 32px;
   }
 }

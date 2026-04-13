@@ -41,9 +41,7 @@
   /* spacing */
   --section-padding: 48px 0;
   --container-max-width: 1200px;
-  --content-max-width: var(--container-max-width);
   --container-narrow-max-width: 768px;
-  --narrow-max-width: var(--container-narrow-max-width);
   --container-padding: 0 24px;
   --gap-sm: 8px;
   --gap-md: 16px;
@@ -61,7 +59,7 @@
   --button-font-weight: 700;
   --button-letter-spacing: 0.98px;
   --button-border-radius: 9999px;
-  --button-padding: 12px 32px;
+  --button-padding: 13px 32px 11px;
   --button-transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s,
     color 0.15s, border-color 0.15s;
   --btn-shadow: var(--accent-color);
@@ -79,10 +77,10 @@
   --card-hover-shadow: 0 4px 20px rgb(0 0 0 / 8%);
   --card-hover-transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
 
-  /* tag pill shared patterns */
-  --tag-padding: 4px 12px;
-  --tag-font-size: 12px;
-  --tag-letter-spacing: 0.6px;
+  /* tag pill shared patterns — asymmetric padding optically centers uppercase text */
+  --tag-padding: 5px 8px 3px;
+  --tag-font-size: 10.4px;
+  --tag-letter-spacing: 0.52px;
 
   /* dark section / overlay text */
   --text-on-dark: rgb(255 255 255 / 85%);
@@ -151,6 +149,9 @@ body.appear {
 
 header {
   height: var(--nav-height);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 header .header,
@@ -345,7 +346,7 @@ p.button-wrapper {
   margin: 0;
 }
 
-/* Decorated buttons (via p.button-container > a.button) */
+/* Decorated buttons (via p.button-wrapper > a.button) */
 a.button:any-link,
 button.button {
   box-sizing: border-box;
@@ -587,9 +588,6 @@ main > .section.accent > div > p {
 main > .section.accent .button-wrapper {
   display: inline-block;
   margin: 4px 8px;
-}
-
-main > .section.accent .button-container {
   justify-content: center;
 }
 
@@ -616,18 +614,23 @@ main .section.narrow > div {
   max-width: var(--container-narrow-max-width);
 }
 
-/* --- EYEBROW PATTERN: first p before h2 in dark/accent sections --- */
+/* --- EYEBROW PILL: first p before h2 in dark/accent sections --- */
 
 main .section.dark > div > p:first-child,
 main .section.accent > div > p:first-child {
+  display: inline-flex;
   font-family: var(--heading-font-family);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
+  font-size: var(--tag-font-size);
+  font-weight: 600;
+  letter-spacing: var(--tag-letter-spacing);
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  padding: var(--tag-padding);
+  border-radius: var(--button-border-radius);
 }
 
-main .section.dark > div > p:first-child {
-  color: var(--text-on-dark);
+main .section.accent > div > p:first-child {
+  background-color: var(--dark-color);
 }
 
 /* Body paragraphs in dark/narrow sections */
@@ -642,13 +645,13 @@ main .section.dark.narrow h2 {
 
 /* --- ARTICLE BODY --- */
 
-/* article body — narrow reading column after hero-article */
-.hero-container:has(.hero-article) + .section > div {
+/* article body — narrow reading column after hero (article) */
+.hero-container:has(.article) + .section > div {
   max-width: var(--container-narrow-max-width);
 }
 
 /* image captions in article body */
-.hero-container:has(.hero-article) + .section > div > p:has(> img) + p {
+.hero-container:has(.article) + .section > div > p:has(> img) + p {
   font-size: var(--body-font-size-s);
   color: var(--text-color-muted);
   font-style: italic;
@@ -696,101 +699,6 @@ a.text-link:hover {
 /* In dark sections, text-links should be white */
 main > .section.dark a.text-link {
   color: var(--background-color);
-}
-
-/* --- SUBSECTION OVERRIDES --- */
-
-/* Override section > div constraint for subsections */
-main > .section > .subsection {
-  max-width: none;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  padding: 48px 24px;
-  box-sizing: border-box;
-}
-
-main > .section > .subsection > * {
-  max-width: var(--container-max-width);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Default (white) subsection — Quick Answers */
-.subsection-default {
-  background-color: var(--background-color);
-}
-
-/* Use high specificity to override .section.dark color inheritance */
-main > .section.dark .subsection-default h1,
-main > .section.dark .subsection-default h2,
-main > .section.dark .subsection-default h3,
-main > .section.dark .subsection-default h4,
-main > .section.dark .subsection-default h5,
-main > .section.dark .subsection-default h6 {
-  color: var(--dark-color);
-}
-
-main > .section.dark .subsection-default p,
-main > .section.dark .subsection-default li,
-main > .section.dark .subsection-default summary,
-main > .section.dark .subsection-default summary p,
-main > .section.dark .subsection-default .accordion-faq-item-body p {
-  color: var(--text-color);
-}
-
-main > .section.dark .subsection-default a.button.primary {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--background-color);
-  box-shadow: 3px 3px 0 var(--accent-color);
-}
-
-main > .section.dark .subsection-default a.text-link {
-  color: var(--accent-color);
-}
-
-main > .section.dark .subsection-default a:any-link:not(.button, .text-link) {
-  color: var(--accent-color);
-}
-
-/* Focus ring reset for light subsections */
-main > .section.dark .subsection-default *:focus-visible,
-main > .section.dark .subsection-secondary *:focus-visible {
-  outline-color: var(--dark-color);
-}
-
-/* Secondary (cream) subsection — How We Work */
-.subsection-secondary {
-  background-color: var(--light-color);
-}
-
-main > .section.dark .subsection-secondary h1,
-main > .section.dark .subsection-secondary h2,
-main > .section.dark .subsection-secondary h3,
-main > .section.dark .subsection-secondary h4,
-main > .section.dark .subsection-secondary h5,
-main > .section.dark .subsection-secondary h6 {
-  color: var(--dark-color);
-}
-
-main > .section.dark .subsection-secondary p,
-main > .section.dark .subsection-secondary li {
-  color: var(--text-color);
-}
-
-/* Quick Answers heading + FAQ link side by side */
-.subsection-default > .default-content-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-@media (width >= 900px) {
-  main > .section > .subsection {
-    padding: 64px 32px;
-  }
 }
 
 /* --- REDUCED MOTION — ACCESSIBILITY --- */

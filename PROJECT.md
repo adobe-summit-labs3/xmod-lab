@@ -5,7 +5,7 @@
 
 ---
 
-## Blocks (13 total)
+## Blocks (12 total) + 1 Section Style
 
 Mix of standalone blocks and block families with CSS variants.
 
@@ -16,7 +16,7 @@ Mix of standalone blocks and block families with CSS variants.
 | `columns` | `columns-about`, `columns-promo`, `columns-pullquote` | 3 variants in one file. `columns-promo` uses `:has()` for narrow container. `columns-pullquote` has pull-quote dark panel. Shared internal class: `columns-img-col`. |
 | `featured-article` | _(none)_ | Standalone block. Image + content side-by-side with tag pill, CTA button. Internal class: `featured-article-img-col`. |
 | `editorial-index` | _(none)_ | Standalone block. Numbered items with large accent numbers. Grid layout: number + content. |
-| `tabs` | _(none)_ | Generic tab container. Can nest any block inside panels. Base has inline card grid styling for activity browser. |
+| `tabs` | _(section style)_ | **Not a block** — section style in `lazy-styles.css`. Consecutive sections with `style: tabs` are grouped into a tabbed container by `decorateTabSections()` in `scripts.js`. Each panel is a full section that can contain any blocks. |
 | `team-profile` | _(none)_ | Standalone block. Circular avatar + name/role + bio. Typically nested inside `tabs` on team pages. |
 | `gallery` | _(none)_ | Standalone block. Photo grid. |
 | `faq-list` | _(none)_ | Uses native `<details>/<summary>` with animated open/close. |
@@ -100,12 +100,12 @@ Usage counts: dark (20), secondary (11), accent (9).
 ### Shared Component Tokens
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--card-border-radius` | `20px` | Cards, columns-promo, sidebar, gallery, tabs panels |
-| `--card-hover-shadow` | `0 4px 20px rgb(0 0 0 / 8%)` | Hover shadow on cards, promo, tab cards |
+| `--card-border-radius` | `20px` | Cards, columns-promo, pullquote, gallery, featured-article |
+| `--card-hover-shadow` | `0 4px 20px rgb(0 0 0 / 8%)` | Hover shadow on cards, promo |
 | `--card-hover-transition` | `background-color 0.15s, border-color 0.15s, box-shadow 0.15s` | Shared card hover transition |
-| `--tag-padding` | `4px 12px` | Tag pill padding (cards, columns-featured, hero-article) |
-| `--tag-font-size` | `12px` | Tag pill font size |
-| `--tag-letter-spacing` | `0.6px` | Tag pill letter spacing |
+| `--tag-padding` | `5px 8px 3px` | Tag pill padding — asymmetric for optical centering of uppercase text |
+| `--tag-font-size` | `10.4px` | Tag pill font size |
+| `--tag-letter-spacing` | `0.52px` | Tag pill letter spacing |
 | `--text-on-dark` | `rgb(255 255 255 / 85%)` | Paragraph text on dark backgrounds |
 | `--text-on-dark-muted` | `rgb(255 255 255 / 55%)` | Secondary text on dark backgrounds |
 | `--glass-bg` | `rgb(255 255 255 / 6%)` | Glass card background (dark sections) |
@@ -164,7 +164,7 @@ Primary (black + amber shadow), Ghost (outline + amber shadow), Accent (amber + 
 Single unified import script (`import.js`) with content-driven block detection via `BLOCK_REGISTRY`.
 
 ### Parsers (tools/importer/parsers/) — 14 files
-`hero-full.js`, `hero-article.js`, `featured-article.js`, `editorial-index.js`, `columns-gallery.js`, `columns-about.js`, `columns-sidebar.js`, `columns-promo.js`, `cards-article.js`, `cards-feature.js`, `tabs-activity.js`, `tabs-team.js`, `faq-list.js`, `ticker.js`
+`hero-full.js`, `hero-article.js`, `featured-article.js`, `editorial-index.js`, `columns-gallery.js`, `columns-about.js`, `columns-sidebar.js` (outputs `columns-pullquote`), `columns-promo.js`, `cards-article.js`, `cards-feature.js`, `tabs-activity.js`, `tabs-team.js`, `faq-list.js`, `ticker.js`
 
 Parser output names (what goes into content HTML):
 - `Hero` → `class="hero"` (base hero, no variant — used on all landing/hub/info pages)
@@ -177,8 +177,8 @@ Parser output names (what goes into content HTML):
 - `Columns (columns-promo)` → `class="columns columns-promo"`
 - `Columns (columns-pullquote)` → `class="columns columns-pullquote"`
 - `Gallery` → `class="gallery"`
-- `Tabs` → `class="tabs"` (generic container, can nest blocks)
-- `Team Profile` → `class="team-profile"` (nested inside tabs on about page)
+- Tabs → section style `tabs` (consecutive sections grouped into tabbed container)
+- `Team Profile` → `class="team-profile"` (used inside tabs sections on about page)
 - `Faq List` → `class="faq-list"` (standalone block)
 - `Ticker` → `class="ticker"`
 
@@ -188,17 +188,17 @@ Parser output names (what goes into content HTML):
 
 ### Bundling
 ```bash
-npx esbuild tools/importer/import-{name}.js \
+npx esbuild tools/importer/import.js \
   --bundle --format=iife --global-name=CustomImportScript \
-  --platform=browser --outfile=tools/importer/import-{name}.bundle.js
+  --platform=browser --outfile=tools/importer/import.bundle.js
 ```
 **Critical:** Must use `--format=iife --global-name=CustomImportScript`. ESM format will fail.
 
 ### Running imports
 ```bash
 node /home/node/.excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js \
-  --import-script tools/importer/import-{name}.bundle.js \
-  --urls tools/importer/urls-{name}.txt
+  --import-script tools/importer/import.bundle.js \
+  --urls tools/importer/urls.txt
 ```
 
 ---
@@ -221,11 +221,11 @@ Detects image-only columns and adds `columns-img-col` class:
 ### featured-article.js
 Same image detection pattern as columns.js but uses `featured-article-img-col` class.
 
-### tabs.js
-Generic tab container. Handles tab UI (buttons, ARIA, panel switching). Discovers and loads nested blocks inside tab panels. Also restructures inline card-like content (images + headings) into card divs for activity browser panels.
-
 ### team-profile.js
 Detects avatar image column and adds `team-profile-avatar` / `team-profile-text` classes.
+
+### Tabs (section style — no block JS)
+Tabs are handled by `decorateTabSections()` in `scripts.js`, not by a block. Consecutive sections with `style: tabs` are grouped into a `.tabs-container` div. The first heading in each section becomes the tab label. CSS is in `styles/lazy-styles.css`. The sliding indicator animates between tabs with an asymmetric ease (leading edge moves first).
 
 ---
 

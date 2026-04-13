@@ -20,6 +20,24 @@ export default function transform(hookName, element, payload) {
       'link',
       'iframe',
     ]);
+
+    // Split .button-group links into separate <p><strong><a> wrappers
+    // so EDS decorates each link as a button
+    element.querySelectorAll('.button-group').forEach((group) => {
+      const links = group.querySelectorAll('a');
+      const { document } = payload;
+      const fragment = document.createDocumentFragment();
+      links.forEach((link, i) => {
+        const label = link.querySelector('.button-label');
+        if (label) link.textContent = label.textContent.trim();
+        const p = document.createElement('p');
+        const wrapper = document.createElement(i === 0 ? 'strong' : 'em');
+        wrapper.appendChild(link.cloneNode(true));
+        p.appendChild(wrapper);
+        fragment.appendChild(p);
+      });
+      group.replaceWith(fragment);
+    });
   }
   if (hookName === TransformHook.afterTransform) {
     // Resolve all relative image URLs to absolute using the source page URL

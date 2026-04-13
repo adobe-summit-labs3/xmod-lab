@@ -1,17 +1,3 @@
-export default function decorate(block) {
-  const cols = [...block.firstElementChild.children];
-  block.classList.add(`gallery-${cols.length}-cols`);
-
-  // setup image columns
-  [...block.children].forEach((row) => {
-    [...row.children].forEach((col) => {
-      const pic = col.querySelector('picture');
-      if (pic) {
-        const picWrapper = pic.closest('div');
-        if (picWrapper && picWrapper.children.length === 1) {
-          picWrapper.classList.add('gallery-img-col');
-        }
-      }
-    });
-  });
+export default function decorate() {
+  // CSS-only block — grid layout and image styling handled entirely by gallery.css
 }
