@@ -1,6 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-import { BRAND_LOGO } from '../../scripts/scripts.js';
+import { BRAND_LOGO, getContentRoot } from '../../scripts/scripts.js';
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
@@ -137,7 +137,7 @@ function buildMegamenuPanel(navItem) {
  */
 export default async function decorate(block) {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${getContentRoot()}/nav`;
   const fragment = await loadFragment(navPath);
 
   block.textContent = '';

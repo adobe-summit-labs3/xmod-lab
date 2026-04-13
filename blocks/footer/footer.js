@@ -1,6 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-import { BRAND_LOGO } from '../../scripts/scripts.js';
+import { BRAND_LOGO, getContentRoot } from '../../scripts/scripts.js';
 
 /**
  * loads and decorates the footer
@@ -8,7 +8,7 @@ import { BRAND_LOGO } from '../../scripts/scripts.js';
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/content/footer';
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `${getContentRoot()}/footer`;
   const fragment = await loadFragment(footerPath);
 
   block.textContent = '';

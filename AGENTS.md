@@ -209,7 +209,7 @@ This project uses a mix of **standalone blocks** and **consolidated block famili
 
 **"Unused in content" does not mean "safe to delete."** Before removing any block, JS file, CSS rule, or class assignment:
 
-1. **Trace JS import dependencies.** A block folder may export functions that other blocks import. Run `grep -r "from.*blockname" blocks/` to check. Example: `blocks/fragment/fragment.js` has zero content usage but `header.js` and `footer.js` both import `loadFragment` from it — deleting it breaks the entire site.
+1. **Trace JS import dependencies.** A block folder may export functions or constants that other blocks import. Run `grep -r "from.*blockname" blocks/` to check. Examples: `blocks/fragment/fragment.js` exports `loadFragment()` used by `header.js` and `footer.js`; `scripts/scripts.js` exports `BRAND_LOGO` used by both `header.js` and `footer.js` for the shared logo SVG.
 2. **Check for auto-blocking.** `scripts.js` `buildAutoBlocks()` may dynamically create blocks not present in any `.plain.html` file.
 3. **Check CSS class consumers before removing JS class assignments.** A class set in JS (e.g., `faq-list-item-body`) may be the only selector target in the corresponding CSS. Search the CSS file before removing.
 4. **Run the linter after every structural deletion** (`npm run lint`). ESLint will catch broken imports immediately.
@@ -335,7 +335,7 @@ Brand column restructuring: first `<a>` in `.footer-top > div:first-child` gets 
 
 ### Nav/Footer Content File Location
 
-Nav and footer content files MUST be at the **workspace root** (`/workspace/nav.plain.html`, `/workspace/footer.plain.html`), NOT in `/content/`. The AEM CLI serves workspace root `.plain.html` at `/{name}.plain.html`, which is the path `loadFragment()` fetches.
+Nav and footer fragment files live at the **workspace root** (`/workspace/nav.plain.html`, `/workspace/footer.plain.html`) so that code sync serves them at `/nav.plain.html` and `/footer.plain.html`. Copies also exist in `/workspace/content/` for local dev convenience. The `loadFragment()` calls in `header.js` and `footer.js` default to `/nav` and `/footer`.
 
 ### Gallery Section CSS Pattern
 
@@ -377,7 +377,7 @@ A page with any random set of sections and blocks in any order must import corre
 
 ### Section Styles
 
-Three section background variants: `dark`, `accent`, `secondary`. Applied via section-metadata in content HTML. Compound modifier `narrow` can be appended (e.g., `dark, narrow`). Styles are auto-detected from source CSS classes — never hardcoded per page.
+Three section background variants: `dark`, `accent`, `secondary`. Two compound modifiers: `narrow` (constrained width) and `center` (centered text + buttons). Compound modifiers can be combined with background styles (e.g., `dark, narrow`, `accent, center`) or used standalone (e.g., `narrow`). Applied via section-metadata in content HTML. Styles are auto-detected from source CSS classes — never hardcoded per page.
 
 ## If all else fails
 

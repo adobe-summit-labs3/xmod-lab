@@ -12,6 +12,33 @@ import {
   loadCSS,
 } from './aem.js';
 
+/**
+ * Resolves a fragment name (e.g. 'nav') to the correct content path.
+ * Derives the content root from the current page path so fragments work
+ * whether content is served from root (/) or a sub-path (/content/).
+ */
+export function getContentRoot() {
+  const { pathname } = window.location;
+  // Find the deepest path segment before the page name that contains content pages
+  // e.g. /content/wknd/about → /content/wknd, /about → /
+  const segments = pathname.split('/').filter(Boolean);
+  // The last segment is the page itself; everything before it is the content root
+  if (segments.length > 1) {
+    // Check if content is nested (e.g. /content/adventures or /content/blog/post)
+    // Walk up to find where nav.plain.html would live (sibling of pages, not inside blog/)
+    // For /content/blog/post → content root is /content
+    // For /content/adventures → content root is /content
+    // For /adventures → content root is /
+    const root = segments.slice(0, -1);
+    // Skip known leaf directories like 'blog'
+    while (root.length > 0 && ['blog'].includes(root[root.length - 1])) {
+      root.pop();
+    }
+    return `/${root.join('/')}`;
+  }
+  return '';
+}
+
 /** Shared brand logo SVG + text used by header and footer */
 export const BRAND_LOGO = `<span class="nav-logo-icon" aria-hidden="true">
   <svg width="100%" height="100%" viewBox="0 0 33 33" preserveAspectRatio="xMidYMid meet">
