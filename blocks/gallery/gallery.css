@@ -122,6 +122,10 @@ main .gallery-container > .default-content-wrapper a.button:hover {
     --gallery-wide-height: 240px;
   }
 
+  .gallery > div {
+    grid-template-columns: 1fr;
+  }
+
   .gallery-container > .default-content-wrapper {
     flex-direction: column;
     gap: var(--gap-sm);

@@ -176,6 +176,23 @@ main .hero a.button.secondary:any-link:hover {
   color: var(--dark-color);
 }
 
+@media (width < 768px) {
+  .section .hero .button-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-sm);
+  }
+
+  .hero .button-wrapper {
+    margin-right: 0;
+  }
+
+  main .hero a.button:any-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 @media (width >= 768px) {
   .hero {
     min-height: 65vh;
