@@ -152,28 +152,51 @@ main .hero a.button:any-link:active {
   box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
 }
 
-/* primary button on hero — accent bg, dark text */
+/* primary button on hero — flashy Vegas gold */
 main .hero a.button.primary:any-link {
-  background: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--dark-color);
+  background: linear-gradient(135deg, #ffd700, #ff8c00, #ffd700);
+  background-size: 200% 200%;
+  animation: vegas-shimmer 2s ease-in-out infinite;
+  border: 2px solid #ffd700;
+  color: #1a0005;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgb(255 215 0 / 30%);
+  box-shadow: 3px 3px 0 0 #b8860b, 0 0 15px rgb(255 215 0 / 40%), 0 0 30px rgb(255 140 0 / 20%);
 }
 
 main .hero a.button.primary:any-link:hover {
-  filter: brightness(0.9);
+  filter: brightness(1.15);
+  box-shadow: 5px 5px 0 0 #b8860b, 0 0 25px rgb(255 215 0 / 60%), 0 0 50px rgb(255 140 0 / 35%);
 }
 
-/* secondary button on hero — white outline, dark shadow */
+main .hero a.button.primary:any-link:active {
+  box-shadow: 0 0 0 #b8860b, 0 0 10px rgb(255 215 0 / 30%);
+}
+
+/* secondary button on hero — neon Vegas pink outline */
 main .hero a.button.secondary:any-link {
   background: transparent;
-  border: 2px solid rgb(255 255 255 / 50%);
-  color: var(--background-color);
+  border: 2px solid #ff1493;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 0 #c71585, 0 0 12px rgb(255 20 147 / 35%), 0 0 25px rgb(255 20 147 / 15%);
 }
 
 main .hero a.button.secondary:any-link:hover {
-  border-color: var(--background-color);
-  background-color: var(--accent-color);
-  color: var(--dark-color);
+  border-color: #ff69b4;
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+  color: #fff;
+  box-shadow: 5px 5px 0 0 #c71585, 0 0 20px rgb(255 20 147 / 50%), 0 0 40px rgb(255 20 147 / 25%);
+}
+
+@keyframes vegas-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @media (width < 768px) {
