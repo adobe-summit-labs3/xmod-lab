@@ -112,7 +112,7 @@ main .gallery-container > .default-content-wrapper a.button:hover {
 /* --- Responsive --- */
 @media (width >= 768px) {
   .gallery > div {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
