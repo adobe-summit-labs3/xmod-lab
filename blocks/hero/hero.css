@@ -152,28 +152,47 @@ main .hero a.button:any-link:active {
   box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
 }
 
-/* primary button on hero — accent bg, dark text */
+/* primary button on hero — vegas neon gold */
 main .hero a.button.primary:any-link {
-  background: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--dark-color);
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  border: 2px solid #ffd700;
+  color: #1a0a00;
+  text-shadow: 0 1px 1px rgb(255 255 255 / 20%);
+  box-shadow:
+    3px 3px 0 0 var(--btn-shadow, var(--dark-color)),
+    0 0 12px rgb(255 215 0 / 40%),
+    0 0 24px rgb(255 140 0 / 20%);
 }
 
 main .hero a.button.primary:any-link:hover {
-  filter: brightness(0.9);
+  background: linear-gradient(135deg, #ffe44d, #ffa033);
+  box-shadow:
+    5px 5px 0 0 var(--btn-shadow, var(--dark-color)),
+    0 0 20px rgb(255 215 0 / 60%),
+    0 0 40px rgb(255 140 0 / 35%);
 }
 
-/* secondary button on hero — white outline, dark shadow */
+/* secondary button on hero — vegas neon outline */
 main .hero a.button.secondary:any-link {
   background: transparent;
-  border: 2px solid rgb(255 255 255 / 50%);
-  color: var(--background-color);
+  border: 2px solid #ff4d6a;
+  color: #ff4d6a;
+  text-shadow: 0 0 6px rgb(255 77 106 / 40%);
+  box-shadow:
+    3px 3px 0 0 var(--btn-shadow, var(--dark-color)),
+    0 0 10px rgb(255 77 106 / 25%),
+    0 0 20px rgb(255 77 106 / 10%);
 }
 
 main .hero a.button.secondary:any-link:hover {
-  border-color: var(--background-color);
-  background-color: var(--accent-color);
-  color: var(--dark-color);
+  border-color: #ff4d6a;
+  background: #ff4d6a;
+  color: #fff;
+  text-shadow: none;
+  box-shadow:
+    5px 5px 0 0 var(--btn-shadow, var(--dark-color)),
+    0 0 18px rgb(255 77 106 / 50%),
+    0 0 36px rgb(255 77 106 / 25%);
 }
 
 @media (width < 768px) {
