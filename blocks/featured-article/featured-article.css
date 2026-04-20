@@ -67,7 +67,7 @@
   border-top: 1px solid var(--border-color-light);
 }
 
-/* style link as dark button */
+/* style link as vibrant Vegas neon button */
 .featured-article .featured-article-content p:last-child a:any-link {
   display: flex;
   align-items: center;
@@ -75,24 +75,26 @@
   font-family: var(--heading-font-family);
   font-size: var(--body-font-size-s);
   font-weight: 700;
-  letter-spacing: 0.98px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   text-decoration: none;
   padding: var(--gap-xs) var(--gap-xl);
-  background-color: var(--dark-color);
-  color: var(--background-color);
+  background: linear-gradient(135deg, #ff2d55, #ff6f00, #ffcc00);
+  color: #fff;
   border-radius: var(--button-border-radius);
-  box-shadow: 3px 3px 0 var(--accent-color);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 0 8px #ff2d55, 0 0 20px rgb(255 45 85 / 40%), 3px 3px 0 #b8001f;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .featured-article .featured-article-content p:last-child a:hover {
-  transform: translateY(-2px);
-  box-shadow: 5px 5px 0 var(--accent-color);
+  transform: translateY(-3px) scale(1.03);
+  background: linear-gradient(135deg, #ff6f00, #ff2d55, #e100ff);
+  box-shadow: 0 0 12px #ff2d55, 0 0 30px rgb(255 45 85 / 60%), 0 0 15px rgb(225 0 255 / 30%), 5px 5px 0 #b8001f;
 }
 
 .featured-article .featured-article-content p:last-child a:active {
-  transform: translateY(0);
-  box-shadow: 0 0 0 var(--accent-color);
+  transform: translateY(0) scale(1);
+  box-shadow: 0 0 4px #ff2d55, 0 0 10px rgb(255 45 85 / 30%), 0 0 0 #b8001f;
 }
 
 @media (width >= 768px) {
