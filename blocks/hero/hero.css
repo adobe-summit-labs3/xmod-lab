@@ -177,6 +177,18 @@ main .hero a.button.primary:any-link {
   color: #fff;
   text-shadow: 0 0 6px rgb(0 0 0 / 40%);
   animation: vegas-neon-pulse 2s ease-in-out infinite;
+  gap: 8px;
+}
+
+/* dice icon on primary hero button */
+main .hero a.button.primary:any-link::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background: url('/icons/dice-snake-eyes.svg') center / contain no-repeat;
+  filter: brightness(0) invert(1);
 }
 
 main .hero a.button.primary:any-link:hover {
@@ -199,6 +211,18 @@ main .hero a.button.secondary:any-link {
   color: #fff;
   text-shadow: 0 0 6px rgb(0 0 0 / 40%);
   animation: vegas-neon-pulse-secondary 2.5s ease-in-out infinite;
+  gap: 8px;
+}
+
+/* fork-knife icon on secondary hero button */
+main .hero a.button.secondary:any-link::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background: url('/icons/fork-knife.svg') center / contain no-repeat;
+  filter: brightness(0) invert(1);
 }
 
 main .hero a.button.secondary:any-link:hover {
