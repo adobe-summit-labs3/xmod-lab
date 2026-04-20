@@ -43,12 +43,12 @@
   display: block;
 }
 
-/* Wide image — last row when there are multiple rows */
-.gallery > div:last-child:not(:first-child) {
+/* Wide image — last row when it has a single image */
+.gallery > div:last-child:not(:first-child):has(> :only-child) {
   grid-template-columns: 1fr;
 }
 
-.gallery > div:last-child:not(:first-child) img {
+.gallery > div:last-child:not(:first-child):has(> :only-child) img {
   height: var(--gallery-wide-height);
 }
 
