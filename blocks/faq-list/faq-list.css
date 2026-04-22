@@ -1,17 +1,18 @@
 /* stylelint-disable no-descending-specificity -- section header + block selectors */
 
-/* FAQ List — Expandable FAQ items with rounded pill borders */
+/* FAQ List — Accordion styled per Figma spec */
 
 .faq-list {
   --faq-max-width: 768px;
-  --faq-question-font-size: var(--body-font-size-m, 18px);
+  --faq-question-font-size: 18px;
   --faq-question-font-weight: 600;
-  --faq-answer-color: var(--text-color-subtle, #3d4f45);
-  --faq-border-color: var(--border-color-light, #ddd8cf);
-  --faq-accent-color: var(--accent-color, #e8651a);
-  --faq-hover-bg: var(--light-color, #f0ece4);
-  --faq-question-padding: var(--gap-md) var(--gap-lg);
-  --faq-answer-padding: 0 var(--gap-lg) var(--gap-md);
+  --faq-answer-color: #3d4f45;
+  --faq-border-color: #e8651a;
+  --faq-accent-color: #e8651a;
+  --faq-summary-bg: #f2ece3;
+  --faq-hover-bg: #e8651a;
+  --faq-question-padding: 16px 24px;
+  --faq-answer-padding: 16px 24px;
   --faq-heading-margin-bottom: var(--gap-xl);
 
   max-width: var(--faq-max-width);
@@ -107,17 +108,24 @@
   background: none;
 }
 
-/* --- FAQ item (details element) — rounded pill with hover accent --- */
+/* --- FAQ item (details element) — rounded pill with accent border --- */
 .faq-list details {
   border: 1px solid var(--faq-border-color);
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: var(--gap-xs);
-  transition: border-color 0.15s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.faq-list details:hover {
-  border-color: var(--faq-accent-color);
+/* Closed hover: dark border, orange fill */
+.faq-list details:not([open]):hover {
+  border-color: #0f1a14;
+  background-color: var(--faq-hover-bg);
+}
+
+/* Open hover: dark border */
+.faq-list details[open]:hover {
+  border-color: #0f1a14;
 }
 
 .faq-list details p {
@@ -142,24 +150,29 @@
   font-weight: var(--faq-question-font-weight);
   text-transform: none;
   letter-spacing: normal;
-  line-height: 1.6;
-  color: var(--dark-color);
-  transition: background-color 0.15s ease;
+  line-height: 1.22;
+  color: #0f1a14;
+  background-color: var(--faq-summary-bg);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .faq-list details summary::-webkit-details-marker {
   display: none;
 }
 
-/* Hover: warm background on question row */
-.faq-list details summary:hover {
+/* Closed hover: orange bg on summary (inherits from details) */
+.faq-list details:not([open]):hover summary {
   background-color: var(--faq-hover-bg);
 }
 
-/* Open state: keep hover background on summary */
+/* Open default: cream bg on summary */
 .faq-list details[open] summary {
+  background-color: var(--faq-summary-bg);
+}
+
+/* Open hover: orange bg on summary */
+.faq-list details[open]:hover summary {
   background-color: var(--faq-hover-bg);
-  border-radius: 15px 15px 0 0;
 }
 
 /* Plus icon → rotates 45° to × when open */
@@ -167,22 +180,36 @@
   content: "+";
   font-size: 20px;
   font-weight: 400;
+  line-height: 1;
   color: var(--faq-accent-color);
   margin-left: var(--gap-md, 16px);
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.2s ease;
 }
 
+/* Closed hover: white icon */
+.faq-list details:not([open]):hover summary::after {
+  color: #fff;
+}
+
+/* Open default: orange icon */
 .faq-list details[open] summary::after {
   transform: rotate(45deg);
+  color: var(--faq-accent-color);
 }
 
-/* --- Answer body — smooth reveal --- */
+/* Open hover: cream icon */
+.faq-list details[open]:hover summary::after {
+  color: #f2ece3;
+}
+
+/* --- Answer body --- */
 .faq-list details .faq-list-item-body {
   padding: var(--faq-answer-padding);
   color: var(--faq-answer-color);
   font-family: var(--body-font-family);
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.69;
 }
 
 .faq-list details .faq-list-item-body a {
@@ -190,7 +217,12 @@
   text-decoration: underline;
 }
 
+/* Open default: cream answer bg */
 .faq-list details[open] .faq-list-item-body {
-  border-top: 1px solid var(--faq-border-color);
-  background-color: var(--background-color);
+  background-color: var(--faq-summary-bg);
+}
+
+/* Open hover: cream answer bg (same) */
+.faq-list details[open]:hover .faq-list-item-body {
+  background-color: var(--faq-summary-bg);
 }
