@@ -7,10 +7,11 @@
   --faq-question-font-size: 18px;
   --faq-question-font-weight: 600;
   --faq-answer-color: var(--text-color-subtle, #3d4f45);
-  --faq-border-color: var(--accent-color, #e8651a);
-  --faq-accent-color: var(--accent-color, #e8651a);
+  --faq-border-color: var(--forest-color, #1a3a2e);
+  --faq-accent-color: var(--forest-color, #1a3a2e);
   --faq-summary-bg: var(--cream-color, #f2ece3);
   --faq-dark-color: var(--dark-color, #0f1a14);
+  --faq-hover-color: #39ff14;
   --faq-question-padding: 16px 24px;
   --faq-answer-padding: 16px 24px;
   --faq-heading-margin-bottom: var(--gap-xl);
@@ -143,13 +144,13 @@
   overflow: hidden;
   margin-bottom: var(--gap-xs);
   background-color: var(--faq-summary-bg);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease 1ms, background-color 0.2s ease 1ms;
 }
 
-/* Hover: dark border + dark outer bg */
+/* Hover: green border + green outer bg */
 .faq-list details:hover {
-  border-color: var(--faq-dark-color);
-  background-color: var(--faq-dark-color);
+  border-color: var(--faq-hover-color);
+  background-color: var(--faq-hover-color);
 }
 
 .faq-list details p {
@@ -177,16 +178,17 @@
   line-height: 1.22;
   color: var(--faq-dark-color);
   background-color: var(--faq-summary-bg);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease 1ms;
 }
 
 .faq-list details summary::-webkit-details-marker {
   display: none;
 }
 
-/* Hover: accent background on summary */
+/* Hover: neon green background on summary */
 .faq-list details:hover summary {
-  background-color: var(--faq-accent-color);
+  background-color: var(--faq-hover-color);
+  color: var(--faq-dark-color);
 }
 
 /* Open state: keep cream bg on summary */
@@ -194,9 +196,10 @@
   background-color: var(--faq-summary-bg);
 }
 
-/* Open + hover: accent bg on summary */
+/* Open + hover: neon green bg on summary */
 .faq-list details[open]:hover summary {
-  background-color: var(--faq-accent-color);
+  background-color: var(--faq-hover-color);
+  color: var(--faq-dark-color);
 }
 
 /* Plus icon → rotates 45° to × when open */
@@ -207,12 +210,12 @@
   color: var(--faq-accent-color);
   margin-left: var(--gap-md, 16px);
   flex-shrink: 0;
-  transition: transform 0.3s ease, color 0.2s ease;
+  transition: transform 0.3s ease 1ms, color 0.2s ease 1ms;
 }
 
-/* Hover closed: icon turns white */
+/* Hover closed: icon turns dark on neon green */
 .faq-list details:hover summary::after {
-  color: #fff;
+  color: var(--faq-dark-color);
 }
 
 /* Open default: icon is accent, rotated */
@@ -221,9 +224,9 @@
   color: var(--faq-accent-color);
 }
 
-/* Open hover: icon turns cream */
+/* Open hover: icon turns dark on neon green */
 .faq-list details[open]:hover summary::after {
-  color: var(--faq-summary-bg);
+  color: var(--faq-dark-color);
 }
 
 /* --- Answer body --- */
