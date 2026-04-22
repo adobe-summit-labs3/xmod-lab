@@ -80,15 +80,6 @@ main > .hero-container {
   max-width: 608px;
 }
 
-.hero h1 .vegas-purple {
-  color: #b44dff;
-  text-shadow: 0 0 12px rgb(180 77 255 / 60%), 0 0 24px rgb(140 40 220 / 30%);
-}
-
-.hero h1 .vegas-gold {
-  color: #ffd700;
-  text-shadow: 0 0 12px rgb(255 215 0 / 60%), 0 0 24px rgb(255 180 0 / 30%);
-}
 
 .hero p:not(.tag-pill) {
   color: var(--text-on-dark);
