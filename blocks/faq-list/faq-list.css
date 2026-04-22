@@ -151,18 +151,29 @@
   display: none;
 }
 
-/* Hover: warm background on question row */
+/* Hover: accent background on question row */
 .faq-list details summary:hover {
-  background-color: var(--faq-hover-bg);
+  background-color: var(--faq-accent-color);
+  color: var(--background-color);
 }
 
-/* Open state: keep hover background on summary */
+.faq-list details summary:hover::after {
+  color: var(--background-color);
+}
+
+/* Open state: accent background on summary */
 .faq-list details[open] summary {
-  background-color: var(--faq-hover-bg);
+  background-color: var(--faq-accent-color);
+  color: var(--background-color);
   border-radius: 15px 15px 0 0;
 }
 
-/* Plus icon → rotates 45° to × when open */
+/* Open + hover inherits open state (already accent) */
+.faq-list details[open]:hover {
+  border-color: var(--faq-accent-color);
+}
+
+/* Plus icon → × when open */
 .faq-list details summary::after {
   content: "+";
   font-size: 20px;
@@ -170,19 +181,22 @@
   color: var(--faq-accent-color);
   margin-left: var(--gap-md, 16px);
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.15s ease;
 }
 
 .faq-list details[open] summary::after {
-  transform: rotate(45deg);
+  content: "×";
+  color: var(--background-color);
+  transform: none;
 }
 
-/* --- Answer body — smooth reveal --- */
+/* --- Answer body — cream background --- */
 .faq-list details .faq-list-item-body {
-  padding: var(--faq-answer-padding);
+  padding: var(--gap-lg);
   color: var(--faq-answer-color);
   font-family: var(--body-font-family);
   line-height: 1.7;
+  background-color: var(--faq-hover-bg);
 }
 
 .faq-list details .faq-list-item-body a {
@@ -191,6 +205,5 @@
 }
 
 .faq-list details[open] .faq-list-item-body {
-  border-top: 1px solid var(--faq-border-color);
-  background-color: var(--background-color);
+  border-top: none;
 }
