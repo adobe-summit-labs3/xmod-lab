@@ -8,7 +8,7 @@
   --faq-question-font-weight: 600;
   --faq-answer-color: var(--text-color-subtle, #3d4f45);
   --faq-border-color: var(--border-color-light, #ddd8cf);
-  --faq-accent-color: var(--accent-color, #e8651a);
+  --faq-accent-color: #1a8a4a;
   --faq-hover-bg: var(--light-color, #f0ece4);
   --faq-question-padding: var(--gap-md) var(--gap-lg);
   --faq-answer-padding: 0 var(--gap-lg) var(--gap-md);

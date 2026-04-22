@@ -45,7 +45,7 @@ function animateAccordion(details, summary) {
 
   summary.addEventListener('click', (e) => {
     e.preventDefault();
-    if (details.open) close();
+    if (details.open) setTimeout(() => close(), 200);
     else open();
   });
 }
