@@ -59,9 +59,15 @@
   --button-letter-spacing: 0.98px;
   --button-border-radius: 9999px;
   --button-padding: 13px 32px 11px;
-  --button-transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s,
-    color 0.15s, border-color 0.15s;
+  --button-transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease,
+    color 0.25s ease, border-color 0.25s ease;
   --btn-shadow: var(--accent-color);
+
+  /* vegas neon palette */
+  --neon-pink: #ff2d95;
+  --neon-gold: #ffd700;
+  --neon-cyan: #00f0ff;
+  --neon-purple: #b026ff;
 
   /* links */
   --link-color: #e8651a;
@@ -364,6 +370,35 @@ p.button-wrapper {
   margin: 0;
 }
 
+/* --- VEGAS NEON KEYFRAMES --- */
+
+@keyframes neon-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 8px var(--neon-pink),
+      0 0 20px rgb(255 45 149 / 40%),
+      3px 3px 0 0 var(--neon-gold);
+  }
+
+  50% {
+    box-shadow:
+      0 0 16px var(--neon-cyan),
+      0 0 40px rgb(0 240 255 / 35%),
+      3px 3px 0 0 var(--neon-gold);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes neon-border-cycle {
+  0%, 100% { border-color: var(--neon-pink); }
+  33% { border-color: var(--neon-cyan); }
+  66% { border-color: var(--neon-purple); }
+}
+
 /* Decorated buttons (via p.button-wrapper > a.button) */
 a.button:any-link {
   box-sizing: border-box;
@@ -372,7 +407,7 @@ a.button:any-link {
   justify-content: center;
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
+  border: 2px solid var(--neon-pink);
   border-radius: var(--button-border-radius);
   padding: var(--button-padding);
   font-family: var(--button-font-family);
@@ -385,46 +420,86 @@ a.button:any-link {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  box-shadow: 3px 3px 0 0 var(--btn-shadow, var(--accent-color));
+  animation: neon-glow-pulse 2.5s ease-in-out infinite;
   transition: var(--button-transition);
 }
 
 a.button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 0 var(--btn-shadow, var(--accent-color));
+  transform: translate(-2px, -2px) scale(1.05);
+  box-shadow:
+    0 0 20px var(--neon-pink),
+    0 0 50px rgb(255 45 149 / 50%),
+    0 0 80px rgb(176 38 255 / 25%),
+    5px 5px 0 0 var(--neon-gold);
   text-decoration: none;
+  animation: none;
 }
 
 a.button:active {
-  transform: translate(0, 0);
-  box-shadow: 0 0 0 0 var(--btn-shadow, var(--accent-color));
+  transform: translate(0, 0) scale(0.97);
+  box-shadow:
+    0 0 6px var(--neon-cyan),
+    0 0 0 0 var(--neon-gold);
 }
 
 
-/* Primary: dark bg, white text */
+/* Primary: hot pink gradient with gold shimmer */
 a.button.primary {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--background-color);
+  border-color: var(--neon-pink);
+  background: linear-gradient(
+    135deg,
+    var(--neon-pink) 0%,
+    #ff6b35 50%,
+    var(--neon-gold) 100%
+  );
+  background-size: 200% auto;
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+  animation: neon-glow-pulse 2.5s ease-in-out infinite, shimmer 3s linear infinite;
 }
 
-/* Secondary/Ghost: transparent bg, border matches context */
+a.button.primary:hover {
+  background: linear-gradient(
+    135deg,
+    var(--neon-gold) 0%,
+    var(--neon-pink) 50%,
+    var(--neon-purple) 100%
+  );
+  background-size: 200% auto;
+}
+
+/* Secondary/Ghost: neon border cycle with transparent bg */
 a.button.secondary {
-  border-color: var(--dark-color);
+  border-color: var(--neon-cyan);
   background-color: transparent;
   color: var(--dark-color);
+  animation: neon-glow-pulse 2.5s ease-in-out infinite, neon-border-cycle 4s linear infinite;
 }
 
 a.button.secondary:hover {
-  background-color: var(--dark-color);
-  color: var(--background-color);
+  background: linear-gradient(
+    135deg,
+    rgb(0 240 255 / 15%),
+    rgb(176 38 255 / 15%)
+  );
+  color: var(--dark-color);
+  border-color: var(--neon-cyan);
+  animation: none;
 }
 
-/* Accent: orange bg, dark text (hero) */
+/* Accent: gold bg with neon glow */
 a.button.accent {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: var(--neon-gold);
+  background: linear-gradient(
+    135deg,
+    var(--neon-gold) 0%,
+    #ffaa00 50%,
+    var(--neon-gold) 100%
+  );
+  background-size: 200% auto;
   color: var(--dark-color);
+  text-shadow: 0 1px 1px rgb(255 255 255 / 30%);
+  animation: neon-glow-pulse 2.5s ease-in-out infinite, shimmer 3s linear infinite;
 }
 
 
@@ -503,24 +578,35 @@ main > .section.dark a:any-link:not(.button) {
   color: var(--accent-color);
 }
 
-/* dark section: primary button inverts to white fill + amber shadow */
+/* dark section: primary button — electric neon gradient */
 main > .section.dark a.button.primary {
-  border-color: var(--background-color);
-  background-color: var(--background-color);
-  color: var(--dark-color);
+  border-color: var(--neon-cyan);
+  background: linear-gradient(
+    135deg,
+    var(--neon-cyan) 0%,
+    var(--neon-pink) 50%,
+    var(--neon-purple) 100%
+  );
+  background-size: 200% auto;
+  color: #fff;
+  text-shadow: 0 0 8px rgb(0 0 0 / 40%);
 }
 
-/* dark section: ghost button uses white outline */
+/* dark section: ghost button — neon cyan border */
 main > .section.dark a.button.secondary {
-  border-color: rgb(255 255 255 / 50%);
+  border-color: var(--neon-cyan);
   background-color: transparent;
-  color: var(--background-color);
+  color: var(--neon-cyan);
 }
 
 main > .section.dark a.button.secondary:hover {
-  background-color: var(--background-color);
-  border-color: var(--background-color);
-  color: var(--dark-color);
+  background: linear-gradient(
+    135deg,
+    rgb(0 240 255 / 20%),
+    rgb(255 45 149 / 20%)
+  );
+  border-color: var(--neon-pink);
+  color: #fff;
 }
 
 /* dark section: focus ring uses white */
@@ -553,11 +639,18 @@ main > .section.accent > div > p:not(.tag-pill) {
   font-size: 20px;
 }
 
-/* accent section: primary button uses black fill + white shadow */
+/* accent section: primary button — dark with neon glow */
 main > .section.accent a.button.primary {
   border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--background-color);
+  background: linear-gradient(
+    135deg,
+    var(--dark-color) 0%,
+    #1a0030 50%,
+    var(--dark-color) 100%
+  );
+  background-size: 200% auto;
+  color: var(--neon-gold);
+  text-shadow: 0 0 10px rgb(255 215 0 / 60%);
 }
 
 main > .section.accent a.button.secondary {
