@@ -152,28 +152,117 @@ main .hero a.button:any-link:active {
   box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
 }
 
-/* primary button on hero — accent bg, dark text */
+/* Vegas neon animations */
+@keyframes neon-flicker-gold {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    background: linear-gradient(135deg, #ffb800, #e8651a);
+    border-color: #ffb800;
+    box-shadow: 0 0 12px #ffb800, 0 0 40px rgb(255 184 0 / 55%), 0 0 80px rgb(232 101 26 / 35%), inset 0 0 20px rgb(255 184 0 / 25%);
+    text-shadow: 0 0 12px rgb(255 184 0 / 90%);
+  }
+
+  20%, 24%, 55% {
+    background: linear-gradient(135deg, #ff8c00, #e8651a);
+    border-color: #ff8c00;
+    box-shadow: 0 0 4px #ff8c00, 0 0 12px rgb(255 140 0 / 30%);
+    text-shadow: 0 0 4px rgb(255 140 0 / 40%);
+  }
+}
+
+@keyframes neon-flicker-pink {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    background: linear-gradient(135deg, #ff2d95, #c4007a);
+    border-color: #ff2d95;
+    box-shadow: 0 0 12px #ff2d95, 0 0 40px rgb(255 45 149 / 55%), 0 0 80px rgb(196 0 122 / 35%), inset 0 0 20px rgb(255 45 149 / 25%);
+    text-shadow: 0 0 12px rgb(255 45 149 / 90%);
+  }
+
+  20%, 24%, 55% {
+    background: linear-gradient(135deg, #cc0077, #a00060);
+    border-color: #cc0077;
+    box-shadow: 0 0 4px #cc0077, 0 0 12px rgb(204 0 119 / 30%);
+    text-shadow: 0 0 4px rgb(204 0 119 / 40%);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* primary button on hero — Vegas gold neon */
 main .hero a.button.primary:any-link {
-  background: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--dark-color);
+  background: linear-gradient(135deg, #ffb800, #e8651a);
+  border: 3px solid #ffb800;
+  color: #fff;
+  text-shadow: 0 0 12px rgb(255 184 0 / 90%);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 18px 42px;
+  border-radius: 0;
+  box-shadow: 0 0 12px #ffb800, 0 0 40px rgb(255 184 0 / 55%), 0 0 80px rgb(232 101 26 / 35%), inset 0 0 20px rgb(255 184 0 / 25%);
+  animation: neon-flicker-gold 3s ease-in-out infinite;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+main .hero a.button.primary:any-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 25%, rgb(255 255 255 / 30%) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+  pointer-events: none;
 }
 
 main .hero a.button.primary:any-link:hover {
-  filter: brightness(0.9);
+  transform: scale(1.08);
+  filter: none;
+  animation: none;
+  background: linear-gradient(135deg, #ffc933, #ff8c00);
+  box-shadow: 0 0 25px #ffb800, 0 0 70px rgb(255 184 0 / 70%), 0 0 120px rgb(232 101 26 / 50%), inset 0 0 30px rgb(255 184 0 / 40%);
 }
 
-/* secondary button on hero — white outline, dark shadow */
+/* secondary button on hero — Vegas hot pink neon */
 main .hero a.button.secondary:any-link {
-  background: transparent;
-  border: 2px solid rgb(255 255 255 / 50%);
-  color: var(--background-color);
+  background: linear-gradient(135deg, #ff2d95, #c4007a);
+  border: 3px solid #ff2d95;
+  color: #fff;
+  text-shadow: 0 0 12px rgb(255 45 149 / 90%);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 18px 42px;
+  border-radius: 0;
+  box-shadow: 0 0 12px #ff2d95, 0 0 40px rgb(255 45 149 / 55%), 0 0 80px rgb(196 0 122 / 35%), inset 0 0 20px rgb(255 45 149 / 25%);
+  animation: neon-flicker-pink 3s ease-in-out 1s infinite;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+main .hero a.button.secondary:any-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 25%, rgb(255 255 255 / 25%) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear 0.5s infinite;
+  pointer-events: none;
 }
 
 main .hero a.button.secondary:any-link:hover {
-  border-color: var(--background-color);
-  background-color: var(--accent-color);
-  color: var(--dark-color);
+  transform: scale(1.08);
+  animation: none;
+  background: linear-gradient(135deg, #ff5aaf, #e6008a);
+  border-color: #ff5aaf;
+  color: #fff;
+  box-shadow: 0 0 25px #ff2d95, 0 0 70px rgb(255 45 149 / 70%), 0 0 120px rgb(196 0 122 / 50%), inset 0 0 30px rgb(255 45 149 / 40%);
 }
 
 @media (width < 768px) {
