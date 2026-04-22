@@ -108,6 +108,34 @@
   background: none;
 }
 
+/* --- Fallback: style raw div rows before JS decorates them --- */
+.faq-list > div > div:first-child {
+  font-weight: var(--faq-question-font-weight);
+  font-size: var(--faq-question-font-size);
+  padding: var(--faq-question-padding);
+  background-color: var(--faq-summary-bg);
+  border: 1px solid var(--faq-border-color);
+  border-radius: 16px 16px 0 0;
+  cursor: pointer;
+}
+
+.faq-list > div > div:last-child {
+  padding: var(--faq-answer-padding);
+  color: var(--faq-answer-color);
+  background-color: var(--faq-summary-bg);
+  border: 1px solid var(--faq-border-color);
+  border-top: 0;
+  border-radius: 0 0 16px 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: var(--gap-xs);
+}
+
+/* Hide raw div fallback once JS creates details elements */
+.faq-list:has(details) > div {
+  display: none;
+}
+
 /* --- FAQ item (details element) — rounded pill with accent border --- */
 .faq-list details {
   border: 1px solid var(--faq-border-color);
