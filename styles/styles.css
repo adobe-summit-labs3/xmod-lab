@@ -59,9 +59,13 @@
   --button-letter-spacing: 0.98px;
   --button-border-radius: 9999px;
   --button-padding: 13px 32px 11px;
-  --button-transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s,
-    color 0.15s, border-color 0.15s;
+  --button-transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease,
+    color 0.2s ease, border-color 0.3s ease, filter 0.2s ease;
   --btn-shadow: var(--accent-color);
+  --vegas-pink: #ff2d7b;
+  --vegas-gold: #ffd700;
+  --vegas-cyan: #00e5ff;
+  --vegas-purple: #b44dff;
 
   /* links */
   --link-color: #e8651a;
@@ -364,6 +368,27 @@ p.button-wrapper {
   margin: 0;
 }
 
+/* Vegas neon animations */
+@keyframes vegas-neon-pulse {
+  0%, 100% { box-shadow: 3px 3px 0 0 var(--vegas-pink), 0 0 8px var(--vegas-pink); }
+  25% { box-shadow: 3px 3px 0 0 var(--vegas-gold), 0 0 12px var(--vegas-gold); }
+  50% { box-shadow: 3px 3px 0 0 var(--vegas-cyan), 0 0 8px var(--vegas-cyan); }
+  75% { box-shadow: 3px 3px 0 0 var(--vegas-purple), 0 0 12px var(--vegas-purple); }
+}
+
+@keyframes vegas-border-cycle {
+  0%, 100% { border-color: var(--vegas-pink); }
+  25% { border-color: var(--vegas-gold); }
+  50% { border-color: var(--vegas-cyan); }
+  75% { border-color: var(--vegas-purple); }
+}
+
+@keyframes vegas-hover-glow {
+  0%, 100% { box-shadow: 5px 5px 0 0 var(--vegas-pink), 0 0 20px var(--vegas-pink), 0 0 40px rgb(255 45 123 / 30%); }
+  33% { box-shadow: 5px 5px 0 0 var(--vegas-gold), 0 0 20px var(--vegas-gold), 0 0 40px rgb(255 215 0 / 30%); }
+  66% { box-shadow: 5px 5px 0 0 var(--vegas-cyan), 0 0 20px var(--vegas-cyan), 0 0 40px rgb(0 229 255 / 30%); }
+}
+
 /* Decorated buttons (via p.button-wrapper > a.button) */
 a.button:any-link {
   box-sizing: border-box;
@@ -372,7 +397,7 @@ a.button:any-link {
   justify-content: center;
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
+  border: 2px solid var(--vegas-pink);
   border-radius: var(--button-border-radius);
   padding: var(--button-padding);
   font-family: var(--button-font-family);
@@ -385,45 +410,48 @@ a.button:any-link {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  box-shadow: 3px 3px 0 0 var(--btn-shadow, var(--accent-color));
+  animation: vegas-neon-pulse 3s ease-in-out infinite, vegas-border-cycle 3s ease-in-out infinite;
   transition: var(--button-transition);
 }
 
 a.button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 0 var(--btn-shadow, var(--accent-color));
+  transform: translate(-2px, -2px) scale(1.05);
+  animation: vegas-hover-glow 1.5s ease-in-out infinite, vegas-border-cycle 1.5s ease-in-out infinite;
+  filter: brightness(1.15);
   text-decoration: none;
 }
 
 a.button:active {
-  transform: translate(0, 0);
-  box-shadow: 0 0 0 0 var(--btn-shadow, var(--accent-color));
+  transform: translate(0, 0) scale(0.97);
+  box-shadow: 0 0 0 0 var(--vegas-pink);
+  animation: none;
+  filter: brightness(0.95);
 }
 
 
-/* Primary: dark bg, white text */
+/* Primary: dark bg, neon pink text */
 a.button.primary {
-  border-color: var(--dark-color);
+  border-color: var(--vegas-pink);
   background-color: var(--dark-color);
   color: var(--background-color);
 }
 
-/* Secondary/Ghost: transparent bg, border matches context */
+/* Secondary/Ghost: transparent bg, neon border */
 a.button.secondary {
-  border-color: var(--dark-color);
+  border-color: var(--vegas-cyan);
   background-color: transparent;
   color: var(--dark-color);
 }
 
 a.button.secondary:hover {
   background-color: var(--dark-color);
-  color: var(--background-color);
+  color: var(--vegas-cyan);
 }
 
-/* Accent: orange bg, dark text (hero) */
+/* Accent: gold bg, dark text (jackpot) */
 a.button.accent {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: var(--vegas-gold);
+  background-color: var(--vegas-gold);
   color: var(--dark-color);
 }
 
