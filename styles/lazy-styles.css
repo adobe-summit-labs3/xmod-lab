@@ -121,3 +121,56 @@
     font-size: 20px;
   }
 }
+
+/* --- Nightlife tab: dark theme --- */
+#tabpanel-nightlife {
+  background-color: var(--dark-color);
+  border-radius: var(--card-border-radius);
+  padding: var(--gap-xl) var(--gap-lg);
+  margin-top: 0;
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li {
+  background-color: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 24px rgb(232 101 26 / 15%);
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li .cards-card-body p.tag-pill {
+  background: linear-gradient(90deg, #ffd700, #ff2d55, #ffd700);
+  background-size: 200% 100%;
+  color: #fff;
+  text-shadow: 0 0 6px rgb(255 215 0 / 50%);
+  border: 1px solid rgb(255 215 0 / 30%);
+  box-shadow: 0 0 8px rgb(255 45 85 / 25%), inset 0 0 6px rgb(255 215 0 / 15%);
+  animation: vegas-tag-glow 3s ease infinite;
+}
+
+@keyframes vegas-tag-glow {
+  0%, 100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 8px rgb(255 45 85 / 25%), inset 0 0 6px rgb(255 215 0 / 15%);
+  }
+
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 14px rgb(255 215 0 / 40%), inset 0 0 10px rgb(255 45 85 / 20%);
+  }
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li h3,
+#tabpanel-nightlife .cards.cards-article > ul > li h3 a {
+  color: var(--background-color);
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li h3 a:hover {
+  color: var(--accent-color);
+}
+
+#tabpanel-nightlife .cards.cards-article > ul > li .cards-card-body p:last-child {
+  color: var(--text-on-dark-muted);
+}

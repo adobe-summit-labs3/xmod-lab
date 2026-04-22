@@ -36,4 +36,52 @@ export default function decorate(block) {
   appendItems(track);
 
   block.append(track);
+
+  // Marquee lights around the border
+  const LIGHT_SPACING = 28;
+  const lightsContainer = document.createElement('div');
+  lightsContainer.className = 'marquee-lights';
+
+  function createLight(x, y, delay) {
+    const dot = document.createElement('span');
+    dot.className = 'marquee-bulb';
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+    dot.style.animationDelay = `${delay}s`;
+    lightsContainer.append(dot);
+  }
+
+  // Wait for layout so we can measure
+  requestAnimationFrame(() => {
+    const w = block.offsetWidth;
+    const h = block.offsetHeight;
+    const topCount = Math.floor(w / LIGHT_SPACING);
+    const sideCount = Math.floor(h / LIGHT_SPACING);
+    const total = (topCount + sideCount) * 2;
+    const delayStep = 2 / total;
+    let idx = 0;
+
+    // Top edge (left to right)
+    for (let i = 0; i < topCount; i += 1) {
+      createLight(i * LIGHT_SPACING + LIGHT_SPACING / 2, -4, idx * delayStep);
+      idx += 1;
+    }
+    // Right edge (top to bottom)
+    for (let i = 0; i < sideCount; i += 1) {
+      createLight(w - 4, i * LIGHT_SPACING + LIGHT_SPACING / 2, idx * delayStep);
+      idx += 1;
+    }
+    // Bottom edge (right to left)
+    for (let i = topCount - 1; i >= 0; i -= 1) {
+      createLight(i * LIGHT_SPACING + LIGHT_SPACING / 2, h - 4, idx * delayStep);
+      idx += 1;
+    }
+    // Left edge (bottom to top)
+    for (let i = sideCount - 1; i >= 0; i -= 1) {
+      createLight(0, i * LIGHT_SPACING + LIGHT_SPACING / 2, idx * delayStep);
+      idx += 1;
+    }
+
+    block.append(lightsContainer);
+  });
 }
