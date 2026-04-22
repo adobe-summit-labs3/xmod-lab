@@ -40,15 +40,12 @@ main > .hero-container {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  filter: saturate(1.6) contrast(1.15) brightness(1.1);
-  animation: vegas-hue 8s ease-in-out infinite;
+  filter: saturate(0) contrast(1.1) brightness(0.95);
+  transition: filter 0.8s ease;
 }
 
-@keyframes vegas-hue {
-  0% { filter: saturate(1.6) contrast(1.15) brightness(1.1) hue-rotate(0deg); }
-  33% { filter: saturate(1.8) contrast(1.2) brightness(1.15) hue-rotate(15deg); }
-  66% { filter: saturate(1.6) contrast(1.15) brightness(1.1) hue-rotate(-10deg); }
-  100% { filter: saturate(1.6) contrast(1.15) brightness(1.1) hue-rotate(0deg); }
+.hero:hover img {
+  filter: saturate(1.8) contrast(1.2) brightness(1.1) hue-rotate(5deg);
 }
 
 /* overlay gradient — Vegas neon over dark base for glow contrast */
