@@ -22,6 +22,23 @@ export default function decorate(block) {
     }
   }
 
+  // Vegas-style alternating letter colors on h1
+  const h1 = block.querySelector('h1');
+  if (h1) {
+    const text = h1.textContent;
+    h1.innerHTML = '';
+    let colorIndex = 0;
+    [...text].forEach((char) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      if (char.trim()) {
+        span.classList.add(colorIndex % 2 === 0 ? 'vegas-purple' : 'vegas-gold');
+        colorIndex += 1;
+      }
+      h1.append(span);
+    });
+  }
+
   // Tag pills: eyebrow p and em-wrapped tags
   const contentDiv = block.querySelector(':scope > div');
   if (contentDiv) {
