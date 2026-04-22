@@ -97,7 +97,7 @@ main > .hero-container {
 .hero .tag-pill {
   margin-bottom: var(--gap-md);
   text-shadow: none;
-  background-color: #00c853;
+  background-color: #ffd700;
 }
 
 /* lead paragraph — after h1 */
