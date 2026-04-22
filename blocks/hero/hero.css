@@ -118,62 +118,108 @@ main > .hero-container {
 }
 
 /*
- * Hero buttons — must override the global reset (main a.button:any-link)
- * which strips padding, border-radius, box-shadow, font-size, etc.
- * Specificity of reset: 0,2,1 — we use main .hero a.button:any-link (0,3,1)
+ * Hero buttons — Vegas neon style
+ * Vibrant animated buttons with neon glow effects
  */
+
+@keyframes vegas-neon-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 8px rgb(232 101 26 / 60%),
+      0 0 20px rgb(232 101 26 / 30%),
+      0 0 40px rgb(232 101 26 / 15%);
+  }
+
+  50% {
+    box-shadow:
+      0 0 12px rgb(232 101 26 / 80%),
+      0 0 30px rgb(232 101 26 / 50%),
+      0 0 60px rgb(232 101 26 / 25%),
+      0 0 80px rgb(232 101 26 / 10%);
+  }
+}
+
+@keyframes vegas-neon-pulse-secondary {
+  0%, 100% {
+    box-shadow:
+      0 0 8px rgb(255 255 255 / 30%),
+      0 0 20px rgb(232 101 26 / 20%),
+      inset 0 0 12px rgb(232 101 26 / 10%);
+  }
+
+  50% {
+    box-shadow:
+      0 0 12px rgb(255 255 255 / 50%),
+      0 0 30px rgb(232 101 26 / 35%),
+      0 0 50px rgb(232 101 26 / 15%),
+      inset 0 0 16px rgb(232 101 26 / 15%);
+  }
+}
+
 main .hero a.button:any-link {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--button-border-radius);
-  padding: var(--button-padding);
+  padding: 15px 36px 13px;
   font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
+  font-size: 15px;
   font-weight: var(--button-font-weight);
-  letter-spacing: var(--button-letter-spacing);
+  letter-spacing: 1.5px;
   line-height: 1.25;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 3px 3px 0 0 var(--btn-shadow, var(--dark-color));
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-main .hero a.button:any-link:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 0 var(--btn-shadow, var(--dark-color));
-  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease,
+    border-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
 }
 
 main .hero a.button:any-link:active {
-  transform: translateY(0);
-  box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
+  transform: scale(0.97);
 }
 
-/* primary button on hero — accent bg, dark text */
+/* primary button — hot neon amber with pulsing glow */
 main .hero a.button.primary:any-link {
-  background: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--dark-color);
+  background: linear-gradient(135deg, #e8651a 0%, #ff8c42 50%, #e8651a 100%);
+  background-size: 200% 200%;
+  border: 2px solid #ff8c42;
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+  animation: vegas-neon-pulse 2s ease-in-out infinite;
 }
 
 main .hero a.button.primary:any-link:hover {
-  filter: brightness(0.9);
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.15) saturate(1.2);
+  animation: none;
+  box-shadow:
+    0 0 16px rgb(232 101 26 / 90%),
+    0 0 40px rgb(255 140 66 / 60%),
+    0 0 70px rgb(232 101 26 / 30%);
 }
 
-/* secondary button on hero — white outline, dark shadow */
+/* secondary button — neon outline with inner glow */
 main .hero a.button.secondary:any-link {
   background: transparent;
-  border: 2px solid rgb(255 255 255 / 50%);
-  color: var(--background-color);
+  border: 2px solid rgb(255 255 255 / 60%);
+  color: #fff;
+  text-shadow: 0 0 8px rgb(255 255 255 / 40%);
+  animation: vegas-neon-pulse-secondary 2.5s ease-in-out infinite;
 }
 
 main .hero a.button.secondary:any-link:hover {
-  border-color: var(--background-color);
-  background-color: var(--accent-color);
-  color: var(--dark-color);
+  transform: translateY(-3px) scale(1.04);
+  border-color: #ff8c42;
+  background: rgb(232 101 26 / 15%);
+  color: #ff8c42;
+  text-shadow: 0 0 10px rgb(232 101 26 / 50%);
+  animation: none;
+  box-shadow:
+    0 0 12px rgb(232 101 26 / 50%),
+    0 0 30px rgb(232 101 26 / 25%),
+    inset 0 0 20px rgb(232 101 26 / 10%);
 }
 
 @media (width < 768px) {
