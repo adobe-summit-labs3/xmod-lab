@@ -109,14 +109,19 @@
 
 /* --- FAQ item (details element) — rounded pill with hover accent --- */
 .faq-list details {
-  border: 1px solid var(--faq-border-color);
+  border: 1.5px solid var(--faq-border-color);
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: var(--gap-xs);
-  transition: border-color 0.15s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .faq-list details:hover {
+  border-color: var(--faq-accent-color);
+}
+
+/* Open state: accent border all around */
+.faq-list details[open] {
   border-color: var(--faq-accent-color);
 }
 
@@ -144,7 +149,7 @@
   letter-spacing: normal;
   line-height: 1.6;
   color: var(--dark-color);
-  transition: background-color 0.15s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .faq-list details summary::-webkit-details-marker {
@@ -156,13 +161,18 @@
   background-color: var(--faq-hover-bg);
 }
 
-/* Open state: keep hover background on summary */
+/* Open state: solid accent background with white text */
 .faq-list details[open] summary {
-  background-color: var(--faq-hover-bg);
-  border-radius: 15px 15px 0 0;
+  background-color: var(--faq-accent-color);
+  color: var(--background-color);
+  border-radius: 14px 14px 0 0;
 }
 
-/* Plus icon → rotates 45° to × when open */
+.faq-list details[open] summary p {
+  color: var(--background-color);
+}
+
+/* Plus icon → × when open */
 .faq-list details summary::after {
   content: "+";
   font-size: 20px;
@@ -170,11 +180,13 @@
   color: var(--faq-accent-color);
   margin-left: var(--gap-md, 16px);
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.25s ease;
 }
 
+/* Open state: white × icon on accent bg */
 .faq-list details[open] summary::after {
-  transform: rotate(45deg);
+  content: "\00d7";
+  color: var(--background-color);
 }
 
 /* --- Answer body — smooth reveal --- */
@@ -183,6 +195,7 @@
   color: var(--faq-answer-color);
   font-family: var(--body-font-family);
   line-height: 1.7;
+  background-color: var(--cream-color);
 }
 
 .faq-list details .faq-list-item-body a {
@@ -191,6 +204,7 @@
 }
 
 .faq-list details[open] .faq-list-item-body {
-  border-top: 1px solid var(--faq-border-color);
-  background-color: var(--background-color);
+  border-top: none;
+  padding-top: var(--gap-lg);
+  padding-bottom: var(--gap-lg);
 }
