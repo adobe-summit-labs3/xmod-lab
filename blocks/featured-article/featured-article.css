@@ -67,7 +67,7 @@
   border-top: 1px solid var(--border-color-light);
 }
 
-/* style link as dark button */
+/* style link as Vegas neon button */
 .featured-article .featured-article-content p:last-child a:any-link {
   display: flex;
   align-items: center;
@@ -80,19 +80,23 @@
   padding: var(--gap-xs) var(--gap-xl);
   background-color: var(--dark-color);
   color: var(--background-color);
+  border: 2px solid var(--vegas-pink);
   border-radius: var(--button-border-radius);
-  box-shadow: 3px 3px 0 var(--accent-color);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  animation: vegas-neon-pulse 3s ease-in-out infinite, vegas-border-cycle 3s ease-in-out infinite;
+  transition: var(--button-transition);
 }
 
 .featured-article .featured-article-content p:last-child a:hover {
-  transform: translateY(-2px);
-  box-shadow: 5px 5px 0 var(--accent-color);
+  transform: translate(-2px, -2px) scale(1.05);
+  animation: vegas-hover-glow 1.5s ease-in-out infinite, vegas-border-cycle 1.5s ease-in-out infinite;
+  filter: brightness(1.15);
 }
 
 .featured-article .featured-article-content p:last-child a:active {
-  transform: translateY(0);
-  box-shadow: 0 0 0 var(--accent-color);
+  transform: translate(0, 0) scale(0.97);
+  box-shadow: 0 0 0 0 var(--vegas-pink);
+  animation: none;
+  filter: brightness(0.95);
 }
 
 @media (width >= 768px) {
