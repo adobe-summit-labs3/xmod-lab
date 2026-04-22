@@ -156,9 +156,14 @@
   background-color: var(--faq-hover-bg);
 }
 
-/* Open state: keep hover background on summary */
+/* Open state: accent background on summary, white text */
+.faq-list details[open] {
+  border-color: var(--faq-accent-color);
+}
+
 .faq-list details[open] summary {
-  background-color: var(--faq-hover-bg);
+  background-color: var(--faq-accent-color);
+  color: #fff;
   border-radius: 15px 15px 0 0;
 }
 
@@ -174,7 +179,9 @@
 }
 
 .faq-list details[open] summary::after {
-  transform: rotate(45deg);
+  content: "\00d7";
+  color: #fff;
+  transform: none;
 }
 
 /* --- Answer body — smooth reveal --- */
