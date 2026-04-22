@@ -118,62 +118,77 @@ main > .hero-container {
 }
 
 /*
- * Hero buttons — must override the global reset (main a.button:any-link)
- * which strips padding, border-radius, box-shadow, font-size, etc.
- * Specificity of reset: 0,2,1 — we use main .hero a.button:any-link (0,3,1)
+ * Hero buttons — Vegas neon style
+ * Vibrant gradients, glow effects, and pulse animation
  */
+
+@keyframes vegas-glow-primary {
+  0%, 100% { box-shadow: 0 0 8px #ff6b00, 0 0 20px rgb(255 107 0 / 50%), 0 0 40px rgb(255 107 0 / 25%); }
+  50% { box-shadow: 0 0 12px #ff3c00, 0 0 30px rgb(255 60 0 / 60%), 0 0 60px rgb(255 60 0 / 30%); }
+}
+
+@keyframes vegas-glow-secondary {
+  0%, 100% { box-shadow: 0 0 8px rgb(255 255 255 / 30%), 0 0 20px rgb(255 215 0 / 25%), 0 0 40px rgb(255 215 0 / 12%); }
+  50% { box-shadow: 0 0 12px rgb(255 255 255 / 50%), 0 0 30px rgb(255 215 0 / 40%), 0 0 60px rgb(255 215 0 / 20%); }
+}
+
 main .hero a.button:any-link {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--button-border-radius);
-  padding: var(--button-padding);
+  padding: 15px 36px 13px;
   font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
+  font-size: 15px;
   font-weight: var(--button-font-weight);
-  letter-spacing: var(--button-letter-spacing);
+  letter-spacing: 1.5px;
   line-height: 1.25;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 3px 3px 0 0 var(--btn-shadow, var(--dark-color));
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-main .hero a.button:any-link:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 0 var(--btn-shadow, var(--dark-color));
-  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
 main .hero a.button:any-link:active {
-  transform: translateY(0);
-  box-shadow: 0 0 0 var(--btn-shadow, var(--dark-color));
+  transform: scale(0.97);
 }
 
-/* primary button on hero — accent bg, dark text */
+/* primary button — hot neon gradient */
 main .hero a.button.primary:any-link {
-  background: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  color: var(--dark-color);
+  background: linear-gradient(135deg, #ff6b00, #ff3c00, #e8651a);
+  background-size: 200% 200%;
+  border: 2px solid rgb(255 107 0 / 60%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  animation: vegas-glow-primary 2s ease-in-out infinite;
 }
 
 main .hero a.button.primary:any-link:hover {
-  filter: brightness(0.9);
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, #ff3c00, #ff6b00, #ffd700);
+  border-color: #ffd700;
+  animation: vegas-glow-primary 1s ease-in-out infinite;
+  text-decoration: none;
 }
 
-/* secondary button on hero — white outline, dark shadow */
+/* secondary button — gold neon outline */
 main .hero a.button.secondary:any-link {
   background: transparent;
-  border: 2px solid rgb(255 255 255 / 50%);
-  color: var(--background-color);
+  border: 2px solid rgb(255 215 0 / 60%);
+  color: #ffd700;
+  text-shadow: 0 0 8px rgb(255 215 0 / 40%);
+  animation: vegas-glow-secondary 2.5s ease-in-out infinite;
 }
 
 main .hero a.button.secondary:any-link:hover {
-  border-color: var(--background-color);
-  background-color: var(--accent-color);
-  color: var(--dark-color);
+  transform: translateY(-3px) scale(1.04);
+  background: linear-gradient(135deg, rgb(255 215 0 / 15%), rgb(255 107 0 / 15%));
+  border-color: #ffd700;
+  color: #fff;
+  animation: vegas-glow-secondary 1s ease-in-out infinite;
+  text-decoration: none;
 }
 
 @media (width < 768px) {
