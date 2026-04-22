@@ -11,7 +11,7 @@
   --faq-accent-color: var(--accent-color, #e8651a);
   --faq-hover-bg: var(--light-color, #f0ece4);
   --faq-question-padding: var(--gap-md) var(--gap-lg);
-  --faq-answer-padding: 0 var(--gap-lg) var(--gap-md);
+  --faq-answer-padding: var(--gap-md) var(--gap-lg) var(--gap-md);
   --faq-heading-margin-bottom: var(--gap-xl);
 
   max-width: var(--faq-max-width);
@@ -120,6 +120,10 @@
   border-color: var(--faq-accent-color);
 }
 
+.faq-list details[open] {
+  border-color: var(--faq-accent-color);
+}
+
 .faq-list details p {
   margin-bottom: 0.8em;
 }
@@ -156,9 +160,16 @@
   background-color: var(--faq-hover-bg);
 }
 
-/* Open state: keep hover background on summary */
+/* Keep accent bg on hover when open */
+.faq-list details[open] summary:hover {
+  background-color: var(--faq-accent-color);
+  filter: brightness(0.95);
+}
+
+/* Open state: solid accent background with white text */
 .faq-list details[open] summary {
-  background-color: var(--faq-hover-bg);
+  background-color: var(--faq-accent-color);
+  color: #fff;
   border-radius: 15px 15px 0 0;
 }
 
@@ -175,6 +186,7 @@
 
 .faq-list details[open] summary::after {
   transform: rotate(45deg);
+  color: #fff;
 }
 
 /* --- Answer body — smooth reveal --- */
